@@ -44,7 +44,7 @@
     - name: Code Coverage
       run: |
         curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
-        echo SCORE=`./cover-totalizer go_coverage.xml` >> "$GITHUB_ENV"
+        echo SCORE=`./cover-totalizer coverage.xml` >> "$GITHUB_ENV"
 
     - uses: kevincobain2000/action-coveritup@v1
       with:
