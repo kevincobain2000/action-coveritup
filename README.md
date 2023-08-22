@@ -21,13 +21,14 @@
 
 # Supported Types
 
-| Type                | Metric |
-|---------------------|--------|
-| coverage            | %      |
-| php-vendor-size     | MB     |
-| npm-modules-size    | MB     |
-| go-binary-size      | KB     |
-| go-mod-dependencies | #      |
+| Type                | Metric | Description                |
+|---------------------|--------|----------------------------|
+| coverage            | %      |                            |
+| php-vendor-size     | MB     |                            |
+| npm-modules-size    | MB     |                            |
+| go-binary-size      | KB     |                            |
+| go-mod-dependencies |        | Num of deps in `go.mod`    |
+| go-sec-issues       |        | Go Security issues `gosec` |
 
 
 # Embedding shield badges
@@ -152,14 +153,6 @@ With Link
 
 ## Compliance
 
-**How GITHUB_TOKEN is used**
-
-`github.token` from your action is sent to the server as Authorization header.
-The expiration of `github.token` is until the workflow is running.
-The token is used to verify if the request has originated from the correct org, repo and commit author.
-https://coveritup.app doesn't store the token.
-You can see usage in `action.yml` file
-
 **Destroy just one type**
 
 ```yaml
@@ -176,3 +169,11 @@ You can see usage in `action.yml` file
       with:
         destroy: true
 ```
+
+**How `github.token` is used**
+
+`github.token` from your action is sent to the server as an Authorization header.
+The expiration of `github.token` is until the workflow is running.
+The token is used to verify if the request has originated from the correct org, repo and commit author.
+https://coveritup.app doesn't store the token.
+You can see usage in `action.yml` file
