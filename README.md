@@ -34,7 +34,7 @@
         type: coverage
     - uses: kevincobain2000/action-coveritup@v1
       with:
-        pr_comment: true #if it is a PR, will comment summary
+        pr_comment: true
 ```
 
 ## GO Binary Size
@@ -47,6 +47,9 @@
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: go-binary-size
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        pr_comment: true
 ```
 
 ## GO `go.mod` num of dependencies
@@ -59,6 +62,9 @@
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: go-mod-dependencies
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        pr_comment: true
 ```
 
 ## GO chaining multiple
@@ -81,7 +87,7 @@
       with:
         type: go-binary-size
 
-    # Finally comment the summary of 2 reports
+    # Finally comment the summary of 2 reports. PR comment should always be in the end.
     - uses: kevincobain2000/action-coveritup@v1
       with:
         pr_comment: true
@@ -132,7 +138,15 @@
 
 ## Compliance
 
-Destroy just one type
+**How GITHUB_TOKEN is used**
+
+`github.token` from your action is sent to the server as Authorization header.
+The expiration of `github.token` is until the workflow is running.
+The token is used to verify if the request has originated from the correct org, repo and commit author.
+https://coveritup.app doesn't store the token.
+You can see usage in `action.yml` file
+
+**Destroy just one type**
 
 ```yaml
       uses: kevincobain2000/action-coveritup@v1
@@ -141,7 +155,7 @@ Destroy just one type
         type: npm-modules-size
 ```
 
-Destroy everything
+**Destroy everything**
 
 ```yaml
       uses: kevincobain2000/action-coveritup@v1
