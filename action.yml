@@ -19,9 +19,6 @@ inputs:
   destroy:
     description: "Destroy all"
     default: 'false'
-  allow_private:
-    description: "Allow publish from private repositories"
-    default: 'false'
 runs:
   using: "composite"
   steps:
@@ -29,29 +26,29 @@ runs:
     - uses: credfeto/action-repo-visibility@v1.2.0
       id: visibility
 
-    - name: Donot allow private repos, unless explicitly specified
+    - name: Do not allow private repos, unless explicitly specified
       shell: bash
-      if: steps.visibility.outputs.is_public != 'true' && inputs.allow_private != 'true'
+      if: ${{ steps.visibility.outputs.is_private == 'true' }}
       run: |
         echo "Private repos are not supported"
         exit 1
 
     - name: Donot allow self-hosted, if user has forgotten to set the host
       shell: bash
-      if: github.api_url != 'https://api.github.com' && inputs.host == 'https://coveritup.app'
+      if: ${{github.api_url != 'https://api.github.com' && inputs.host == 'https://coveritup.app'}}
       run: |
         echo "You must set the host to your own coveritup instance"
         exit 1
 
     # Branch names for publication and pull requests comments
     - id: branch-name
-      if: inputs.destroy != 'true'
+      if: ${{inputs.destroy != 'true'}}
       uses: tj-actions/branch-names@v7
 
     # Find the pull request number
     # steps.branch-name.outputs.is_default == 'false' is to ensure that type is a pull request
     - id: find-pull-request
-      if: inputs.destroy != 'true' && steps.branch-name.outputs.is_default == 'false'
+      if: ${{inputs.destroy != 'true' && steps.branch-name.outputs.is_default == 'false' }}
       uses: jwalton/gh-find-current-pr@v1
       with:
         state: open
@@ -59,14 +56,14 @@ runs:
     # All branch names for this repo seperated by spaces
     - name: Extract all active branches
       shell: bash
-      if: inputs.pr_comment != 'true' && inputs.destroy != 'true'
+      if: ${{inputs.pr_comment != 'true' &&inputs.destroy != 'true'}}
       run: |
         git config remote.origin.prune true && git fetch
         echo CIU_ACTIVE_BRANCHES=`git branch -r | grep -v HEAD | sed 's/origin\///' | tr '\n' ' '` >> "$GITHUB_ENV"
 
 
     - name: Publish this output and update branches
-      if: inputs.pr_comment != 'true' && inputs.destroy != 'true'
+      if: ${{inputs.pr_comment != 'true' && inputs.destroy != 'true'}}
       shell: bash
       run: |
         curl -sLk \
@@ -88,7 +85,7 @@ runs:
           "${{inputs.host}}/api/upload"
 
     - name: Prepare comment on PR if it is a pull req
-      if: inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.base_ref_branch != ''
+      if: ${{inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.base_ref_branch != ''}}
       shell: bash
       run: |
         curl -sLk \
@@ -97,14 +94,14 @@ runs:
           "${{inputs.host}}/embed?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" > comment_body.txt
 
     - name: Comment on PR if it is a pull req
-      if: inputs.pr_comment == 'true' && steps.find-pull-request.outputs.number != '' && steps.branch-name.outputs.base_ref_branch != ''
+      if: ${{inputs.pr_comment == 'true' && steps.find-pull-request.outputs.number != '' && steps.branch-name.outputs.base_ref_branch != ''}}
       uses: peter-evans/create-or-update-comment@v3
       with:
         issue-number: ${{ steps.find-pull-request.outputs.number }}
         body-path: comment_body.txt
 
     - name: Destroy everything that was ever published
-      if: inputs.destroy == 'true'
+      if: ${{inputs.destroy == 'true'}}
       shell: bash
       run: |
         curl -sLk \
