@@ -19,7 +19,24 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
-# Usages
+# Supported Types
+
+| Type                | Metric |
+|---------------------|--------|
+| coverage            | %      |
+| php-vendor-size     | MB     |
+| npm-modules-size    | MB     |
+| go-binary-size      | KB     |
+| go-mod-dependencies | #      |
+
+
+# Embedding shield badges
+
+```
+![alt title](https://coveritup.app/embed?org=ORG_OR_USER_NAME&repo=REPO_NAME&branch=BRANCH_NAME&type=TYPE_NAME)
+```
+
+# Using Action
 
 ## Code Coverages
 
@@ -122,17 +139,6 @@
       with:
         pr_comment: true
 ```
-
-# Supported Types
-
-| Type                | Metric |
-|---------------------|--------|
-| coverage            | %      |
-| php-vendor-size     | MB     |
-| npm-modules-size    | MB     |
-| go-binary-size      | KB     |
-| go-mod-dependencies | #      |
-
 
 ---
 
