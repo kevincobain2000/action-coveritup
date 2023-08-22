@@ -88,7 +88,7 @@ runs:
           "${{inputs.host}}/api/upload"
 
     - name: Prepare comment on PR if it is a pull req
-      if: inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false'
+      if: inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.base_ref_branch != ''
       shell: bash
       run: |
         curl -sLk \
@@ -97,7 +97,7 @@ runs:
           "${{inputs.host}}/embed?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" > comment_body.txt
 
     - name: Comment on PR if it is a pull req
-      if: inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false'
+      if: inputs.pr_comment == 'true' && steps.find-pull-request.outputs.number != '' && steps.branch-name.outputs.base_ref_branch != ''
       uses: peter-evans/create-or-update-comment@v3
       with:
         issue-number: ${{ steps.find-pull-request.outputs.number }}
