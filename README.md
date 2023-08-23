@@ -29,6 +29,7 @@
 | go-binary-size      | KB     |                            |
 | go-mod-dependencies |        | Num of deps in `go.mod`    |
 | go-sec-issues       |        | Go Security issues `gosec` |
+| build-time          | s      | Build time in seconds      |
 
 
 # Embedding shield badges
@@ -63,7 +64,21 @@ With Link
         pr_comment: true
 ```
 
-## GO Binary Size
+## Build Time
+
+```yaml
+    - name: Build
+      run: |
+        BUILD_START=$SECONDS
+        echo "Your build command. Building..."
+        echo SCORE=$(($SECONDS-BUILD_START)) >> "$GITHUB_ENV"
+
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        type: build-time
+```
+
+## GO - Binary Size
 
 ```yaml
     - name: Go Binary Size
@@ -78,7 +93,7 @@ With Link
         pr_comment: true
 ```
 
-## GO `go.mod` num of dependencies
+## GO - `go.mod` num of dependencies
 
 ```yaml
     - name: Number of dependencies
@@ -93,7 +108,7 @@ With Link
         pr_comment: true
 ```
 
-## GO chaining multiple
+## GO - chaining multiple
 
 ```yaml
     # First report
@@ -119,7 +134,7 @@ With Link
         pr_comment: true
 ```
 
-## Node.js modules size
+## NPM - modules size
 
 ```yaml
     - name: Node Modules Size
@@ -134,7 +149,7 @@ With Link
         pr_comment: true
 ```
 
-## PHP vendor size
+## PHP - vendor size
 
 ```yaml
     - name: PHP/Composer Vendor Size
@@ -153,7 +168,7 @@ With Link
 
 ## Compliance
 
-**Destroy just one type**
+**Delete just one type**
 
 ```yaml
       uses: kevincobain2000/action-coveritup@v1
@@ -162,7 +177,7 @@ With Link
         type: npm-modules-size
 ```
 
-**Destroy everything**
+**Delete everything**
 
 ```yaml
       uses: kevincobain2000/action-coveritup@v1
@@ -170,7 +185,7 @@ With Link
         destroy: true
 ```
 
-**How `github.token` is used**
+**How this action uses `github.token`**
 
 `github.token` from your action is sent to the server as an Authorization header.
 The expiration of `github.token` is until the workflow is running.
