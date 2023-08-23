@@ -37,13 +37,13 @@
 Shield only
 
 ```
-![alt title](https://coveritup.app/embed?org=ORG_OR_USER_NAME&repo=REPO_NAME&branch=BRANCH_NAME&type=TYPE_NAME)
+![alt title](https://coveritup.app/embed/ORG_NAME/REPO_NAME?branch=BRANCH_NAME&type=TYPE_NAME)
 ```
 
 With Link
 
 ```
-[![coveritup](https://coveritup.app/embed?org=ORG_OR_USER_NAME&repo=REPO_NAME&branch=BRANCH_NAME&type=TYPE_NAME)](https://coveritup.app/ORG_NAME/REPO_NAME)
+[![coveritup](https://coveritup.app/embed/ORG_NAME/REPO_NAME?branch=BRANCH_NAME&type=TYPE_NAME)](https://coveritup.app/ORG_NAME/REPO_NAME)
 ```
 
 # Using Action

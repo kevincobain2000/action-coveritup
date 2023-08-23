@@ -1,6 +1,6 @@
 name: "action-coveritup"
 author: "kevincobain2000"
-description: "Pulse analytics for your repository"
+description: "All in one action to publish code coverage, build and other metrics, comment on pull requests"
 branding:
   icon: 'activity'
   color: 'red'
