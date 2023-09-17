@@ -40,11 +40,7 @@ Shield only
 ![alt title](https://coveritup.app/embed/ORG_NAME/REPO_NAME?branch=BRANCH_NAME&type=TYPE_NAME)
 ```
 
-With Link
-
-```
-[![coveritup](https://coveritup.app/embed/ORG_NAME/REPO_NAME?branch=BRANCH_NAME&type=TYPE_NAME)](https://coveritup.app/ORG_NAME/REPO_NAME)
-```
+Get all your shield badges from https://coveritup.app/ORG_NAME/REPO_NAME
 
 # Using Action
 
@@ -159,6 +155,21 @@ With Link
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: php-vendor-size
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        pr_comment: true
+```
+
+## PHP - composer number of dependencies
+
+```yaml
+    - name: PHP/Composer Vendor Size
+      run: |
+        echo SCORE=`composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'` >> "$GITHUB_ENV"
+
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        type: composer-dependencies
     - uses: kevincobain2000/action-coveritup@v1
       with:
         pr_comment: true
