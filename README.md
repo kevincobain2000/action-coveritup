@@ -44,6 +44,13 @@ Get all your shield badges from https://coveritup.app/ORG_NAME/REPO_NAME
 
 # Using Action
 
+Before using this action, enable Github Actions
+
+![Github Settings](https://imgur.com/psKpD15.png)
+
+- [x] Read and write permission
+- [x] Allow Github Actions to create and approve pull requests
+
 ## Code Coverages
 
 ```yaml
