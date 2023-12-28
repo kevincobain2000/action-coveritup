@@ -21,25 +21,9 @@
 
 # Supported Types
 
-| Type                | Metric | Description                 |
-| :------------------ | :----- | :-------------------------- |
-| coverage            | %      |                             |
-| php-vendor-size     | MB     |                             |
-| npm-modules-size    | MB     |                             |
-| go-binary-size      | KB     |                             |
-| go-mod-dependencies |        | Num of deps in `go.mod`     |
-| go-sec-issues       |        | Go Security issues `gosec`  |
-| build-time          | s      | Build time in seconds       |
-| ...and more         |        | https://coveritup.app/types |
-
+https://coveritup.app/types
 
 # Embedding shield badges
-
-Shield only
-
-```
-![alt title](https://coveritup.app/embed/ORG_NAME/REPO_NAME?branch=BRANCH_NAME&type=TYPE_NAME)
-```
 
 Get all your shield badges from https://coveritup.app/ORG_NAME/REPO_NAME
 
