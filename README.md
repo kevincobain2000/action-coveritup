@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://coveritup.app">
-    <img alt="coveritup app url" src="https://imgur.com/uxGVcRN.png" width="360">
+    <img alt="coveritup app url" src="https://imgur.com/ETrKqqQ.png" width="360">
   </a>
 </p>
 <p align="center">
