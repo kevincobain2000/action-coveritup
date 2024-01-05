@@ -109,7 +109,7 @@ runs:
         curl -sLk \
           -X GET \
           -H 'Content-Type: application/json' \
-          "${{inputs.host}}/embed/${{github.repository_owner}}/${{ github.event.repository.name }}?branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" > comment_body.txt
+          "${{inputs.host}}/embed/${{github.repository_owner}}/${{ github.event.repository.name }}?type=${{ inputs.type }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" > comment_body.txt
 
     # Comment on PR if it is a pull req
     - name: Comment on PR if it is a pull req
