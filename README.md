@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://coveritup.app">
-    <img alt="coveritup app url" src="https://imgur.com/ETrKqqQ.png" width="160">
+    <img alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
   </a>
 </p>
 <p align="center">
@@ -19,15 +19,17 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
-# Supported Types
+- [Step 1) Using Action](#step-1-using-action)
+- [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
+  - [Scores](#scores)
+  - [Times](#times)
+  - [Sizes](#sizes)
+  - [Counts](#counts)
+- [Step 3) Embedding shield badges in README](#step-3-embedding-shield-badges-in-readme)
+- [Compliance](#compliance)
 
-https://coveritup.app/types
 
-# Embedding shield badges
-
-Get all your shield badges from https://coveritup.app/ORG_NAME/REPO_NAME
-
-# Using Action
+# Step 1) Using Action
 
 Before using this action, enable Github Actions
 
@@ -36,70 +38,56 @@ Before using this action, enable Github Actions
 - [x] Read and write permission
 - [x] Allow Github Actions to create and approve pull requests
 
-## Code Coverages
+
+# Step 2) Add to your workflow
+
+## Scores
 
 ```yaml
+    # Example: Clover
     - name: Code Coverage
       run: |
         curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
         echo SCORE=`./cover-totalizer coverage.xml` >> "$GITHUB_ENV"
-
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: coverage
+
+    # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
       with:
         pr_comment: true
 ```
 
-## Build Time
+## Times
 
 ```yaml
+    # Example: Go
     - name: Build
       run: |
         BUILD_START=$SECONDS
-        echo "Your build command. Building..."
+        go build main.go
+        echo SCORE=$(($SECONDS-BUILD_START)) >> "$GITHUB_ENV"
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        type: go-build-time
+
+    # Example: NPM
+    - name: Build
+      run: |
+        BUILD_START=$SECONDS
+        npm install
         echo SCORE=$(($SECONDS-BUILD_START)) >> "$GITHUB_ENV"
 
     - uses: kevincobain2000/action-coveritup@v1
       with:
-        type: build-time
+        type: npm-build-time
 ```
 
-## GO - Binary Size
+## Sizes
 
 ```yaml
-    - name: Go Binary Size
-      run: |
-        echo SCORE=`du -sk main | awk '{print $1}'` >> "$GITHUB_ENV"
-
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        type: go-binary-size
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        pr_comment: true
-```
-
-## GO - `go.mod` num of dependencies
-
-```yaml
-    - name: Number of dependencies
-      run: |
-        echo SCORE=`go list -m all|wc -l|awk '{$1=$1};1'` >> "$GITHUB_ENV"
-
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        type: go-mod-dependencies
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        pr_comment: true
-```
-
-## GO - chaining multiple
-
-```yaml
-    # First report
+    # Example: Go
     - name: Go Binary Size
       run: |
         echo SCORE=`du -sk main | awk '{print $1}'` >> "$GITHUB_ENV"
@@ -107,54 +95,40 @@ Before using this action, enable Github Actions
       with:
         type: go-binary-size
 
-    # Second report
-    - name: go.mod Number of dependencies
-      run: |
-        echo SCORE=`go list -m all|wc -l|awk '{$1=$1};1'` >> "$GITHUB_ENV"
-
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        type: go-binary-size
-
-    # Finally comment the summary of 2 reports. PR comment should always be in the end.
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        pr_comment: true
-```
-
-## NPM - modules size
-
-```yaml
+    # Example: NPM
     - name: Node Modules Size
       run: |
         echo SCORE=`du -sm node_modules/ | awk '{print $1}'` >> "$GITHUB_ENV"
-
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: npm-modules-size
-    - uses: kevincobain2000/action-coveritup@v1
-      with:
-        pr_comment: true
-```
 
-## PHP - vendor size
-
-```yaml
+    # Example: PHP
     - name: PHP/Composer Vendor Size
       run: |
         echo SCORE=`du -sm vendor/ | awk '{print $1}'` >> "$GITHUB_ENV"
-
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: php-vendor-size
+
+    # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
       with:
         pr_comment: true
 ```
 
-## PHP - composer number of dependencies
+## Counts
 
 ```yaml
+    # Example: Go
+    - name: Number of dependencies
+      run: |
+        echo SCORE=`go list -m all|wc -l|awk '{$1=$1};1'` >> "$GITHUB_ENV"
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        type: go-mod-dependencies
+
+    # Example: PHP
     - name: PHP/Composer Vendor Size
       run: |
         echo SCORE=`composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'` >> "$GITHUB_ENV"
@@ -162,14 +136,21 @@ Before using this action, enable Github Actions
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: composer-dependencies
+
+    # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
       with:
         pr_comment: true
 ```
 
+# Step 3) Embedding shield badges in README
+
+Navigate to your repo and obtain shield badges https://coveritup.app/explore
+
+
 ---
 
-## Compliance
+# Compliance
 
 **Delete just one type**
 
