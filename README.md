@@ -78,10 +78,14 @@ Before using this action, enable Github Actions
         BUILD_START=$SECONDS
         npm install
         echo SCORE=$(($SECONDS-BUILD_START)) >> "$GITHUB_ENV"
-
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: npm-build-time
+
+    # Finally comment on PR
+    - uses: kevincobain2000/action-coveritup@v1
+      with:
+        pr_comment: true
 ```
 
 ## Sizes
@@ -132,7 +136,6 @@ Before using this action, enable Github Actions
     - name: PHP/Composer Vendor Size
       run: |
         echo SCORE=`composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'` >> "$GITHUB_ENV"
-
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: composer-dependencies
@@ -146,7 +149,6 @@ Before using this action, enable Github Actions
 # Step 3) Embedding shield badges in README
 
 Navigate to your repo and obtain shield badges https://coveritup.app/explore
-
 
 ---
 
