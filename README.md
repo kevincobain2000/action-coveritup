@@ -157,7 +157,7 @@ Navigate to your repo and obtain shield badges https://coveritup.app/explore
 **Delete just one type**
 
 ```yaml
-      uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v1
       with:
         destroy: true
         type: npm-modules-size
@@ -166,7 +166,7 @@ Navigate to your repo and obtain shield badges https://coveritup.app/explore
 **Delete everything**
 
 ```yaml
-      uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v1
       with:
         destroy: true
 ```
