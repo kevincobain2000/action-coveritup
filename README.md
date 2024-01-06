@@ -3,6 +3,13 @@
     <img alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
   </a>
 </p>
+
+<p align="center">
+  <a href="https://coveritup.app">
+    <img alt="coveritup app url" src="https://imgur.com/7pQEwvT.png" width="460">
+  </a>
+</p>
+
 <p align="center">
   Action for uploading Code Metrics to <a href="https://coveritup.app">coveritup.app</a>
 </p>
