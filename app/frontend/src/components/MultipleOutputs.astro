@@ -1,0 +1,59 @@
+---
+
+---
+
+<!--Main-->
+<div
+  class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center"
+>
+  <!--Left Col-->
+  <div
+    class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden"
+  >
+    <h1
+      class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
+    >
+      <span
+        class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
+      >
+        SVG
+      </span>
+      or
+      <span
+        class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
+      >
+        PNG
+      </span>
+    </h1>
+
+    <div
+      class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-6 overflow-auto no-scrollbar"
+    >
+      <div class="mb-4">
+
+        <b class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">SVG:</b> <b class="text-slate-100">Vector based, can be scaled to any size</b>
+        <br>
+        <b class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">PNG:</b> <b class="text-slate-100">With custom dimensions</b>
+        <p class="pt-5">
+            <i>Choose the right format for your use case.</i>
+            <br>
+            <i>Images are generated on the fly and cached.</i>
+            <br>
+            <br>
+            <b>{`Under 4kb for SVG`}</b>
+            <br>
+            <b>{`Under 12kb for PNG`}</b>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!--Right Col-->
+  <div class="w-full xl:w-3/5 pt-5 overflow-hidden">
+    <img
+      class="mx-auto w-full md:w-4/5"
+      src="https://instachart.coveritup.app/bar?title=SVG+PNG+Sizes&style=vertical&subtitle=in%20KB&metric=KB&theme=dark&data={%20%22x%22:%20[%22SVG%22,%20%22PNG%22],%20%22y%22:%20[[1.8,11]]%20}"
+    />
+  </div>
+</div>
+<style></style>

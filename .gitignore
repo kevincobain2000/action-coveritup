@@ -8,7 +8,7 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
-# diskcache directory 
+# diskcache directory
 cache/*
 vendor/*
 
@@ -18,3 +18,4 @@ tmp/
 *.pid
 dist/
 bin/
+main

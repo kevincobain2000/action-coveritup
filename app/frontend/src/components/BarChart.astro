@@ -1,0 +1,64 @@
+---
+import barchart from "@assets/barchart.svg?raw";
+---
+
+<!--Main-->
+<div
+  class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center"
+>
+  <!--Left Col-->
+  <div class="w-full xl:w-3/5 pt-5 overflow-hidden">
+    <h1
+      class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
+    >
+      Amazing
+      <span
+        class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
+      >
+        Bar Charts
+      </span>
+    </h1>
+    <p class="w-20">
+      <Fragment set:html={barchart} />
+    </p>
+    <span>Calculate Max and Average values automatically.</span>
+    <p
+      class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
+    >
+    </p>
+    <img
+      class="mx-auto w-full md:w-4/5 transform transition duration-700 ease-in-out"
+      src="https://instachart.coveritup.app/bar?title=Engineer&width=860&subtitle=Sleeping+hours&height=520&data={%20%22x%22:%20[%22Monday%22,%20%22Friday%22,%20%22Sunday%22],%20%22y%22:%20[[8,12,14],%20[16,12,10]],%20%22names%22:%20[%22Sleeping%22,%20%22Awake%22]%20}&theme=dark"
+    />
+  </div>
+
+  <!--Left Col-->
+  <div
+    class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden"
+  >
+    <p
+      class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
+    >
+      Apply your own customization and create bar charts as images.
+    </p>
+
+    <div
+      class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-6 overflow-auto no-scrollbar"
+    >
+      <div class="mb-4">
+        <label class="block text-blue-300 py-2 font-bold mb-2" for="code">
+          <pre
+            class="">{`
+https://instachart.coveritup.app/bar?title=Bar
+&subtitle=Sleeping+hours
+&data={
+    "x": ["Monday", "Friday", "Sunday"],
+    "y": [[8,12,14], [16,12,10]],
+    "names": ["Sleeping", "Awake"]
+}`}</pre>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<style></style>

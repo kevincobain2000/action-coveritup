@@ -1,6 +1,6 @@
 name: "action-coveritup"
 author: "kevincobain2000"
-description: "All in one action to publish code coverage, build and other metrics, comment on pull requests"
+description: "All in one code coverage solution, build times and custom metrics, comment on pull requests"
 branding:
   icon: 'activity'
   color: 'red'
@@ -95,11 +95,10 @@ runs:
             "score": "${{ env.SCORE }}",
             "user": "${{ github.actor }}",
             "branch": "${{ steps.branch-name.outputs.current_branch }}",
-            "base_branch": "${{ steps.branch-name.outputs.base_ref_branch }}",
             "pr": "${{ steps.find-pull-request.outputs.number }}",
             "branches": "${{ env.CIU_ACTIVE_BRANCHES }}"
           }' \
-          "${{inputs.host}}/api/upload"
+          "${{inputs.host}}/upload"
 
     # Prepare comment on PR if it is a pull req
     - name: Prepare comment on PR if it is a pull req
@@ -133,17 +132,15 @@ runs:
       shell: bash
       run: |
         curl -sLk \
-          -X PUT \
+          -X POST \
           -H 'Content-Type: application/json' \
           -H 'Authorization: ${{ github.token }}' \
           -d '{
             "org": "${{github.repository_owner}}",
             "repo": "${{ github.event.repository.name }}",
-            "commit": "${{ github.sha }}",
-            "type": "${{ inputs.type }}",
-            "branches": ""
+            "type": "${{ inputs.type }}"
           }' \
-          "${{inputs.host}}/api/upload"
+          "${{inputs.host}}/destroy"
 
     ###                End                ###
     ###             Compliance            ###

@@ -1,0 +1,39 @@
+---
+import Layout from "@components/Layout.astro";
+import Nav from "@components/Nav.astro";
+import LineChart from "@components/LineChart.astro";
+import Themes from "@components/Themes.astro";
+import Hero from "@components/Hero.astro";
+import BarChart from "@components/BarChart.astro";
+import RadarChart from "@components/RadarChart.astro";
+import SelfHosting from "@components/SelfHosting.astro";
+import FinalAction from "@components/FinalAction.astro";
+import Compare from "@components/Compare.astro";
+import MultipleOutputs from "@components/MultipleOutputs.astro";
+import PieChart from "@components/PieChart.astro";
+import Footer from "@components/Footer.astro";
+---
+
+<Layout
+  title="CoverItUp - All in one code coverage tool"
+  description="Discover CoverItUp: Your go-to online tool for effortlessly creating, customizing, and sharing code coverage reports. It's free, open-source, and easy to use. A CodeCov, Sonarqube, Coveralls, CodeClimate alternative. Best code coverage tool for enterprise and open source projects."
+>
+  <div class="h-full">
+    <Nav />
+
+    <Hero />
+    <Themes />
+    <!-- <LineChart />
+    <BarChart />
+    <PieChart />
+    <RadarChart />
+    <SelfHosting />
+
+    <Compare />
+    <MultipleOutputs /> -->
+    <FinalAction />
+    <Footer />
+  </div>
+</Layout>
+
+<style></style>

@@ -1,0 +1,59 @@
+---
+import piechart from "@assets/piechart.svg?raw";
+---
+
+<!--Main-->
+<div
+  class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center"
+>
+  <!--Left Col-->
+  <div class="w-full xl:w-3/5 pt-5 overflow-hidden">
+    <h1
+      class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
+    >
+    Piece by Piece
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+        Pie Charts
+      </span>
+    </h1>
+    <Fragment set:html={piechart} />
+    <span>A Slice of Insight: Revealing the Whole Picture, Piece by Piece.</span>
+    <p
+      class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
+    >
+    </p>
+    <img
+      class="mx-auto w-full md:w-4/5 transform transition duration-700 ease-in-out"
+      src="https://instachart.coveritup.app/pie?title=Engineer+Holidays&subtitle=Sleeping+Hours&height=620&data={%20%22names%22:%20[%22Monday%22,%20%22Friday%22,%20%22Saturday%22,%20%22Sunday%22],%20%22values%22:%20[4,%206%20,7,%209]%20}&theme=dark"
+    />
+  </div>
+
+  <!--Left Col-->
+  <div
+    class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden"
+  >
+    <p
+      class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
+    >
+      Apply your own customization and create bar charts as images.
+    </p>
+
+    <div
+      class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-6 overflow-auto no-scrollbar"
+    >
+      <div class="mb-4">
+        <label class="block text-blue-300 py-2 font-bold mb-2" for="code">
+          <pre
+            class="">{`
+https://instachart.coveritup.app/pie?title=Pie
+&subtitle=Sleeping+Hours
+&data={
+    "names": ["Monday", "Friday", "Saturday", "Sunday"],
+    "values": [4, 6 ,7, 9]
+}`}</pre>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+<style></style>
