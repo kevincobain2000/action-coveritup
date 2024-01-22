@@ -1,9 +1,9 @@
-before:
-  hooks:
-    - cd app; go mod tidy
 builds:
   -
-    main: ./app/main.go
+    main: main.go
+    dir: app
+    hooks:
+      pre: go mod tidy
     env:
       - CGO_ENABLED=0
     goos:

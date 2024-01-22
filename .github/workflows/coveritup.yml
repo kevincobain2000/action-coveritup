@@ -57,15 +57,15 @@ jobs:
           go mod tidy
           go test ./... -count=1
 
-      # - name: NPM Install
-      #   working-directory: app/frontend
-      #   run: |
-      #     START=$SECONDS
-      #     npm install
-      #     echo SCORE=$(($SECONDS-START)) >> "$GITHUB_ENV"
-      # - uses: kevincobain2000/action-coveritup@v1
-      #   with:
-      #     type: npm-install-time
+      - name: NPM Install
+        working-directory: app/frontend
+        run: |
+          START=$SECONDS
+          npm install
+          echo SCORE=$(($SECONDS-START)) >> "$GITHUB_ENV"
+      - uses: kevincobain2000/action-coveritup@v1
+        with:
+          type: npm-install-time
 
       # - name: NPM Build
       #   working-directory: app/frontend
