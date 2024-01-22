@@ -45,6 +45,7 @@
   - [Counts](#counts)
 - [Step 3) Embedding shield badges in README](#step-3-embedding-shield-badges-in-readme)
 - [Compliance](#compliance)
+- [CHANGE LOG](#change-log)
 
 
 # Step 1) Using Action
@@ -196,3 +197,8 @@ The expiration of `github.token` is until the workflow is running.
 The token is used to verify if the request has originated from the correct org, repo and commit author.
 https://coveritup.app doesn't store the token.
 You can see usage in `action.yml` file
+
+
+# CHANGE LOG
+
+- **v1.0.0** - Initial release with `self hosted` and `action`.

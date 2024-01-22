@@ -84,9 +84,11 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		urls = append(urls, u)
 	}
 	mdText.Table(mdTable)
+	images := ""
 	for _, u := range urls {
-		mdText.PlainTextf(md.Image("chart", u))
+		images += md.Image("chart", u)
 	}
+	mdText.PlainText(images)
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s/readme?org=%s&repo=%s&branch=%s",

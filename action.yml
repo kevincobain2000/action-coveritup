@@ -50,7 +50,7 @@ runs:
     # Find the pull request number
     # steps.branch-name.outputs.is_default == 'false' is to ensure that type is a pull request
     - id: find-pull-request
-      if: ${{inputs.destroy != 'true' && steps.branch-name.outputs.is_default == 'false' }}
+      if: ${{inputs.destroy != 'true' && steps.branch-name.outputs.is_default == 'false' && github.event_name == 'pull_request'}}
       uses: jwalton/gh-find-current-pr@v1
       with:
         state: open
