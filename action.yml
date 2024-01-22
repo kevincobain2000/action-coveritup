@@ -1,6 +1,6 @@
 name: "action-coveritup"
 author: "kevincobain2000"
-description: "All in one action to publish code coverage, build and other metrics, comment on pull requests"
+description: "All in one code coverage solution, build times and custom metrics, comment on pull requests"
 branding:
   icon: 'activity'
   color: 'red'
@@ -16,8 +16,6 @@ inputs:
     description: "Type of score"
   metric:
     description: "Metric of score"
-  value:
-    description: "Value of Score"
   destroy:
     description: "Destroy all"
     default: 'false'
@@ -27,7 +25,6 @@ runs:
 
     ###              Start                ###
     ### PREPARE ENVIRONMENT and VARIABLES ###
-
     - uses: credfeto/action-repo-visibility@v1.2.0
       id: visibility
 
@@ -65,7 +62,6 @@ runs:
       run: |
         git config remote.origin.prune true && git fetch
         echo CIU_ACTIVE_BRANCHES=`git branch -r | grep -v HEAD | sed 's/origin\///' | tr '\n' ' '` >> "$GITHUB_ENV"
-
     ###              End                ###
     ### PREPARE ENVIRONMENT and VARIABLES ###
 
@@ -73,16 +69,13 @@ runs:
 
     ###              Start                ###
     ###            PUBLISHING             ###
-
-
-    # Publish the score
     # Will create a new type if not exists for metric.
     # If type exists, then it will use the existing metric and ignore the metric passed
     - name: Publish this output and update branches
       if: ${{inputs.pr_comment != 'true' && inputs.destroy != 'true'}}
       shell: bash
       run: |
-        curl -sLk \
+        curl -sLk --fail \
           -X POST \
           -H 'Content-Type: application/json' \
           -H 'Authorization: ${{ github.token }}' \
@@ -95,55 +88,53 @@ runs:
             "score": "${{ env.SCORE }}",
             "user": "${{ github.actor }}",
             "branch": "${{ steps.branch-name.outputs.current_branch }}",
-            "base_branch": "${{ steps.branch-name.outputs.base_ref_branch }}",
             "pr": "${{ steps.find-pull-request.outputs.number }}",
             "branches": "${{ env.CIU_ACTIVE_BRANCHES }}"
           }' \
-          "${{inputs.host}}/api/upload"
+          "${{inputs.host}}/upload"
 
     # Prepare comment on PR if it is a pull req
     - name: Prepare comment on PR if it is a pull req
       if: ${{inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.base_ref_branch != ''}}
       shell: bash
       run: |
-        curl -sLk \
+        response=$(curl -sLk \
           -X GET \
           -H 'Content-Type: application/json' \
-          "${{inputs.host}}/embed/${{github.repository_owner}}/${{ github.event.repository.name }}?type=${{ inputs.type }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" > comment_body.txt
+          -w "%{http_code}" \
+          "${{inputs.host}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&type=${{ inputs.type }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
+          -o comment_body.txt)
+        echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 
-    # Comment on PR if it is a pull req
+    # Comment on PR if it is a pull req and the status code is 201
     - name: Comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && steps.find-pull-request.outputs.number != '' && steps.branch-name.outputs.base_ref_branch != ''}}
+      if: ${{inputs.pr_comment == 'true' && steps.find-pull-request.outputs.number != '' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201'}}
       uses: peter-evans/create-or-update-comment@v3
       with:
         issue-number: ${{ steps.find-pull-request.outputs.number }}
         body-path: comment_body.txt
-
     ###               END                 ###
     ###            PUBLISHING             ###
 
 
     ###               Start               ###
     ###             Compliance            ###
-
     # Destroy everything or just by the type
     # if type is empty then it will destroy everything
     - name: Destroy everything that was ever published
       if: ${{inputs.destroy == 'true'}}
       shell: bash
       run: |
-        curl -sLk \
-          -X PUT \
+        curl -sLk --fail \
+          -X POST \
           -H 'Content-Type: application/json' \
           -H 'Authorization: ${{ github.token }}' \
           -d '{
             "org": "${{github.repository_owner}}",
             "repo": "${{ github.event.repository.name }}",
-            "commit": "${{ github.sha }}",
             "type": "${{ inputs.type }}",
-            "branches": ""
+            "commit": "${{ github.sha }}"
           }' \
-          "${{inputs.host}}/api/upload"
-
+          "${{inputs.host}}/destroy"
     ###                End                ###
     ###             Compliance            ###

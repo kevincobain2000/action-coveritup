@@ -1,0 +1,82 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+const measurementID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="canonical" href={Astro.url} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://instachart.coveritup.app/logo.png" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://instachart.coveritup.app/logo.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Medidation times" />
+    <meta property="og:site_name" content="Instachart" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="apple-mobile-web-app-title" content="Instachart" />
+    <meta name="application-name" content="Instachart" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/favicon.ico" />
+    <meta name="msapplication-config" content="/favicon.ico" />
+
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    {measurementID && (
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XZJTXSVNVB"></script>
+        <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-XZJTXSVNVB');
+        </script>
+    )}
+
+
+  </head>
+  <body
+    class="leading-normal tracking-normal text-slate-400 m-6 bg-cover bg-gradient"
+  >
+    <slot />
+  </body>
+</html>
+<style is:global>
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .bg-gradient {
+    background: #780206;
+    background: -webkit-linear-gradient(to right, #061161, #780206);
+    background: linear-gradient(to right, #061161, #780206);
+  }
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+</style>

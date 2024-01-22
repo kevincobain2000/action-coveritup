@@ -1,0 +1,98 @@
+package pkg
+
+import (
+	"net/http"
+
+	"github.com/labstack/echo/v4"
+	"github.com/mcuadros/go-defaults"
+)
+
+type ChartHandler struct {
+	Chart *Chart
+}
+
+func NewChartHandler() *ChartHandler {
+	return &ChartHandler{
+		Chart: NewChart(),
+	}
+}
+
+type ChartRequest struct {
+	Org        string `json:"org"  query:"org" validate:"required,ascii,excludes=/" message:"org is required"`
+	Repo       string `json:"repo" query:"repo" validate:"required,ascii,excludes=/" message:"repo is required"`
+	Branch     string `json:"branch" query:"branch" validate:"ascii" message:"ascii branch is required"`
+	User       string `json:"user" query:"user" validate:"ascii,excludes=/" message:"ascii user is required"`
+	BaseBranch string `json:"base_branch" query:"base_branch" validate:"ascii" message:"ascii base_branch is required"`
+	Type       string `json:"type" query:"type" validate:"ascii,required,excludes=/" message:"ascii type is required"`
+	Branches   string `json:"branches" query:"branches" validate:"ascii" message:"ascii branches is required"`
+	Users      string `json:"users" query:"users" validate:"ascii" message:"ascii users is required"`
+
+	Output string `json:"output" query:"output" default:"png" validate:"oneof=svg png" message:"output must be svg or png"`
+	Theme  string `json:"theme" query:"theme" default:"light" validate:"oneof=light dark" message:"theme must be light or dark"`
+	Width  int    `json:"width" query:"width" default:"1024" validate:"min=1,max=2048" message:"width must be between 1 and 2048"`
+	Height int    `json:"height" query:"height" default:"512" validate:"min=1,max=2048" message:"height must be between 1 and 2048"`
+	Line   string `json:"line" query:"line" default:"nofill" validate:"oneof=nofill fill" message:"line must be fill or nofill"`
+}
+
+func (h *ChartHandler) Get(c echo.Context) error {
+	req := new(ChartRequest)
+	if err := BindRequest(c, req); err != nil {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)
+	}
+	defaults.SetDefaults(req)
+
+	msgs, err := ValidateRequest(req)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
+	}
+
+	t, err := h.Chart.GetType(req.Type)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, err.Error())
+	}
+	if t.ID == 0 {
+		return echo.NewHTTPError(http.StatusNotFound, "type not found")
+	}
+
+	if req.Branches == "" && req.Users == "" && req.Branch == "" && req.User == "" {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, "branches, users, branch or user, branch or base_branch are required")
+	}
+
+	if req.Branch != "" && req.BaseBranch == "" {
+		buf, err := h.Chart.GetInstaChartForBranch(req, t)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
+	}
+	if req.Branch != "" && req.BaseBranch != "" {
+		req.Branches = req.BaseBranch + "," + req.Branch
+		buf, err := h.Chart.GetInstaChartForBranches(req, t)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
+	}
+	if req.User != "" {
+		buf, err := h.Chart.GetInstaChartForUser(req, t)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
+	}
+	if req.Branches != "" {
+		buf, err := h.Chart.GetInstaChartForBranches(req, t)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
+	}
+	if req.Users != "" {
+		buf, err := h.Chart.GetInstaChartForUsers(req, t)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
+	}
+	return echo.NewHTTPError(http.StatusBadRequest, "Client went wrong")
+}

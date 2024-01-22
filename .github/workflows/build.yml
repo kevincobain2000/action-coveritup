@@ -1,0 +1,46 @@
+on:
+  push:
+    paths:
+      - '**/*.go'
+      - '**/*.mod'
+      - '**/*.sum'
+      - '**/*.yml'
+name: CI
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+jobs:
+  build:
+    strategy:
+      matrix:
+        go-version: [latest]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: kevincobain2000/action-gobrew@v2
+        with:
+          version: ${{ matrix.go-version }}
+      - name: Setup Node.js ${{ matrix.node-versions }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
+      - name: Build Dist for Embed
+        working-directory: app/frontend
+        run: |
+          npm install
+          npm run build
+      - name: Build
+        working-directory: app
+        run: go build main.go
+
+      - name: Install Tools
+        run: |
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+      - name: Lint
+        working-directory: app
+        run: |
+          gosec ./...
+          go vet -all .
+
