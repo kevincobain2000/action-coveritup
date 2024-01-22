@@ -37,7 +37,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	for _, t := range types {
 		y := make([]float64, 2)
 		row := make([]string, 3)
-		row[0] = t.Name
+		row[0] = "*" + t.Name + "*"
 
 		sb, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.BaseBranch, t.Name)
 		if err != nil {
@@ -55,6 +55,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		} else {
 			y[1] = s.Score
 			row[2] = F64NumberToK(&s.Score) + " " + t.Metric + p.UpOrDown(&sb.Score, &s.Score)
+			row[2] = "**" + row[2] + "**"
 		}
 		mdTable.Rows = append(mdTable.Rows, row)
 
@@ -90,7 +91,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s/readme?org=%s&repo=%s&branch=%s",
 		req.scheme, req.host, req.Org, req.Repo, req.Branch)
-	mdText.PlainTextf(md.Link("Add to Readme", readmeLink))
+	mdText.PlainTextf(md.Link("Add Badges and Charts to Readme", readmeLink))
 
 	return mdText.String(), nil
 }
