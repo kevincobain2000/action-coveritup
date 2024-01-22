@@ -78,6 +78,12 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 		g.log.Error(err)
 		return err
 	}
+	// if response is not a redirect
+	if resp.StatusCode >= http.StatusMovedPermanently && resp.StatusCode <= http.StatusBadRequest {
+		err := fmt.Errorf("github auth response code is %d", resp.StatusCode)
+		g.log.Error(err)
+		return err
+	}
 	g.log.Info("github auth response code is " + resp.Status)
 	err = g.cache.Set(cacheKey, []byte("true"), 60*60*24*7)
 
