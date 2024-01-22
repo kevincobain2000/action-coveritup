@@ -60,7 +60,7 @@
   - [Times](#times)
   - [Sizes](#sizes)
   - [Counts](#counts)
-- [Step 3) Embedding shield badges in README](#step-3-embedding-shield-badges-in-readme)
+- [Step 3) Embedding badges and charts](#step-3-embedding-badges-and-charts)
 - [Compliance](#compliance)
 - [CHANGE LOG](#change-log)
 
@@ -182,9 +182,10 @@ Before using this action, enable Github Actions
         pr_comment: true
 ```
 
-# Step 3) Embedding shield badges in README
+# Step 3) Embedding badges and charts
 
-Navigate to your repo and obtain shield badges https://coveritup.app/explore
+Navigate to your repo and obtain embeding code for badges and charts.
+https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=master
 
 ---
 
