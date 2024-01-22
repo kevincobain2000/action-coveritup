@@ -1,8 +1,7 @@
 package pkg
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	"hash/fnv"
 	"strconv"
 )
 
@@ -55,7 +54,12 @@ func TakeFirst(s string, n int) string {
 	return s[:n]
 }
 
-func MD5(text string) string {
-	hash := md5.Sum([]byte(text))
-	return hex.EncodeToString(hash[:])
+func MD5(s string) string {
+	h := fnv.New32a()
+	_, err := h.Write([]byte(s))
+	if err != nil {
+		return s
+	}
+	u := h.Sum32()
+	return strconv.FormatUint(uint64(u), 16)
 }
