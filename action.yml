@@ -45,7 +45,7 @@ runs:
     # Branch names for publication and pull requests comments
     - id: branch-name
       if: ${{inputs.destroy != 'true'}}
-      uses: tj-actions/branch-names@v7
+      uses: tj-actions/branch-names@v8
 
     # Find the pull request number
     # steps.branch-name.outputs.is_default == 'false' is to ensure that type is a pull request
