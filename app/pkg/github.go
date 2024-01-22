@@ -69,7 +69,11 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 		g.log.Error(err)
 		return err
 	}
-	if resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden {
+	// on same commit, the response code is 422 which doesn't mean it is not authenticated
+	if resp.StatusCode != http.StatusUnauthorized ||
+		resp.StatusCode == http.StatusForbidden ||
+		resp.StatusCode == http.StatusNotFound ||
+		resp.StatusCode >= http.StatusInternalServerError {
 		err := fmt.Errorf("github auth response code is %d", resp.StatusCode)
 		g.log.Error(err)
 		return err
