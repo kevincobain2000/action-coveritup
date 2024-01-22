@@ -70,16 +70,26 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 		return err
 	}
 	// on same commit, the response code is 422 which doesn't mean it is not authenticated
-	if resp.StatusCode != http.StatusUnauthorized ||
+	if resp.StatusCode == http.StatusUnauthorized ||
 		resp.StatusCode == http.StatusForbidden ||
+		resp.StatusCode == http.StatusBadRequest ||
 		resp.StatusCode == http.StatusNotFound ||
 		resp.StatusCode >= http.StatusInternalServerError {
-		err := fmt.Errorf("github auth response code is %d", resp.StatusCode)
+		err := fmt.Errorf("github auth response code is unauthorized %d", resp.StatusCode)
+		g.log.Error(err)
+		return err
+	}
+	// if response is not a redirect
+	if resp.StatusCode == http.StatusMovedPermanently || resp.StatusCode == http.StatusFound {
+		err := fmt.Errorf("github auth response code is redirect %d", resp.StatusCode)
 		g.log.Error(err)
 		return err
 	}
 	g.log.Info("github auth response code is " + resp.Status)
 	err = g.cache.Set(cacheKey, []byte("true"), 60*60*24*7)
+	if err != nil {
+		g.log.Error(err)
+	}
 
 	return err
 }
