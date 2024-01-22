@@ -1,16 +1,16 @@
+before:
+  hooks:
+    - go mod tidy
 builds:
   -
     main: main.go
-    dir: app
-    hooks:
-      pre: go mod tidy
     env:
       - CGO_ENABLED=0
     goos:
       - linux
       - darwin
       # - windows
-      # - freebsd
+      - freebsd
     goarch:
       - amd64
       - arm64

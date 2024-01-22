@@ -46,17 +46,6 @@ jobs:
         with:
           mysql-version: "8.0"
 
-      - name: Build Dist for Embed
-        working-directory: app/frontend
-        run: |
-          npm install
-          npm run build
-      - name: test
-        working-directory: app
-        run: |
-          go mod tidy
-          go test ./... -count=1
-
       - name: NPM Install
         working-directory: app/frontend
         run: |
@@ -67,25 +56,26 @@ jobs:
         with:
           type: npm-install-time
 
-      # - name: NPM Build
-      #   working-directory: app/frontend
-      #   run: |
-      #     START=$SECONDS
-      #     npm run build
-      #     echo SCORE=$(($SECONDS-START)) >> "$GITHUB_ENV"
-      # - uses: kevincobain2000/action-coveritup@v1
-      #   with:
-      #     type: npm-build-time
+      - name: NPM Build
+        working-directory: app/frontend
+        run: |
+          START=$SECONDS
+          npm run build
+          echo SCORE=$(($SECONDS-START)) >> "$GITHUB_ENV"
+      - uses: kevincobain2000/action-coveritup@v1
+        with:
+          type: npm-build-time
 
-      # - name: Go Build
-      #   working-directory: app
-      #   run: |
-      #     START=$SECONDS
-      #     go build -ldflags '-s -w' -o main main.go
-      #     echo SCORE=$(($SECONDS-START)) >> "$GITHUB_ENV"
-      # - uses: kevincobain2000/action-coveritup@v1
-      #   with:
-      #     type: go-build-time
+      - name: Go Build
+        working-directory: app
+        run: |
+          START=$SECONDS
+          go mod tidy
+          go build -ldflags '-s -w' -o main main.go
+          echo SCORE=$(($SECONDS-START)) >> "$GITHUB_ENV"
+      - uses: kevincobain2000/action-coveritup@v1
+        with:
+          type: go-build-time
 
       # - name: Test
       #   working-directory: app
