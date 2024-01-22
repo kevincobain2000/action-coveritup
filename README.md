@@ -37,15 +37,23 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
-![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&theme=dark&output=svg&line=fill)
-![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&theme=dark&output=svg&line=fill)
-![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&theme=dark&output=svg&line=fill)
-![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&theme=dark&output=svg&line=fill)
-![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&theme=dark&output=svg&line=fill)
-![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&theme=dark&output=svg&line=fill)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&theme=dark&output=svg&line=fill)
-![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&theme=dark&output=svg&line=fill)
+# Examples
 
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branch=master&output=svg&theme=dark)
+![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branch=master&output=svg&theme=dark&line=fill)
+![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark)
+![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark)
+![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark)
+![unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark)
+
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branches=all&output=svg)
+![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branches=all&output=svg)
+![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg)
+![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg)
+![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg)
+![unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg)
+
+- [Examples](#examples)
 - [Step 1) Using Action](#step-1-using-action)
 - [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
   - [Scores](#scores)
