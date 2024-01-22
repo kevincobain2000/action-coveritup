@@ -37,6 +37,15 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
+![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&theme=dark)
+![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&theme=dark)
+![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&theme=dark)
+![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&theme=dark)
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&theme=dark)
+![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&theme=dark)
+![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&theme=dark)
+![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&theme=dark)
+
 - [Step 1) Using Action](#step-1-using-action)
 - [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
   - [Scores](#scores)

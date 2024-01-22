@@ -48,6 +48,12 @@ func (e *Chart) GetInstaChartForBranch(req *ChartRequest, t *models.Type) ([]byt
 		yData = append(yData, r.Score)
 		yyData = append(yyData, yData)
 	}
+	if len(xData) == 0 {
+		xData = append(xData, "0")
+	}
+	if len(yyData) == 0 {
+		yyData = append(yyData, []float64{0})
+	}
 
 	return line.Get(xData, yyData, names, cReq)
 }
@@ -69,6 +75,12 @@ func (e *Chart) GetInstaChartForUser(req *ChartRequest, t *models.Type) ([]byte,
 		xData = append(xData, r.CreatedAt)
 		yData = append(yData, r.Score)
 		yyData = append(yyData, yData)
+	}
+	if len(xData) == 0 {
+		xData = append(xData, "0")
+	}
+	if len(yyData) == 0 {
+		yyData = append(yyData, []float64{0})
 	}
 
 	return line.Get(xData, yyData, names, cReq)
