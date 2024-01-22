@@ -18,8 +18,9 @@ type Repo struct {
 func (Repo) TableName() string {
 	return "repos"
 }
-func (r *Repo) Get(orgID int64, name string) (Repo, error) {
+func (r *Repo) Get(orgID int64, name string) (*Repo, error) {
 	var ret Repo
+	name = strings.TrimSpace(name)
 
 	query := `SELECT * FROM repos WHERE org_id = @org_id AND name = @name LIMIT 1`
 	err := db.Db().Raw(
@@ -28,20 +29,29 @@ func (r *Repo) Get(orgID int64, name string) (Repo, error) {
 		sql.Named("name", name)).
 		Scan(&ret).Error
 
-	ret.Name = strings.TrimSpace(ret.Name)
-
-	return ret, err
+	return &ret, err
 }
 
-func (r *Repo) Create(orgID int64, name string) (Repo, error) {
+func (r *Repo) Create(orgID int64, name string) (*Repo, error) {
 	var ret Repo
+	name = strings.TrimSpace(name)
 
-	query := `INSERT INTO repos (org_id, name) VALUES (@org_id, @name)`
+	insertQ := `INSERT INTO repos (org_id, name) VALUES (@org_id, @name)`
 	err := db.Db().Raw(
-		query,
+		insertQ,
 		sql.Named("org_id", orgID),
 		sql.Named("name", name)).
 		Scan(&ret).Error
 
-	return ret, err
+	if err != nil {
+		return &ret, err
+	}
+	selectQ := `SELECT * FROM repos WHERE org_id = @orgID AND name = @name LIMIT 1`
+	err = db.Db().Raw(
+		selectQ,
+		sql.Named("orgID", orgID),
+		sql.Named("name", name)).
+		Scan(&ret).Error
+
+	return &ret, err
 }

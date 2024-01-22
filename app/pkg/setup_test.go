@@ -13,13 +13,13 @@ var embedMigrations embed.FS
 func BeforeEach() {
 	os.Setenv("DATABASE_DSN", "root:@tcp(127.0.0.1:3306)/")
 	os.Setenv("DATABASE_NAME", "coverituptest")
-	db.Migrate("create", embedMigrations)
+	db.Migrate("create", embedMigrations, "migrations")
 
 	db.SetupDatabase()
-	db.Migrate("up", embedMigrations)
+	db.Migrate("up", embedMigrations, "migrations")
 }
 func AfterEach() {
 	os.Setenv("DATABASE_DSN", "root:@tcp(127.0.0.1:3306)/")
 	os.Setenv("DATABASE_NAME", "coverituptest")
-	db.Migrate("drop", embedMigrations)
+	db.Migrate("drop", embedMigrations, "migrations")
 }

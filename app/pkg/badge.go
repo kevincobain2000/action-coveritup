@@ -18,7 +18,7 @@ func NewBadge() *Badge {
 	return &Badge{}
 }
 
-func (b *Badge) Get(req *BadgeRequest, t models.Type) ([]byte, error) {
+func (b *Badge) Get(req *BadgeRequest, t *models.Type) ([]byte, error) {
 
 	if t.Name == models.TYPE_AVERAGE_PR_DAYS {
 		num, err := b.coverageModel.GetAveragePRDays(req.Org, req.Repo)
@@ -61,9 +61,9 @@ func (b *Badge) Get404(req *BadgeRequest) ([]byte, error) {
 	return badge.RenderBytes(req.Branch+"|"+req.Type, "404", "#fff", "white", "red")
 }
 
-func (b *Badge) GetType(name string) (models.Type, error) {
+func (b *Badge) GetType(name string) (*models.Type, error) {
 	if (name == models.TYPE_AVERAGE_PR_DAYS) || (name == models.TYPE_NUMBER_OF_CONTRIBUTORS) {
-		return models.Type{
+		return &models.Type{
 			Name: name,
 		}, nil
 	}

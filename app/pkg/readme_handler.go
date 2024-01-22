@@ -33,9 +33,21 @@ func (h *ReadmeHandler) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)
 	}
 	defaults.SetDefaults(req)
+	msgs, err := ValidateRequest(req)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
+	}
+
 	req.host = c.Request().Host
 	req.scheme = c.Scheme()
-	str, err := h.Readme.Get(req)
+	types, err := h.Readme.GetTypes(req)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	if len(types) == 0 {
+		return c.String(http.StatusNotFound, "no types found for this org/repo")
+	}
+	str, err := h.Readme.Get(req, types)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}

@@ -21,7 +21,7 @@ Disallow: /chart
 Disallow: /badge
 Disallow: /destroy
 Disallow: /pr
-Disallow: /README.md`
+Disallow: /readme`
 )
 
 func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed.FS) {
@@ -48,7 +48,7 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 	e.POST(baseURL+"destroy", NewDestroyHandler().Post, HasAuthorizationHeader())
 
 	// /README.md to return markdown for embedings of badge and charts
-	e.GET(baseURL+"README.md", NewReadmeHandler().Get)
+	e.GET(baseURL+"readme", NewReadmeHandler().Get)
 
 	// /badge to return badges
 	e.GET(baseURL+"badge", NewBadgeHandler().Get)

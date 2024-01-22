@@ -7,6 +7,7 @@ import (
 
 	md "github.com/go-spectest/markdown"
 	"github.com/kevincobain2000/action-coveritup/models"
+	"github.com/sirupsen/logrus"
 )
 
 const ()
@@ -14,10 +15,13 @@ const ()
 type PR struct {
 	coverageModel *models.Coverage
 	typeModel     *models.Type
+	log           *logrus.Logger
 }
 
 func NewPR() *PR {
-	return &PR{}
+	return &PR{
+		log: Logger(),
+	}
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
@@ -84,7 +88,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	readmeLink := fmt.Sprintf("%s://%s/README.md?org=%s&repo=%s&branch=%s",
+	readmeLink := fmt.Sprintf("%s://%s/readme?org=%s&repo=%s&branch=%s",
 		req.scheme, req.host, req.Org, req.Repo, req.Branch)
 	mdText.PlainTextf(md.Link("Add to Readme", readmeLink))
 
@@ -110,6 +114,7 @@ func (p *PR) TypesChangedSince(req *PRRequest) ([]models.Type, error) {
 	for _, t := range types {
 		sbs, err := p.coverageModel.GetLatestBranchScoresWithPR(req.Org, req.Repo, req.Branch, t.Name, 2)
 		if err != nil {
+			p.log.Error(err)
 			typesChanged = append(typesChanged, t)
 			continue
 		}

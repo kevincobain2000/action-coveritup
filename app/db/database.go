@@ -66,7 +66,7 @@ func configureSQL(sqlDB *sql.DB) {
 	sqlDB.SetConnMaxLifetime(time.Hour * time.Duration(1))
 }
 
-func Migrate(command string, embedMigrations embed.FS) error {
+func Migrate(command string, embedMigrations embed.FS, dir string) error {
 	if command == "create" {
 		create()
 		return nil
@@ -93,8 +93,10 @@ func Migrate(command string, embedMigrations embed.FS) error {
 	if err != nil {
 		panic(err)
 	}
+
 	goose.SetBaseFS(embedMigrations)
-	err = goose.RunContext(ctx, command, driver, "migrations")
+
+	err = goose.RunContext(ctx, command, driver, dir)
 	if err != nil {
 		panic(err)
 	}

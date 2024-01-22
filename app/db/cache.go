@@ -26,13 +26,13 @@ func syncCache() *freecache.Cache {
 	}
 	cacheOnce.Do(func() {
 		cacheSize := 32 * 1024 * 1024 // 32 MB
-		cache := freecache.NewCache(cacheSize)
+		cache = freecache.NewCache(cacheSize)
 		configureCache(cache)
 	})
 
 	return cache
 }
 
-func configureCache(fc *freecache.Cache) {
-
+func configureCache(fc *freecache.Cache) *freecache.Cache {
+	return fc
 }

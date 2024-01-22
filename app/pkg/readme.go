@@ -16,11 +16,14 @@ func NewReadme() *Readme {
 	return &Readme{}
 }
 
-func (r *Readme) Get(req *ReadmeRequest) (string, error) {
+func (r *Readme) GetTypes(req *ReadmeRequest) ([]models.Type, error) {
 	types, err := r.typeModel.GetTypesFor(req.Org, req.Repo)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
+	return types, nil
+}
+func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 	mdText := md.NewMarkdown(os.Stdout)
 
 	mdText.H1("CoverItUp Report").

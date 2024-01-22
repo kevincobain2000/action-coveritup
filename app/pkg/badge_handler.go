@@ -22,8 +22,6 @@ type BadgeRequest struct {
 	Repo   string `json:"repo" query:"repo" validate:"required,ascii,excludes=/" message:"repo is required"`
 	Branch string `json:"branch" query:"branch" validate:"required,ascii,excludes=/" message:"ascii branch is required"`
 	Type   string `json:"type" query:"type" validate:"ascii,required,excludes=/" message:"ascii type is required"`
-	Style  string `json:"style" query:"style" default:"badge" validate:"oneof=badge chart table" message:"style must be badge or chart"`
-	Color  string `json:"color" query:"color" default:"blue" validate:"oneof=blue red green orange" message:"color must be blue, red, green or orange"`
 }
 
 func (h *BadgeHandler) Get(c echo.Context) error {

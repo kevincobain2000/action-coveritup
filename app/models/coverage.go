@@ -165,7 +165,7 @@ func (c *Coverage) GetLatestBranchScore(orgName string, repoName string, branchN
 	AND
 		t.name = @typeName
 	ORDER BY
-		c.created_at DESC
+		c.created_at DESC, c.id DESC
 	LIMIT 1;
 	`
 	err := db.Db().Raw(
@@ -221,7 +221,7 @@ func (c *Coverage) GetLatestBranchScoresWithPR(orgName string, repoName string, 
 	AND
 		t.name = @typeName
 	ORDER BY
-		c.created_at DESC
+		c.created_at DESC, c.id DESC
 	LIMIT @limit;
 	`
 	err := db.Db().Raw(
@@ -353,7 +353,7 @@ func (c *Coverage) GetLatestUserScore(orgName string, repoName string, userName 
 	AND
 		t.name = @typeName
 	ORDER BY
-		c.created_at DESC
+		c.created_at DESC, c.id DESC
 	LIMIT 1;
 	`
 	err := db.Db().Raw(
@@ -519,7 +519,10 @@ func (c *Coverage) Create(
 	score float32) (*Coverage, error) {
 	var ret Coverage
 
-	query := `INSERT INTO
+	branchName = strings.TrimSpace(branchName)
+	commit = strings.TrimSpace(commit)
+
+	insertQ := `INSERT INTO
 		coverages (
 			org_id,
 			repo_id,
@@ -541,7 +544,7 @@ func (c *Coverage) Create(
 			@score
 	)`
 	err := db.Db().Raw(
-		query,
+		insertQ,
 		sql.Named("org_id", orgID),
 		sql.Named("repo_id", repoID),
 		sql.Named("user_id", userID),
@@ -552,26 +555,45 @@ func (c *Coverage) Create(
 		sql.Named("score", score)).
 		Scan(&ret).Error
 
+	if err != nil {
+		return &ret, err
+	}
+
 	return &ret, err
 }
 func (c *Coverage) SoftDeleteCoverages(orgID int64, repoID int64, branches string) error {
+	// Split the branches string into a slice
+	branchList := strings.Split(branches, " ")
+
+	// Build the NOT IN clause with placeholders
+	placeholders := make([]string, len(branchList))
+	args := make([]interface{}, len(branchList)+2)
+
+	// Set the orgID and repoID at the beginning of the args slice
+	args[0] = orgID
+	args[1] = repoID
+
+	// Assign placeholders and arguments for branch names
+	for i, branch := range branchList {
+		placeholders[i] = "?" // Use "?" as the placeholder for each branch
+		args[i+2] = branch    // +2 to account for orgID and repoID at the beginning
+	}
+	notInClause := strings.Join(placeholders, ", ")
+
 	query := `
 	UPDATE
 		coverages
 	SET
 		deleted_at = NOW()
 	WHERE
-		org_id = @org_id
+		org_id = ?
 	AND
-		repo_id = @repo_id
+		repo_id = ?
 	AND
-		branch_name IN (@branches)
+		branch_name NOT IN (` + notInClause + `)
 	`
-	err := db.Db().Exec(
-		query,
-		sql.Named("org_id", orgID),
-		sql.Named("repo_id", repoID),
-		sql.Named("branches", branches)).
-		Error
+
+	// Execute the query
+	err := db.Db().Exec(query, args...).Error
 	return err
 }

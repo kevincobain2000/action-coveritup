@@ -22,8 +22,9 @@ const (
 	TYPE_NUMBER_OF_CONTRIBUTORS = "number-of-contributors"
 )
 
-func (t *Type) Get(name string) (Type, error) {
+func (t *Type) Get(name string) (*Type, error) {
 	var ret Type
+	name = strings.TrimSpace(name)
 
 	query := `SELECT * FROM types WHERE name = @name LIMIT 1`
 	err := db.Db().Raw(
@@ -34,19 +35,30 @@ func (t *Type) Get(name string) (Type, error) {
 	ret.Metric = strings.TrimSpace(ret.Metric)
 	ret.Name = strings.TrimSpace(ret.Name)
 
-	return ret, err
+	return &ret, err
 }
 
-func (t *Type) Create(name string, metric string) (Type, error) {
+func (t *Type) Create(name string, metric string) (*Type, error) {
 	var ret Type
-	query := `INSERT INTO types (name, metric) VALUES (@name, @metric)`
+	name = strings.TrimSpace(name)
+	metric = strings.TrimSpace(metric)
+	insertQ := `INSERT INTO types (name, metric) VALUES (@name, @metric)`
 	err := db.Db().Raw(
-		query,
+		insertQ,
 		sql.Named("name", name),
 		sql.Named("metric", metric)).
 		Scan(&ret).Error
+	if err != nil {
+		return &ret, err
+	}
 
-	return ret, err
+	selectQ := `SELECT * FROM types WHERE name = @name LIMIT 1`
+	err = db.Db().Raw(
+		selectQ,
+		sql.Named("name", name)).
+		Scan(&ret).Error
+
+	return &ret, err
 }
 
 func (t *Type) GetTypesFor(orgName string, repoName string) ([]Type, error) {

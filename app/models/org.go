@@ -18,7 +18,7 @@ func (Org) TableName() string {
 	return "orgs"
 }
 
-func (o *Org) Get(name string) (Org, error) {
+func (o *Org) Get(name string) (*Org, error) {
 	var ret Org
 
 	query := `SELECT * FROM orgs WHERE name = @name LIMIT 1`
@@ -29,17 +29,28 @@ func (o *Org) Get(name string) (Org, error) {
 
 	ret.Name = strings.TrimSpace(ret.Name)
 
-	return ret, err
+	return &ret, err
 }
 
-func (o *Org) Create(name string) (Org, error) {
+func (o *Org) Create(name string) (*Org, error) {
 	var ret Org
+	name = strings.TrimSpace(name)
 
-	query := `INSERT INTO orgs (name) VALUES (@name)`
+	insertQ := `INSERT INTO orgs (name) VALUES (@name)`
 	err := db.Db().Raw(
-		query,
+		insertQ,
 		sql.Named("name", name)).
 		Scan(&ret).Error
 
-	return ret, err
+	if err != nil {
+		return &ret, err
+	}
+
+	selectQ := `SELECT * FROM orgs WHERE name = @name LIMIT 1`
+	err = db.Db().Raw(
+		selectQ,
+		sql.Named("name", name)).
+		Scan(&ret).Error
+
+	return &ret, err
 }

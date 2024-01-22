@@ -43,7 +43,7 @@ func main() {
 	db.SetupDatabase()
 
 	if f.migrate != "" {
-		err := db.Migrate(f.migrate, embedMigrations)
+		err := db.Migrate(f.migrate, embedMigrations, "pkg/migrations")
 		if err != nil {
 			pkg.Logger().Error(err)
 		}
@@ -55,7 +55,7 @@ func main() {
 
 func SetupFlags() {
 	flag.StringVar(&f.host, "host", "localhost", "host to serve")
-	flag.StringVar(&f.port, "port", "3002", "port to serve")
+	flag.StringVar(&f.port, "port", "3003", "port to serve")
 	flag.StringVar(&f.baseUrl, "base-url", "/", "base url with slash")
 	flag.StringVar(&f.databaseDSN, "db-dsn", "root:@tcp(127.0.0.1:3306)/", "databaseURL url")
 	flag.StringVar(&f.databaseName, "db-name", "coveritup", "database name")
@@ -63,19 +63,19 @@ func SetupFlags() {
 	flag.StringVar(&f.githubAPI, "github-api", "https://api.github.com", "github api url")
 	flag.Parse()
 
-	if f.databaseDSN != "" {
+	if f.databaseDSN != "" && os.Getenv("DATABASE_DSN") == "" {
 		err := os.Setenv("DATABASE_DSN", f.databaseDSN)
 		if err != nil {
 			pkg.Logger().Error(err)
 		}
 	}
-	if f.databaseName != "" {
+	if f.databaseName != "" && os.Getenv("DATABASE_NAME") == "" {
 		err := os.Setenv("DATABASE_NAME", f.databaseName)
 		if err != nil {
 			pkg.Logger().Error(err)
 		}
 	}
-	if f.githubAPI != "" {
+	if f.githubAPI != "" && os.Getenv("GITHUB_API") == "" {
 		err := os.Setenv("GITHUB_API", f.githubAPI)
 		if err != nil {
 			pkg.Logger().Error(err)

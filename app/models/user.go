@@ -22,7 +22,7 @@ func (User) TableName() string {
 	return "users"
 }
 
-func (u *User) Get(name string) (User, error) {
+func (u *User) Get(name string) (*User, error) {
 	var ret User
 
 	query := `SELECT * FROM users WHERE name = @name LIMIT 1`
@@ -31,19 +31,28 @@ func (u *User) Get(name string) (User, error) {
 		sql.Named("name", name)).
 		Scan(&ret).Error
 
-	ret.Name = strings.TrimSpace(ret.Name)
-
-	return ret, err
+	return &ret, err
 }
 
-func (u *User) Create(name string) (User, error) {
+func (u *User) Create(name string) (*User, error) {
 	var ret User
+	name = strings.TrimSpace(name)
 
-	query := `INSERT INTO users (name) VALUES (@name)`
+	insertQ := `INSERT INTO users (name) VALUES (@name)`
 	err := db.Db().Raw(
-		query,
+		insertQ,
 		sql.Named("name", name)).
 		Scan(&ret).Error
 
-	return ret, err
+	if err != nil {
+		return &ret, err
+	}
+
+	selectQ := `SELECT * FROM users WHERE name = @name LIMIT 1`
+	err = db.Db().Raw(
+		selectQ,
+		sql.Named("name", name)).
+		Scan(&ret).Error
+
+	return &ret, err
 }

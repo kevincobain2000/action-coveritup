@@ -25,11 +25,11 @@ func NewChart() *Chart {
 	}
 }
 
-func (e *Chart) GetType(name string) (models.Type, error) {
+func (e *Chart) GetType(name string) (*models.Type, error) {
 	return e.typeModel.Get(name)
 }
 
-func (e *Chart) GetInstaChartForBranch(req *ChartRequest, t models.Type) ([]byte, error) {
+func (e *Chart) GetInstaChartForBranch(req *ChartRequest, t *models.Type) ([]byte, error) {
 	cReq := e.makeChartRequest(req, t)
 	line := instachart.NewLineChart()
 	xData := []string{}
@@ -51,7 +51,7 @@ func (e *Chart) GetInstaChartForBranch(req *ChartRequest, t models.Type) ([]byte
 
 	return line.Get(xData, yyData, names, cReq)
 }
-func (e *Chart) GetInstaChartForUser(req *ChartRequest, t models.Type) ([]byte, error) {
+func (e *Chart) GetInstaChartForUser(req *ChartRequest, t *models.Type) ([]byte, error) {
 	cReq := e.makeChartRequest(req, t)
 	line := instachart.NewLineChart()
 	xData := []string{}
@@ -73,7 +73,7 @@ func (e *Chart) GetInstaChartForUser(req *ChartRequest, t models.Type) ([]byte, 
 
 	return line.Get(xData, yyData, names, cReq)
 }
-func (e *Chart) GetInstaChartForBranches(req *ChartRequest, t models.Type) ([]byte, error) {
+func (e *Chart) GetInstaChartForBranches(req *ChartRequest, t *models.Type) ([]byte, error) {
 	cReq := e.makeChartRequest(req, t)
 	bar := instachart.NewBarChart()
 
@@ -109,7 +109,7 @@ func (e *Chart) GetInstaChartForBranches(req *ChartRequest, t models.Type) ([]by
 
 	return bar.GetStacked(xData, yyData, zzData, names, cReq)
 }
-func (e *Chart) GetInstaChartForUsers(req *ChartRequest, t models.Type) ([]byte, error) {
+func (e *Chart) GetInstaChartForUsers(req *ChartRequest, t *models.Type) ([]byte, error) {
 	cReq := e.makeChartRequest(req, t)
 	bar := instachart.NewBarChart()
 
@@ -146,7 +146,7 @@ func (e *Chart) GetInstaChartForUsers(req *ChartRequest, t models.Type) ([]byte,
 	return bar.GetStacked(xData, yyData, zzData, names, cReq)
 }
 
-func (e *Chart) makeChartRequest(req *ChartRequest, t models.Type) *instachart.ChartRequest {
+func (e *Chart) makeChartRequest(req *ChartRequest, t *models.Type) *instachart.ChartRequest {
 	cReq := &instachart.ChartRequest{
 		Output:        req.Output,
 		Metric:        t.Metric,

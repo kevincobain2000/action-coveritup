@@ -62,6 +62,7 @@ func (c *Upload) Post(req *UploadRequest) (*models.Coverage, error) {
 		}
 	}
 
+	req.Branches += " " + req.Branch
 	err = c.coverage.SoftDeleteCoverages(o.ID, r.ID, req.Branches)
 	if err != nil {
 		return nil, err
