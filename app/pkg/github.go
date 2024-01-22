@@ -69,11 +69,12 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 		g.log.Error(err)
 		return err
 	}
-	if resp.StatusCode < 200 || resp.StatusCode > 299 {
+	if resp.StatusCode != http.StatusUnauthorized {
 		err := fmt.Errorf("github auth response code is %d", resp.StatusCode)
 		g.log.Error(err)
 		return err
 	}
+	g.log.Info("github auth response code is " + resp.Status)
 	err = g.cache.Set(cacheKey, []byte("true"), 60*60*24*7)
 
 	return err
