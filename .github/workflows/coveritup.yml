@@ -6,6 +6,8 @@ on:
       - '**/*.sum'
       - '**/*.yml'
   push:
+    branches:
+      - '**'
     paths:
       - '**/*.go'
       - '**/*.mod'
