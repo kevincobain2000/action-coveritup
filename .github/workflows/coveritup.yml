@@ -95,6 +95,7 @@ jobs:
           go tool cover -html=coverage.out -o coverage.html
           gocov convert coverage.out | gocov-xml > coverage.xml
       - name: Coveritup
+        working-directory: app
         run: |
           curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
           echo SCORE=`./cover-totalizer coverage.xml` >> "$GITHUB_ENV"

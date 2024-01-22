@@ -14,6 +14,11 @@
   Action for uploading Code Metrics to <a href="https://coveritup.app">coveritup.app</a>
 </p>
 
+![npm-install-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master)
+![npm-build-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master)
+![go-build-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master)
+![go-test-run-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master)
+
 **Quick Setup:** Quickly set up code coverage or other useful metrics on your project.
 
 **Self-Hosted:** Also available. Host your code coverage server.
