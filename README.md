@@ -17,7 +17,13 @@
 ![npm-install-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master)
 ![npm-build-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master)
 ![go-build-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master)
+
+![coverage](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master)
+![go-binary-size](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master)
+
 ![go-test-run-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master)
+![go-mod-dependencies](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master)
+![go-sec-issues](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master)
 
 **Quick Setup:** Quickly set up code coverage or other useful metrics on your project.
 
