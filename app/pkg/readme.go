@@ -32,8 +32,8 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 		PlainText("")
 
 	for _, t := range types {
-		u := fmt.Sprintf("%s://%s/badge?org=%s&repo=%s&type=%s&branch=%s",
-			req.scheme, req.host, req.Org, req.Repo, t.Name, req.Branch)
+		u := fmt.Sprintf("%s://%s%s/badge?org=%s&repo=%s&type=%s&branch=%s",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.Branch)
 		mdText.PlainTextf(md.Image(t.Name, u))
 	}
 
@@ -48,8 +48,8 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 			PlainText("")
 
 		for _, t := range types {
-			u := fmt.Sprintf("%s://%s/chart?org=%s&repo=%s&type=%s&branch=%s",
-				req.scheme, req.host, req.Org, req.Repo, t.Name, req.Branch)
+			u := fmt.Sprintf("%s://%s%s/chart?org=%s&repo=%s&type=%s&branch=%s",
+				req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.Branch)
 			mdText.PlainTextf(md.Image(t.Name, u))
 		}
 		mdText.PlainText("")
@@ -72,8 +72,8 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 			PlainText("")
 
 		for _, t := range types {
-			u := fmt.Sprintf("%s://%s/chart?org=%s&repo=%s&type=%s&user=%s",
-				req.scheme, req.host, req.Org, req.Repo, t.Name, req.User)
+			u := fmt.Sprintf("%s://%s%s/chart?org=%s&repo=%s&type=%s&user=%s",
+				req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.User)
 			mdText.PlainTextf(md.Image(t.Name, u))
 		}
 
@@ -83,8 +83,8 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 	mdText.H3("All").
 		PlainText("")
 	for _, t := range types {
-		u := fmt.Sprintf("%s://%s/chart?org=%s&repo=%s&type=%s&users=all",
-			req.scheme, req.host, req.Org, req.Repo, t.Name)
+		u := fmt.Sprintf("%s://%s%s/chart?org=%s&repo=%s&type=%s&users=all",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name)
 		mdText.PlainTextf(md.Image(t.Name, u))
 	}
 	return mdText.String(), nil
