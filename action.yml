@@ -52,9 +52,8 @@ runs:
       uses: tj-actions/branch-names@v8
 
     # Find the pull request number
-    # steps.branch-name.outputs.is_default == 'false' is to ensure that type is a pull request
     - id: find-pull-request
-      if: ${{inputs.destroy != 'true' && steps.branch-name.outputs.is_default == 'false' && github.event_name == 'pull_request'}}
+      if: ${{inputs.destroy != 'true' && github.event_name == 'pull_request'}}
       uses: jwalton/gh-find-current-pr@v1
       with:
         state: open
@@ -100,7 +99,7 @@ runs:
 
     # Prepare comment on PR if it is a pull req
     - name: Prepare comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && steps.branch-name.outputs.is_default == 'false' && steps.branch-name.outputs.base_ref_branch != ''}}
+      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != ''}}
       shell: bash
       run: |
         response=$(curl -sLk \
