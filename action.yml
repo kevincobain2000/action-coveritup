@@ -19,6 +19,9 @@ inputs:
   destroy:
     description: "Destroy all"
     default: 'false'
+  http_proxy:
+    description: "HTTP Proxy if any"
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -78,6 +81,7 @@ runs:
       run: |
         curl -sLk --fail \
           -X POST \
+          -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
           -H 'Authorization: ${{ github.token }}' \
           -d '{
@@ -101,6 +105,7 @@ runs:
       run: |
         response=$(curl -sLk \
           -X GET \
+          -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
           -w "%{http_code}" \
           "${{inputs.host}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&type=${{ inputs.type }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
@@ -128,6 +133,7 @@ runs:
       run: |
         curl -sLk --fail \
           -X POST \
+          -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
           -H 'Authorization: ${{ github.token }}' \
           -d '{
