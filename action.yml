@@ -26,13 +26,14 @@ runs:
     ###              Start                ###
     ### PREPARE ENVIRONMENT and VARIABLES ###
     - uses: credfeto/action-repo-visibility@v1.2.0
+      if: ${{github.api_url == 'https://api.github.com'}}
       id: visibility
 
     - name: Do not allow private repos, unless explicitly specified
       shell: bash
-      if: ${{ steps.visibility.outputs.is_private == 'true' }}
+      if: ${{ github.api_url == 'https://api.github.com' && steps.visibility.outputs.is_private == 'true' }}
       run: |
-        echo "Private repos are not supported"
+        echo "Private repos are not supported for Github"
         exit 1
 
     - name: Donot allow self-hosted, if user has forgotten to set the host
