@@ -20,7 +20,7 @@ func NewReadmeHandler() *ReadmeHandler {
 type ReadmeRequest struct {
 	Org    string `json:"org"  query:"org" validate:"required,ascii,excludes=/" message:"org is required"`
 	Repo   string `json:"repo" query:"repo" validate:"required,ascii,excludes=/" message:"repo is required"`
-	Branch string `json:"branch" query:"branch" validate:"ascii,excludes=/" message:"ascii branch is required"`
+	Branch string `json:"branch" query:"branch" validate:"ascii" message:"ascii branch is required"`
 	User   string `json:"user" query:"user" validate:"ascii,excludes=/" message:"ascii user is required"`
 
 	host   string

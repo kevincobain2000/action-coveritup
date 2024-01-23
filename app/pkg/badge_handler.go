@@ -20,7 +20,7 @@ func NewBadgeHandler() *BadgeHandler {
 type BadgeRequest struct {
 	Org    string `json:"org"  query:"org" validate:"required,ascii,excludes=/" message:"org is required"`
 	Repo   string `json:"repo" query:"repo" validate:"required,ascii,excludes=/" message:"repo is required"`
-	Branch string `json:"branch" query:"branch" validate:"required,ascii,excludes=/" message:"ascii branch is required"`
+	Branch string `json:"branch" query:"branch" validate:"required,ascii" message:"ascii branch is required"`
 	Type   string `json:"type" query:"type" validate:"ascii,required,excludes=/" message:"ascii type is required"`
 }
 
