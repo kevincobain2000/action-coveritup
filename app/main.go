@@ -81,4 +81,10 @@ func SetupFlags() {
 			pkg.Logger().Error(err)
 		}
 	}
+	if f.baseUrl != "" && os.Getenv("BASE_URL") == "" {
+		err := os.Setenv("BASE_URL", f.baseUrl)
+		if err != nil {
+			pkg.Logger().Error(err)
+		}
+	}
 }

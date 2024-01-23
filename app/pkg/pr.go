@@ -91,8 +91,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	mdText.PlainText(images)
 
 	mdText.PlainText("")
-	readmeLink := fmt.Sprintf("%s://%s/readme?org=%s&repo=%s&branch=%s",
-		req.scheme, req.host, req.Org, req.Repo, req.Branch)
+	readmeLink := fmt.Sprintf("%s://%s%s/readme?org=%s&repo=%s&branch=%s",
+		req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, req.Branch)
 	mdText.PlainTextf(md.Link("Add Badges and Charts to Readme", readmeLink))
 
 	return mdText.String(), nil
