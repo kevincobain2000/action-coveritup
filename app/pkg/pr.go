@@ -100,10 +100,10 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 
 func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 	if *baseScore > *branchScore {
-		return "+"
+		return "-"
 	}
 	if *baseScore < *branchScore {
-		return "-"
+		return "+"
 	}
 	return ""
 }
