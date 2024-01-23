@@ -92,7 +92,7 @@ runs:
             "score": "${{ env.SCORE }}",
             "user": "${{ github.actor }}",
             "branch": "${{ steps.branch-name.outputs.current_branch }}",
-            "pr": "${{ steps.find-pull-request.outputs.number }}",
+            "pr_num": "${{ steps.find-pull-request.outputs.number }}",
             "branches": "${{ env.CIU_ACTIVE_BRANCHES }}"
           }' \
           "${{inputs.host}}/upload"
