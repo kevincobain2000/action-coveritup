@@ -73,7 +73,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		data.Y = append(data.Y, y)
 		data.Z = append(data.Z, y)
 
-		u := fmt.Sprintf("%s://%s%s/bar?title=%s&metric=%s&width=%s&height=%s&output=%s&theme=%s",
+		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&output=%s&theme=%s",
 			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", "dark")
 
 		jsonData, err := json.Marshal(data)
@@ -91,7 +91,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	mdText.PlainText(images)
 
 	mdText.PlainText("")
-	readmeLink := fmt.Sprintf("%s://%s%s/readme?org=%s&repo=%s&branch=%s",
+	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
 		req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, req.Branch)
 	mdText.PlainTextf(md.Link("Add Badges and Charts to Readme", readmeLink))
 
