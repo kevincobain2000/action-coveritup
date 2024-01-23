@@ -42,18 +42,15 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 		PlainText("")
 	mdText.H3("Branch").
 		PlainText("")
-	if req.Branch != "" {
+	mdText.H4("Single").
+		PlainText("")
 
-		mdText.H4("Single").
-			PlainText("")
-
-		for _, t := range types {
-			u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&branch=%s",
-				req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.Branch)
-			mdText.PlainTextf(md.Image(t.Name, u))
-		}
-		mdText.PlainText("")
+	for _, t := range types {
+		u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&branch=%s",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.Branch)
+		mdText.PlainTextf(md.Image(t.Name, u))
 	}
+	mdText.PlainText("")
 
 	mdText.H4("All").PlainText("")
 	for _, t := range types {
@@ -65,20 +62,16 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 
 	mdText.H3("User").PlainText("")
 
-	if req.User != "" {
-		mdText.H3("User").
-			PlainText("")
-		mdText.H4("Single").
-			PlainText("")
+	mdText.H4("Single").
+		PlainText("")
 
-		for _, t := range types {
-			u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&user=%s",
-				req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.User)
-			mdText.PlainTextf(md.Image(t.Name, u))
-		}
-
-		mdText.PlainText("")
+	for _, t := range types {
+		u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&user=%s",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.User)
+		mdText.PlainTextf(md.Image(t.Name, u))
 	}
+
+	mdText.PlainText("")
 
 	mdText.H3("All").
 		PlainText("")
