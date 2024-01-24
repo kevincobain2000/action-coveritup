@@ -20,7 +20,7 @@ require (
 	gorm.io/gorm v1.25.5
 )
 
-replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge v0.0.0-20240117034316-e85a7d8fbe8c
+replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge v0.0.0-20240124060355-fd6eab96e50a
 
 require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
