@@ -1,5 +1,5 @@
 ---
-import piechart from "@assets/piechart.svg?raw";
+
 ---
 
 <!--Main-->
@@ -11,21 +11,22 @@ import piechart from "@assets/piechart.svg?raw";
     <h1
       class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
     >
-    Piece by Piece
+    Comes with
       <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
-        Pie Charts
+        Shield Badges
       </span>
     </h1>
-    <Fragment set:html={piechart} />
-    <span>A Slice of Insight: Revealing the Whole Picture, Piece by Piece.</span>
+    <span>
+        Create your own shield badges with custom text and colors.
+    </span>
     <p
       class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
     >
     </p>
-    <img
-      class="mx-auto w-full md:w-4/5 transform transition duration-700 ease-in-out"
-      src="https://instachart.coveritup.app/pie?title=Engineer+Holidays&subtitle=Sleeping+Hours&height=620&data={%20%22names%22:%20[%22Monday%22,%20%22Friday%22,%20%22Saturday%22,%20%22Sunday%22],%20%22values%22:%20[4,%206%20,7,%209]%20}&theme=dark"
-    />
+    <img alt="badge" src="https://coveritup.app/badge?org=kevincobain2000&repo=gobrew&type=coverage&branch=master" /> <br>
+    <img alt="badge" src="https://coveritup.app/badge?org=kevincobain2000&repo=gobrew&type=build-time&branch=master" /> <br>
+    <img alt="badge" src="https://coveritup.app/badge?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master" /> <br>
+    <img alt="badge" src="https://coveritup.app/badge?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master" />
   </div>
 
   <!--Left Col-->
@@ -35,7 +36,9 @@ import piechart from "@assets/piechart.svg?raw";
     <p
       class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
     >
-      Apply your own customization and create bar charts as images.
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+            Embeddable Badges for README
+        </span>
     </p>
 
     <div
@@ -45,12 +48,10 @@ import piechart from "@assets/piechart.svg?raw";
         <label class="block text-blue-300 py-2 font-bold mb-2" for="code">
           <pre
             class="">{`
-https://instachart.coveritup.app/pie?title=Pie
-&subtitle=Sleeping+Hours
-&data={
-    "names": ["Monday", "Friday", "Saturday", "Sunday"],
-    "values": [4, 6 ,7, 9]
-}`}</pre>
+![badge](https://coveritup.app/chart?org=kevincobain2000
+&repo=gobrew
+&type=coverage
+&branch=master)`}</pre>
         </label>
       </div>
     </div>

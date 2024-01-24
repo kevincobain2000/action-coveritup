@@ -13,11 +13,11 @@ import linechart from "@assets/linechart.svg?raw";
     <h1
       class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
     >
-      Beautiful
+      Code
       <span
         class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
       >
-        Line Charts
+        Coverages
       </span>
     </h1>
     <p
@@ -25,8 +25,7 @@ import linechart from "@assets/linechart.svg?raw";
     >
       <Fragment set:html={linechart} />
 
-       Your go-to online tool for effortlessly creating, customizing, and sharing
-      professional charts as images.
+       Record code coverages and view trends over time.
     </p>
 
     <div
@@ -36,13 +35,13 @@ import linechart from "@assets/linechart.svg?raw";
         <label class="block text-blue-300 py-2 font-bold mb-2" for="code">
           <pre
             class="">{`
-https://instachart.coveritup.app/line?title=Line
-&subtitle=Sleeping+Hours
-&data={
-    "x": ["Mon","Tue","Wed"],
-    "y": [[4,8,7], [10,20,24]],
-    "names": ["Sleeping", "Awake"]
-}`}</pre>
+- name: Code Coverage
+    run: |
+    curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
+    echo SCORE=\`./cover-totalizer coverage.xml\` >> "$GITHUB_ENV"
+- uses: kevincobain2000/action-coveritup@v1
+    with:
+    type: coverage`}</pre>
         </label>
       </div>
     </div>
@@ -52,7 +51,7 @@ https://instachart.coveritup.app/line?title=Line
   <div class="w-full xl:w-3/5 pt-5 overflow-hidden">
     <img
       class="mx-auto w-full md:w-4/5"
-      src="https://instachart.coveritup.app/line?title=Hackathon&subtitle=Sleeping+Hours&width=760&height=560&data={%20%22x%22:%20[%22Mon%22,%22Tue%22,%22Wed%22],%20%22y%22:%20[[4,8,7],%20[10,20,24]],%20%22names%22:%20[%22Sleeping%22,%20%22Awake%22]%20}&theme=dark"
+      src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branch=master&theme=dark&line=fill&width=760&height=560"
     />
   </div>
 </div>

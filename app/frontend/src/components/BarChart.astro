@@ -11,7 +11,7 @@ import barchart from "@assets/barchart.svg?raw";
     <h1
       class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
     >
-      Amazing
+      Embed
       <span
         class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
       >
@@ -21,14 +21,16 @@ import barchart from "@assets/barchart.svg?raw";
     <p class="w-20">
       <Fragment set:html={barchart} />
     </p>
-    <span>Calculate Max and Average values automatically.</span>
+    <span>
+        Embed metrics into Github's README, Notion, Blogs, and more.
+    </span>
     <p
       class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
     >
     </p>
     <img
       class="mx-auto w-full md:w-4/5 transform transition duration-700 ease-in-out"
-      src="https://instachart.coveritup.app/bar?title=Engineer&width=860&subtitle=Sleeping+hours&height=520&data={%20%22x%22:%20[%22Monday%22,%20%22Friday%22,%20%22Sunday%22],%20%22y%22:%20[[8,12,14],%20[16,12,10]],%20%22names%22:%20[%22Sleeping%22,%20%22Awake%22]%20}&theme=dark"
+      src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg&theme=dark&width=760&height=560"
     />
   </div>
 
@@ -39,7 +41,7 @@ import barchart from "@assets/barchart.svg?raw";
     <p
       class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
     >
-      Apply your own customization and create bar charts as images.
+      Apply your own customization and create bar charts as images for your metrics.
     </p>
 
     <div
@@ -48,14 +50,11 @@ import barchart from "@assets/barchart.svg?raw";
       <div class="mb-4">
         <label class="block text-blue-300 py-2 font-bold mb-2" for="code">
           <pre
-            class="">{`
-https://instachart.coveritup.app/bar?title=Bar
-&subtitle=Sleeping+hours
-&data={
-    "x": ["Monday", "Friday", "Sunday"],
-    "y": [[8,12,14], [16,12,10]],
-    "names": ["Sleeping", "Awake"]
-}`}</pre>
+            class="">{`https://coveritup.app/chart?org=kevincobain2000
+&repo=gobrew
+&type=unit-test-run-time
+&branches=all
+&output=svg`}</pre>
         </label>
       </div>
     </div>
