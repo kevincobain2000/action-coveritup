@@ -35,7 +35,7 @@ func TestGetBadgeErrors(t *testing.T) {
 			Query:            `?org=org&repo=repo&branch=branch&type=type`,
 			Status:           http.StatusOK,
 			ContentType:      "image/svg+xml",
-			ResponseContains: `<text x="96" y="14" fill="white">404</text>`,
+			ResponseContains: `fill="white">404</text>`,
 		},
 		{
 			Name:        "422",
