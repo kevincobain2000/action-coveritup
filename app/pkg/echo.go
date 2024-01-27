@@ -15,11 +15,15 @@ import (
 )
 
 func NewEcho(baseURL string, publicDir embed.FS, favicon embed.FS) *echo.Echo {
-	viewer.SetConfiguration(viewer.WithTheme(viewer.ThemeWesteros), viewer.WithAddr("localhost:8082"))
-	mgr := statsview.New()
-	_ = mgr
-	// go mgr.Start()
-	// mgr.Stop()
+	if os.Getenv("PPROF_HOST") != "" && os.Getenv("PPROF_PORT") != "" {
+		Logger().Info("pprof enabled and listening on: ", os.Getenv("PPROF_HOST")+":"+os.Getenv("PPROF_PORT"))
+		addr := os.Getenv("PPROF_HOST") + ":" + os.Getenv("PPROF_PORT")
+		viewer.SetConfiguration(viewer.WithTheme(viewer.ThemeWesteros), viewer.WithAddr(addr))
+		mgr := statsview.New()
+		_ = mgr
+		go mgr.Start()
+		mgr.Stop()
+	}
 
 	e := echo.New()
 

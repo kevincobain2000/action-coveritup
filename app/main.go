@@ -27,6 +27,8 @@ type Flags struct {
 	databaseName string
 	migrate      string
 	githubAPI    string
+	pprofHost    string
+	pprofPort    string
 }
 
 var f Flags
@@ -61,6 +63,8 @@ func SetupFlags() {
 	flag.StringVar(&f.databaseName, "db-name", "coveritup", "database name")
 	flag.StringVar(&f.migrate, "migrate", "", "migrate up, down or redo")
 	flag.StringVar(&f.githubAPI, "github-api", "https://api.github.com", "github api url")
+	flag.StringVar(&f.pprofHost, "pprof-host", "", "pprof host")
+	flag.StringVar(&f.pprofPort, "pprof-port", "", "pprof port")
 	flag.Parse()
 
 	if f.databaseDSN != "" && os.Getenv("DATABASE_DSN") == "" {
@@ -83,6 +87,19 @@ func SetupFlags() {
 	}
 	if f.baseUrl != "" && os.Getenv("BASE_URL") == "" {
 		err := os.Setenv("BASE_URL", f.baseUrl)
+		if err != nil {
+			pkg.Logger().Error(err)
+		}
+	}
+
+	if f.pprofHost != "" && os.Getenv("PPROF_HOST") == "" {
+		err := os.Setenv("PPROF_HOST", f.pprofHost)
+		if err != nil {
+			pkg.Logger().Error(err)
+		}
+	}
+	if f.pprofPort != "" && os.Getenv("PPROF_PORT") == "" {
+		err := os.Setenv("PPROF_PORT", f.pprofPort)
 		if err != nil {
 			pkg.Logger().Error(err)
 		}
