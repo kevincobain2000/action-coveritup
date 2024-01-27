@@ -22,7 +22,7 @@ func NewEcho(baseURL string, publicDir embed.FS, favicon embed.FS) *echo.Echo {
 		mgr := statsview.New()
 		_ = mgr
 		go mgr.Start()
-		mgr.Stop()
+		// mgr.Stop()
 	}
 
 	e := echo.New()
