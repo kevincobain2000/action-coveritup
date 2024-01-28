@@ -78,7 +78,7 @@ runs:
       if: ${{inputs.pr_comment != 'true' && inputs.destroy != 'true'}}
       shell: bash
       run: |
-        curl -sLk --fail \
+        curl -Lk --fail \
           -X POST \
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
@@ -102,7 +102,7 @@ runs:
       if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != ''}}
       shell: bash
       run: |
-        response=$(curl -sLk \
+        response=$(curl -Lk \
           -X GET \
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
@@ -130,7 +130,7 @@ runs:
       if: ${{inputs.destroy == 'true'}}
       shell: bash
       run: |
-        curl -sLk --fail \
+        curl -Lk --fail \
           -X POST \
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
