@@ -55,7 +55,7 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 
 	// /bar
 	e.GET(baseURL+"bar", func(c echo.Context) error {
-		img, err := instachart.NewBarChartHandler("").Get(c)
+		img, err := instachart.NewBarChartHandler().Get(c)
 		if err != nil {
 			return err
 		}
