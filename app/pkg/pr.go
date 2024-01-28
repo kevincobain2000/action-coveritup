@@ -45,7 +45,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			row[1] = ""
 		} else {
 			y[0] = sb.Score
-			row[1] = F64NumberToK(&sb.Score) + " " + t.Metric
+			row[1] = F64NumberToK(&sb.Score) + "" + t.Metric
 		}
 
 		s, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.Branch, t.Name)
@@ -54,7 +54,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			row[2] = ""
 		} else {
 			y[1] = s.Score
-			row[2] = F64NumberToK(&s.Score) + " " + t.Metric + p.UpOrDown(&sb.Score, &s.Score)
+			row[2] = F64NumberToK(&s.Score) + "" + t.Metric + p.UpOrDown(&sb.Score, &s.Score)
 			row[2] = "**" + row[2] + "**"
 		}
 		mdTable.Rows = append(mdTable.Rows, row)
