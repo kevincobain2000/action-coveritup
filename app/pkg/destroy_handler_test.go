@@ -16,7 +16,7 @@ func TestDestroyErrors(t *testing.T) {
 	defer AfterEach()
 	e := echo.New()
 	e.POST("/destroy", func(c echo.Context) error {
-		return NewUploadHandler().Post(c)
+		return NewDestroyHandler().Post(c)
 	})
 
 	server := httptest.NewServer(e)
@@ -34,14 +34,9 @@ func TestDestroyErrors(t *testing.T) {
 			Status: http.StatusUnprocessableEntity,
 		},
 		{
-			Name:   "422",
+			Name:   "200",
 			Body:   []byte(`{"org":"org", "repo":"repo","branch":"branch","type":"type"}`),
-			Status: http.StatusUnprocessableEntity,
-		},
-		{
-			Name:   "422",
-			Body:   []byte(`{"org":"org","repo":"repo","user": "user", "branch":"branch","type":"type"}`),
-			Status: http.StatusUnprocessableEntity,
+			Status: http.StatusOK,
 		},
 	}
 

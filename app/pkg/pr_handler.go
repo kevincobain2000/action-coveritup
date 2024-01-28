@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -48,7 +49,7 @@ func (h *PRHandler) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 	if len(types) == 0 {
-		return c.String(http.StatusConflict, "No change since last PR")
+		return echo.NewHTTPError(http.StatusConflict, errors.New("no types changed"))
 	}
 	prComment, err := h.PR.Get(req, types)
 
