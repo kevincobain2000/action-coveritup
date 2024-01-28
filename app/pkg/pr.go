@@ -130,7 +130,7 @@ func (p *PR) TypesChangedSince(req *PRRequest) ([]models.Type, error) {
 			typesChanged = append(typesChanged, t)
 			continue
 		}
-		if sbs[0].Score != sbs[1].Score {
+		if F64NumberToK(&sbs[0].Score) != F64NumberToK(&sbs[1].Score) {
 			typesChanged = append(typesChanged, t)
 			continue
 		}
