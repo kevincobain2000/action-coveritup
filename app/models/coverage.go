@@ -220,6 +220,8 @@ func (c *Coverage) GetLatestBranchScoresWithPR(orgName string, repoName string, 
 		c.branch_name = @branchName
 	AND
 		t.name = @typeName
+	AND
+		c.pr_num != 0
 	ORDER BY
 		c.created_at DESC, c.id DESC
 	LIMIT @limit;

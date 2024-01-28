@@ -3,6 +3,7 @@ package pkg
 import (
 	"hash/fnv"
 	"strconv"
+	"strings"
 )
 
 func F64ToS(f *float64) string {
@@ -34,6 +35,12 @@ func F64To1DecimalF64(num *float64) float64 {
 }
 
 func StringToInt(s string) int64 {
+	parts := strings.Split(s, ".")
+	if len(parts) == 0 {
+		return 0
+	}
+
+	s = parts[0]
 	i, _ := strconv.Atoi(s)
 	return int64(i)
 }
