@@ -159,11 +159,18 @@ func (e *Chart) GetInstaChartForUsers(req *ChartRequest, t *models.Type) ([]byte
 }
 
 func (e *Chart) makeChartRequest(req *ChartRequest, t *models.Type) *instachart.ChartRequest {
+	title := req.Org + "/" + req.Repo
+	subtitle := req.Branch
+
+	if req.Width <= 200 && req.Height <= 200 {
+		title = t.Name
+		subtitle = ""
+	}
 	cReq := &instachart.ChartRequest{
 		Output:        req.Output,
 		Metric:        t.Metric,
-		ChartTitle:    req.Org + "/" + req.Repo,
-		ChartSubtitle: req.Branch,
+		ChartTitle:    title,
+		ChartSubtitle: subtitle,
 		Theme:         req.Theme,
 		Width:         req.Width,
 		Height:        req.Height,

@@ -42,7 +42,9 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 		PlainText("")
 	mdText.H3("Branch").
 		PlainText("")
-	mdText.H4("Single").
+	mdText.H4("Trends - Line").
+		PlainText("").
+		PlainText("Add &width=200&height=200 to line charts for smaller widgets").
 		PlainText("")
 
 	for _, t := range types {
@@ -52,7 +54,7 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 	}
 	mdText.PlainText("")
 
-	mdText.H4("All").PlainText("")
+	mdText.H4("All to Compare - Bars").PlainText("")
 	for _, t := range types {
 		u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&branches=all",
 			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name)
@@ -62,7 +64,9 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 
 	mdText.H3("User").PlainText("")
 
-	mdText.H4("Single").
+	mdText.H4("Trends - Line").
+		PlainText("").
+		PlainText("Add &width=200&height=200 to line charts for smaller widgets").
 		PlainText("")
 
 	for _, t := range types {
@@ -73,7 +77,7 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 
 	mdText.PlainText("")
 
-	mdText.H3("All").
+	mdText.H3("All to Compare - bars").
 		PlainText("")
 	for _, t := range types {
 		u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&users=all",
