@@ -55,8 +55,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		} else {
 			ud := p.UpOrDown(&sb.Score, &s.Score)
 			y[1] = s.Score
-			row[2] = F64NumberToK(&s.Score) + "" + t.Metric + p.UpOrDown(&sb.Score, &s.Score)
-			if ud != "" {
+			row[2] = F64NumberToK(&s.Score) + "" + t.Metric + ud
+			if ud != "" && ud != "-" {
 				row[2] = "**" + row[2] + "**"
 			}
 		}
