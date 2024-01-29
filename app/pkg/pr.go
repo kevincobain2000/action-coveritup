@@ -53,9 +53,12 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			y[1] = 0
 			row[2] = ""
 		} else {
+			ud := p.UpOrDown(&sb.Score, &s.Score)
 			y[1] = s.Score
 			row[2] = F64NumberToK(&s.Score) + "" + t.Metric + p.UpOrDown(&sb.Score, &s.Score)
-			row[2] = "**" + row[2] + "**"
+			if ud != "" {
+				row[2] = "**" + row[2] + "**"
+			}
 		}
 		mdTable.Rows = append(mdTable.Rows, row)
 
