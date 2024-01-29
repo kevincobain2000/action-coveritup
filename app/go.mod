@@ -8,7 +8,7 @@ require (
 	github.com/go-echarts/statsview v0.3.4
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-spectest/markdown v0.0.7
-	github.com/kevincobain2000/instachart v1.0.12
+	github.com/kevincobain2000/instachart v1.0.13
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/mcuadros/go-defaults v1.2.0
 	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
