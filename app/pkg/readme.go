@@ -44,7 +44,7 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 		PlainText("")
 	mdText.H4("Trends - Line").
 		PlainText("").
-		PlainText("Add &width=200&height=200 to line charts for smaller widgets").
+		PlainText("Add &output=svg&&width=200&height=200 to charts smaller widgets").
 		PlainText("")
 
 	for _, t := range types {
@@ -66,7 +66,7 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 
 	mdText.H4("Trends - Line").
 		PlainText("").
-		PlainText("Add &width=200&height=200 to line charts for smaller widgets").
+		PlainText("Add &output=svg&&width=200&height=200 to charts smaller widgets").
 		PlainText("")
 
 	for _, t := range types {
