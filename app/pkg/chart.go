@@ -158,11 +158,17 @@ func (e *Chart) GetInstaChartForUsers(req *ChartRequest, t *models.Type) ([]byte
 	return bar.GetStacked(xData, yyData, zzData, names, cReq)
 }
 
+func (e *Chart) isMini(req *ChartRequest) bool {
+	if req.Width <= 200 && req.Height <= 200 {
+		return true
+	}
+	return false
+}
 func (e *Chart) makeChartRequest(req *ChartRequest, t *models.Type) *instachart.ChartRequest {
 	title := req.Org + "/" + req.Repo
 	subtitle := req.Branch
 
-	if req.Width <= 200 && req.Height <= 200 {
+	if e.isMini(req) {
 		title = t.Name
 		subtitle = ""
 	}

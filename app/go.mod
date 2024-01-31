@@ -8,7 +8,7 @@ require (
 	github.com/go-echarts/statsview v0.3.4
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-spectest/markdown v0.0.7
-	github.com/kevincobain2000/instachart v1.0.13
+	github.com/kevincobain2000/instachart v1.0.14
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/mcuadros/go-defaults v1.2.0
 	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
@@ -35,7 +35,7 @@ require (
 	github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
-	github.com/google/pprof v0.0.0-20240125082051-42cd04596328 // indirect
+	github.com/google/pprof v0.0.0-20240130152714-0ed6a68c8d9e // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/imroc/req/v3 v3.42.3 // indirect
@@ -53,7 +53,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/quic-go v0.41.0 // indirect
-	github.com/refraction-networking/utls v1.6.1 // indirect
+	github.com/refraction-networking/utls v1.6.2 // indirect
 	github.com/rivo/uniseg v0.4.6 // indirect
 	github.com/rs/cors v1.10.1 // indirect
 	github.com/sethvargo/go-retry v0.2.4 // indirect

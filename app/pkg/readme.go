@@ -28,7 +28,7 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 
 	mdText.H1("CoverItUp Report").
 		PlainText("").
-		H2("Badges").
+		H2("Badges & charts widgets").
 		PlainText("")
 
 	for _, t := range types {
@@ -36,15 +36,21 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.Branch)
 		mdText.PlainTextf(md.Image(t.Name, u))
 	}
+	mdText.PlainText("")
+	for _, t := range types {
+		u := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&type=%s&output=svg&width=160&height=160&branch=%s",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, t.Name, req.Branch)
+		mdText.PlainTextf(md.Image(t.Name, u))
+	}
 
 	mdText.PlainText("").
+		H1("Other Embeds").
+		PlainText("").
 		H2("Charts").
 		PlainText("")
 	mdText.H3("Branch").
 		PlainText("")
 	mdText.H4("Trends - Line").
-		PlainText("").
-		PlainText("Add &output=svg&&width=200&height=200 to charts smaller widgets").
 		PlainText("")
 
 	for _, t := range types {
@@ -65,8 +71,6 @@ func (r *Readme) Get(req *ReadmeRequest, types []models.Type) (string, error) {
 	mdText.H3("User").PlainText("")
 
 	mdText.H4("Trends - Line").
-		PlainText("").
-		PlainText("Add &output=svg&&width=200&height=200 to charts smaller widgets").
 		PlainText("")
 
 	for _, t := range types {

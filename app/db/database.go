@@ -49,6 +49,10 @@ func syncDb() *gorm.DB {
 		if err != nil {
 			log.Fatal("cannot get database intance")
 		}
+		_, err = sqlDb.Exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
+		if err != nil {
+			log.Fatal("cannot set sql_mode")
+		}
 		configureSQL(sqlDb)
 	})
 
