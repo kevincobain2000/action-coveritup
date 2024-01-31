@@ -170,7 +170,7 @@ func (e *Chart) makeChartRequest(req *ChartRequest, t *models.Type) *instachart.
 
 	if e.isMini(req) {
 		title = t.Name
-		subtitle = ""
+		subtitle = req.Branch
 	}
 	cReq := &instachart.ChartRequest{
 		Output:        req.Output,
