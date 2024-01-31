@@ -51,7 +51,7 @@ func syncDb() *gorm.DB {
 		}
 		_, err = sqlDb.Exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
 		if err != nil {
-			log.Fatal("cannot set sql_mode")
+			log.Println("cannot set auto set sql_mode, may have unexpected errors, please set sql_mode=''; in your mysql config")
 		}
 		configureSQL(sqlDb)
 	})
