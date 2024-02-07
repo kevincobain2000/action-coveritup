@@ -98,6 +98,6 @@ func (g *Github) getEndpoint(api, orgName, repoName, commit string) string {
 
 func (g *Github) setHeader(req *http.Request, token string) {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
-	req.Header.Set("Accept", "application/vnd.github+json")
+	req.Header.Set("Accept", "application/vnd.github.sha")
 	req.Header.Set("X-Github-Api-Version", "2022-11-28")
 }
