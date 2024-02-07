@@ -113,7 +113,7 @@ runs:
 
     # Comment on PR if it is a pull req and the status code is 201
     - name: Comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201'}}
+      if: ${{inputs.pr_comment == 'true' && steps.find-pull-request.outputs.number != '' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201'}}
       uses: peter-evans/create-or-update-comment@v3
       with:
         issue-number: ${{ steps.find-pull-request.outputs.number }}
