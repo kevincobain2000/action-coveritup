@@ -111,8 +111,9 @@ runs:
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 
     # Comment on PR if it is a pull req and the status code is 201
+    # Won't work on forks https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#restrictions-on-repository-forks
     - name: Comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201'}}
+      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository }}
       uses: peter-evans/create-or-update-comment@v3
       with:
         issue-number: ${{ steps.pr-number-id.outputs.pr }}
