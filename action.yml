@@ -52,9 +52,10 @@ runs:
       uses: tj-actions/branch-names@v8
 
     # Find the pull request number
-    - id: bcgov
+    - name: pr-number-action
       if: ${{github.event_name == 'pull_request'}}
-      uses: bcgov-nr/action-get-pr@v0.0.1
+      id: pr-number-id
+      uses: kkak10/pr-number-action@v1.3
 
     # All branch names for this repo seperated by spaces
     - name: Extract all active branches
@@ -90,7 +91,7 @@ runs:
             "score": "${{ env.SCORE }}",
             "user": "${{ github.actor }}",
             "branch": "${{ steps.branch-name.outputs.current_branch }}",
-            "pr_num": "${{ steps.bcgov.outputs.pr }}",
+            "pr_num": "${{ steps.pr-number-id.outputs.pr }}",
             "branches": "${{ env.CIU_ACTIVE_BRANCHES }}"
           }' \
           "${{inputs.host}}/upload"
@@ -114,7 +115,7 @@ runs:
       if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201'}}
       uses: peter-evans/create-or-update-comment@v3
       with:
-        issue-number: ${{ steps.bcgov.outputs.pr }}
+        issue-number: ${{ steps.pr-number-id.outputs.pr }}
         body-path: comment_body.txt
     ###               END                 ###
     ###            PUBLISHING             ###
