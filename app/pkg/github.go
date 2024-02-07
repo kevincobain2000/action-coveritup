@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"bytes"
 	"errors"
 	"fmt"
 	"net/http"
@@ -13,7 +12,6 @@ import (
 )
 
 type Github struct {
-	body  *bytes.Buffer
 	log   *logrus.Logger
 	api   string
 	cache *freecache.Cache
@@ -21,7 +19,6 @@ type Github struct {
 
 func NewGithub() *Github {
 	return &Github{
-		body:  bytes.NewBuffer([]byte(`{"state":"success", "context": "coveritup", "description": "authenticated"}`)),
 		log:   Logger(),
 		api:   os.Getenv("GITHUB_API"),
 		cache: db.Cache(),
@@ -46,7 +43,7 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 
 	url := g.getEndpoint(g.api, orgName, repoName, commit)
 
-	req, err := http.NewRequest("POST", url, g.body)
+	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		g.log.Error(err)
 		return err
@@ -69,19 +66,19 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 		g.log.Error(err)
 		return err
 	}
-	// on same commit, the response code is 422 which doesn't mean it is not authenticated
-	if resp.StatusCode == http.StatusUnauthorized ||
-		resp.StatusCode == http.StatusForbidden ||
-		resp.StatusCode == http.StatusBadRequest ||
-		resp.StatusCode == http.StatusNotFound ||
-		resp.StatusCode >= http.StatusInternalServerError {
+
+	if resp.StatusCode == 422 {
+		err := fmt.Errorf("github auth response code is unprocessable entity %d", resp.StatusCode)
+		g.log.Error(err)
+		return err
+	}
+	if resp.StatusCode >= 400 && resp.StatusCode < 500 {
 		err := fmt.Errorf("github auth response code is unauthorized %d", resp.StatusCode)
 		g.log.Error(err)
 		return err
 	}
-	// if response is not a redirect
-	if resp.StatusCode == http.StatusMovedPermanently || resp.StatusCode == http.StatusFound {
-		err := fmt.Errorf("github auth response code is redirect %d", resp.StatusCode)
+	if resp.StatusCode >= 500 {
+		err := fmt.Errorf("github auth response code is server error %d", resp.StatusCode)
 		g.log.Error(err)
 		return err
 	}
@@ -94,12 +91,13 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 	return err
 }
 
+// /repos/{owner}/{repo}/commits/{ref}
 func (g *Github) getEndpoint(api, orgName, repoName, commit string) string {
-	return fmt.Sprintf("%s/repos/%s/%s/statuses/%s", api, orgName, repoName, commit)
+	return fmt.Sprintf("%s/repos/%s/%s/commits/%s", api, orgName, repoName, commit)
 }
 
 func (g *Github) setHeader(req *http.Request, token string) {
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
-	req.Header.Set("Accept", "application/vnd.github+json")
+	req.Header.Set("Accept", "application/vnd.github.sha")
 	req.Header.Set("X-Github-Api-Version", "2022-11-28")
 }
