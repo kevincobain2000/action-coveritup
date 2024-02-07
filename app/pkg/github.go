@@ -46,7 +46,7 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 
 	url := g.getEndpoint(g.api, orgName, repoName, commit)
 
-	req, err := http.NewRequest("POST", url, g.body)
+	req, err := http.NewRequest("GET", url, g.body)
 	if err != nil {
 		g.log.Error(err)
 		return err
@@ -69,6 +69,7 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 		g.log.Error(err)
 		return err
 	}
+	g.log.Info(fmt.Sprintf("github auth response code is %d", resp.StatusCode))
 	// on same commit, the response code is 422 which doesn't mean it is not authenticated
 	if resp.StatusCode == http.StatusUnauthorized ||
 		resp.StatusCode == http.StatusForbidden ||
@@ -94,8 +95,9 @@ func (g *Github) VerifyGithubToken(token, orgName, repoName, commit string) erro
 	return err
 }
 
+// /repos/{owner}/{repo}/commits/{ref}
 func (g *Github) getEndpoint(api, orgName, repoName, commit string) string {
-	return fmt.Sprintf("%s/repos/%s/%s/statuses/%s", api, orgName, repoName, commit)
+	return fmt.Sprintf("%s/repos/%s/%s/commits/%s", api, orgName, repoName, commit)
 }
 
 func (g *Github) setHeader(req *http.Request, token string) {
