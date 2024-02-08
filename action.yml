@@ -121,6 +121,7 @@ runs:
       with:
         issue-number: ${{ steps.pr-number-id.outputs.pr }}
         body-path: comment_body.txt
+        token: ${{ inputs.token }}
     ###               END                 ###
     ###            PUBLISHING             ###
 
