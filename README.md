@@ -32,13 +32,13 @@
     <b>Add Widgets To your README</b>
 </p>
 
-![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg)
+![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg&line=fill)
 ![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg)
-![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&height=150&width=150&output=svg)
+![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&height=150&width=150&output=svg&line=fill)
 ![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&height=150&width=150&output=svg)
-![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&height=150&width=150&output=svg)
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&height=150&width=150&output=svg&line=fill)
 ![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&height=150&width=150&output=svg)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&height=150&width=150&output=svg)
+![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&height=150&width=150&output=svg&line=fill)
 ![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&height=150&width=150&output=svg)
 
 
