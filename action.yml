@@ -22,6 +22,9 @@ inputs:
   http_proxy:
     description: "HTTP Proxy if any"
     default: ''
+  token:
+    description: "Github token"
+    default: '${{ github.token }}'
 runs:
   using: "composite"
   steps:
@@ -81,7 +84,7 @@ runs:
           -X POST \
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
-          -H 'Authorization: ${{ github.token }}' \
+          -H 'Authorization: ${{ inputs.token }}' \
           -d '{
             "org": "${{github.repository_owner}}",
             "commit": "${{ github.sha }}",
@@ -134,7 +137,7 @@ runs:
           -X POST \
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
-          -H 'Authorization: ${{ github.token }}' \
+          -H 'Authorization: ${{ inputs.token }}' \
           -d '{
             "org": "${{github.repository_owner}}",
             "repo": "${{ github.event.repository.name }}",
