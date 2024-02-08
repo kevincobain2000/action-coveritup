@@ -212,9 +212,6 @@ Before using this action, enable Github Actions
     - uses: kevincobain2000/action-coveritup@v1
       with:
         pr_comment: true
-        # optional: token, generally if you want to enable comments on a Forked
-        # default is ${{ github.token }}
-        # token: ${{ secrets.PAT }}
 ```
 
 # Step 3) Embedding badges and charts
