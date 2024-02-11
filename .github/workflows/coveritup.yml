@@ -5,6 +5,7 @@ on:
       - '**/*.mod'
       - '**/*.sum'
       - '**/*.yml'
+      - '**/*.astro'
   push:
     tags-ignore:
       - '**'
@@ -15,6 +16,7 @@ on:
       - '**/*.mod'
       - '**/*.sum'
       - '**/*.yml'
+      - '**/*.astro'
 
 name: "Cover It Up"
 concurrency:
