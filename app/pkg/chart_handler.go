@@ -32,6 +32,7 @@ type ChartRequest struct {
 	Width  int    `json:"width" query:"width" default:"1024" validate:"min=1,max=2048" message:"width must be between 1 and 2048"`
 	Height int    `json:"height" query:"height" default:"512" validate:"min=1,max=2048" message:"height must be between 1 and 2048"`
 	Line   string `json:"line" query:"line" default:"nofill" validate:"oneof=nofill fill" message:"line must be fill or nofill"`
+	Grid   string `json:"grid" query:"grid" default:"show" validate:"oneof=show hide" message:"grid must be show or hide"`
 }
 
 func (h *ChartHandler) Get(c echo.Context) error {

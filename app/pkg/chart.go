@@ -167,10 +167,10 @@ func (e *Chart) isMini(req *ChartRequest) bool {
 func (e *Chart) makeChartRequest(req *ChartRequest, t *models.Type) *instachart.ChartRequest {
 	title := req.Org + "/" + req.Repo
 	subtitle := req.Branch
-
 	if e.isMini(req) {
 		title = t.Name
 		subtitle = req.Branch
+		req.Grid = "hide"
 	}
 	cReq := &instachart.ChartRequest{
 		Output:        req.Output,
@@ -181,6 +181,7 @@ func (e *Chart) makeChartRequest(req *ChartRequest, t *models.Type) *instachart.
 		Width:         req.Width,
 		Height:        req.Height,
 		Line:          req.Line,
+		Grid:          req.Grid,
 	}
 	return cReq
 }

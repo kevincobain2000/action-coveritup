@@ -61,7 +61,7 @@ func (t *Type) Create(name string, metric string) (*Type, error) {
 	return &ret, err
 }
 
-func (t *Type) GetTypesFor(orgName string, repoName string) ([]Type, error) {
+func (t *Type) GetAllTypesFor(orgName string, repoName string) ([]Type, error) {
 	var ret []Type
 
 	query := `SELECT t.* FROM types t
@@ -81,6 +81,41 @@ func (t *Type) GetTypesFor(orgName string, repoName string) ([]Type, error) {
 	err := db.Db().Raw(query,
 		sql.Named("orgName", orgName),
 		sql.Named("repoName", repoName),
+		sql.Named("limit", SAFE_LIMIT_TYPES)).
+		Scan(&ret).Error
+	if err != nil {
+		return ret, err
+	}
+	for i := range ret {
+		ret[i].Name = strings.TrimSpace(ret[i].Name)
+		ret[i].Metric = strings.TrimSpace(ret[i].Metric)
+	}
+
+	return ret, err
+}
+func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []string) ([]Type, error) {
+	var ret []Type
+
+	query := `SELECT t.* FROM types t
+			LEFT JOIN
+					coverages c ON t.id = c.type_id
+			LEFT JOIN
+				repos r ON c.repo_id = r.id
+			LEFT JOIN
+				orgs o ON c.org_id = o.id
+			WHERE
+				o.name = @orgName
+			AND
+				r.name = @repoName
+			AND
+				c.branch_name IN @branches
+			GROUP BY t.id
+			LIMIT @limit`
+
+	err := db.Db().Raw(query,
+		sql.Named("orgName", orgName),
+		sql.Named("repoName", repoName),
+		sql.Named("branches", branches),
 		sql.Named("limit", SAFE_LIMIT_TYPES)).
 		Scan(&ret).Error
 	if err != nil {

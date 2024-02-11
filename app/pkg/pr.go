@@ -76,7 +76,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		data.Y = append(data.Y, y)
 		data.Z = append(data.Z, y)
 
-		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&output=%s&theme=%s",
+		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&grid=hide&output=%s&theme=%s",
 			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", "dark")
 
 		jsonData, err := json.Marshal(data)
@@ -113,10 +113,11 @@ func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 
 func (p *PR) TypesChangedSince(req *PRRequest) ([]models.Type, error) {
 	typesChanged := []models.Type{}
-	types, err := p.typeModel.GetTypesFor(req.Org, req.Repo)
+	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch})
 	if err != nil {
 		return typesChanged, err
 	}
+
 	for _, t := range types {
 		sbs, err := p.coverageModel.GetLatestBranchScoresWithPR(req.Org, req.Repo, req.Branch, t.Name, 2)
 		if err != nil {

@@ -17,7 +17,7 @@ func NewReadme() *Readme {
 }
 
 func (r *Readme) GetTypes(req *ReadmeRequest) ([]models.Type, error) {
-	types, err := r.typeModel.GetTypesFor(req.Org, req.Repo)
+	types, err := r.typeModel.GetAllTypesFor(req.Org, req.Repo)
 	if err != nil {
 		return nil, err
 	}
