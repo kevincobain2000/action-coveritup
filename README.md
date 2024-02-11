@@ -40,7 +40,8 @@
 ![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&height=150&width=150&output=svg)
 ![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&height=150&width=150&output=svg&line=fill)
 ![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&height=150&width=150&output=svg)
-![go-lint-errors](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&branch=master)
+![go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&output=svg&width=160&height=160&branch=master)
+
 
 
 <p align="center">
@@ -57,7 +58,7 @@
 ![go-test-run-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master)
 ![go-mod-dependencies](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master)
 ![go-sec-issues](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master)
-![go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&output=svg&width=160&height=160&branch=master)
+![go-lint-errors](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&branch=master)
 
 **Quick Setup:** Quickly set up code coverage or other useful metrics on your project.
 
