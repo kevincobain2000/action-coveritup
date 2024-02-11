@@ -19,7 +19,7 @@
         href="https://www.producthunt.com/posts/coveritup?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-coveritup"
         target="_blank"
         ><img
-        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=433114&theme=dark"
+        src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=433114&theme=light"
         alt="CoverItUp - All&#0032;in&#0032;one&#0032;code&#0032;coverage&#0032;and&#0032;badges&#0032;tool&#0046; | Product Hunt"
         style="width: 250px; height: 54px;"
         width="250"
