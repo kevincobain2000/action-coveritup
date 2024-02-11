@@ -7,7 +7,6 @@ import (
 )
 
 func TestMD5(t *testing.T) {
-
 	type TestCase struct {
 		In  string
 		Out string
@@ -25,7 +24,6 @@ func TestMD5(t *testing.T) {
 }
 
 func TestF64ToS(t *testing.T) {
-
 	type TestCase struct {
 		In  float64
 		Out string
@@ -55,7 +53,6 @@ func TestF64ToS(t *testing.T) {
 }
 
 func TestF64To1DecimalF64(t *testing.T) {
-
 	type TestCase struct {
 		In  float64
 		Out float64

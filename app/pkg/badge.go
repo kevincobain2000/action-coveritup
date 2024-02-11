@@ -19,7 +19,6 @@ func NewBadge() *Badge {
 }
 
 func (b *Badge) Get(req *BadgeRequest, t *models.Type) ([]byte, error) {
-
 	if t.Name == models.TYPE_AVERAGE_PR_DAYS {
 		num, err := b.coverageModel.GetAveragePRDays(req.Org, req.Repo)
 		if err != nil {

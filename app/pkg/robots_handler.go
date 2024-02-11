@@ -19,5 +19,4 @@ func NewRobotsHandler() *RobotsHandler {
 func (h *RobotsHandler) Get(c echo.Context) error {
 	SetHeaderResponseText(c.Response().Header())
 	return c.String(http.StatusOK, h.text)
-
 }
