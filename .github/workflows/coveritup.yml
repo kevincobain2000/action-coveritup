@@ -83,6 +83,7 @@ jobs:
           type: go-build-time
 
       - name: Lint Errors
+        working-directory: app
         run: |
           echo SCORE=`golangci-lint run ./... | grep  -c "\^"` >> "$GITHUB_ENV"
         shell: bash
