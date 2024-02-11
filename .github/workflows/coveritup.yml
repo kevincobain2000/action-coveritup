@@ -42,6 +42,7 @@ jobs:
           go install github.com/securego/gosec/v2/cmd/gosec@latest
           go install github.com/axw/gocov/gocov@latest
           go install github.com/AlekSi/gocov-xml@latest
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
       - name: Setup Node.js ${{ matrix.node-versions }}
         uses: actions/setup-node@v2
         with:
@@ -80,6 +81,15 @@ jobs:
       - uses: kevincobain2000/action-coveritup@v1
         with:
           type: go-build-time
+
+      - name: Lint Errors
+        working-directory: app
+        run: |
+          echo SCORE=`golangci-lint run ./... | grep  -c "\^"` >> "$GITHUB_ENV"
+        shell: bash
+      - uses: kevincobain2000/action-coveritup@v1
+        with:
+          type: go-lint-errors
 
       - name: Test
         working-directory: app
