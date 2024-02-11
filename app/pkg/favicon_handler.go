@@ -27,5 +27,4 @@ func (h *FaviconHandler) Get(c echo.Context) error {
 	}
 	SetHeadersResponsePNG(c.Response().Header())
 	return c.Blob(http.StatusOK, "image/x-icon", content)
-
 }

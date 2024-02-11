@@ -1,7 +1,6 @@
 package db
 
 import (
-	_ "embed"
 	"sync"
 
 	"github.com/coocood/freecache"

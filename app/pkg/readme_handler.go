@@ -52,5 +52,4 @@ func (h *ReadmeHandler) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 	return c.String(http.StatusOK, str)
-
 }

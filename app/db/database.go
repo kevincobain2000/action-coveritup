@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"embed"
-	_ "embed"
 	"log"
 	"os"
 	"sync"
@@ -45,15 +44,15 @@ func syncDb() *gorm.DB {
 		if err != nil {
 			log.Fatal("cannot connect to database")
 		}
-		sqlDb, err := db.DB()
+		sqlDB, err := db.DB()
 		if err != nil {
 			log.Fatal("cannot get database intance")
 		}
-		_, err = sqlDb.Exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
+		_, err = sqlDB.Exec("SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));")
 		if err != nil {
 			log.Println("cannot set auto set sql_mode, may have unexpected errors, please set sql_mode=''; in your mysql config")
 		}
-		configureSQL(sqlDb)
+		configureSQL(sqlDB)
 	})
 
 	return db

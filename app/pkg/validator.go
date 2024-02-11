@@ -16,6 +16,7 @@ func ValidateRequest[T any](request T) (ValidationErrs, error) {
 	errs := validate.Struct(request)
 	validationErrs := ValidationErrs{}
 	if errs != nil {
+		// nolint:errorlint
 		for _, err := range errs.(validator.ValidationErrors) {
 			field, _ := reflect.TypeOf(request).Elem().FieldByName(err.Field())
 			queryTag := getStructTag(field, "query")
