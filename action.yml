@@ -25,6 +25,9 @@ inputs:
   token:
     description: "Github token"
     default: '${{ github.token }}'
+  theme:
+    description: "Theme of the comment"
+    default: 'light'
 runs:
   using: "composite"
   steps:
@@ -109,7 +112,7 @@ runs:
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
           -w "%{http_code}" \
-          "${{inputs.host}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&type=${{ inputs.type }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
+          "${{inputs.host}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&type=${{ inputs.type }}&theme=${{ inputs.theme }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
           -o comment_body.txt)
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 

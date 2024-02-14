@@ -76,8 +76,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		data.Y = append(data.Y, y)
 		data.Z = append(data.Z, y)
 
-		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&grid=hide&output=%s&theme=%s",
-			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", "dark")
+		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&grid=hide&output=%s&theme=%s&grid=%s",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", req.Theme, "hide")
 
 		jsonData, err := json.Marshal(data)
 		if err != nil {
