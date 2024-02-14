@@ -1,7 +1,6 @@
 package pkg
 
 import (
-	"strconv"
 	"strings"
 
 	"github.com/kevincobain2000/action-coveritup/models"
@@ -19,26 +18,6 @@ func NewBadge() *Badge {
 }
 
 func (b *Badge) Get(req *BadgeRequest, t *models.Type) ([]byte, error) {
-	if t.Name == models.TYPE_AVERAGE_PR_DAYS {
-		num, err := b.coverageModel.GetAveragePRDays(req.Org, req.Repo)
-		if err != nil {
-			return nil, err
-		}
-		numStr := strconv.Itoa(num)
-		badge, err := stars.RenderBytes("social", models.TYPE_AVERAGE_PR_DAYS, numStr, "")
-		return badge, err
-	}
-
-	if t.Name == models.TYPE_NUMBER_OF_CONTRIBUTORS {
-		num, err := b.coverageModel.GetNumberOfContributors(req.Org, req.Repo)
-		if err != nil {
-			return nil, err
-		}
-		numStr := strconv.Itoa(num)
-		badge, err := stars.RenderBytes("social", models.TYPE_NUMBER_OF_CONTRIBUTORS, numStr, "")
-		return badge, err
-	}
-
 	ret, err := b.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.Branch, t.Name)
 
 	if err != nil {

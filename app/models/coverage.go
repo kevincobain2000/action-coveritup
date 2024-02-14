@@ -36,72 +36,6 @@ func (c *Coverage) GetByBranchName(branchName string) ([]Coverage, error) {
 	return ret, err
 }
 
-func (c *Coverage) GetNumberOfContributors(orgName string, repoName string) (int, error) {
-	var ret int
-	query := `
-	SELECT
-		COUNT(DISTINCT c.user_id) AS num
-	FROM
-		coverages c
-	INNER JOIN
-		orgs o ON c.org_id = o.id
-	INNER JOIN
-		repos r ON c.repo_id = r.id
-	WHERE
-		o.name = @orgName
-	AND
-		r.name = @repoName
-	`
-	err := db.Db().Raw(
-		query,
-		sql.Named("orgName", orgName),
-		sql.Named("repoName", repoName)).
-		Scan(&ret).Error
-	return ret, err
-}
-
-func (c *Coverage) GetAveragePRDays(orgName string, repoName string) (int, error) {
-	var ret float64
-	query := `
-	SELECT
-    	COALESCE(AVG(duration_in_days), 0) AS avg
-	FROM (
-		SELECT
-			c.pr_num,
-			DATEDIFF(
-				MAX(c.created_at),
-				MIN(c.created_at)
-			) AS duration_in_days
-	FROM
-		coverages c
-	INNER JOIN
-		orgs o ON c.org_id = o.id
-	INNER JOIN
-		repos r ON c.repo_id = r.id
-	WHERE
-		o.name = @orgName
-		AND r.name = @repoName
-		AND c.pr_num != 0
-	GROUP BY
-		c.pr_num
-	) AS durations
-`
-	err := db.Db().Raw(
-		query,
-		sql.Named("orgName", orgName),
-		sql.Named("repoName", repoName)).
-		Scan(&ret).Error
-	return int(ret), err
-}
-
-type LatestBranchScore struct {
-	BranchName string  `json:"branch_name"`
-	Score      float64 `json:"score"`
-	TypeName   string  `json:"type_name"`
-	Metric     string  `json:"metric"`
-	CreatedAt  string  `json:"created_at"`
-}
-
 func (c *Coverage) GetAllBranches(orgName string, repoName string, typeName string) ([]string, error) {
 	var ret []string
 	query := `
@@ -138,6 +72,15 @@ func (c *Coverage) GetAllBranches(orgName string, repoName string, typeName stri
 	return ret, err
 
 }
+
+type LatestBranchScore struct {
+	BranchName string  `json:"branch_name"`
+	Score      float64 `json:"score"`
+	TypeName   string  `json:"type_name"`
+	Metric     string  `json:"metric"`
+	CreatedAt  string  `json:"created_at"`
+}
+
 func (c *Coverage) GetLatestBranchScore(orgName string, repoName string, branchName string, typeName string) (LatestBranchScore, error) {
 
 	var ret LatestBranchScore
@@ -274,6 +217,50 @@ func (c *Coverage) GetLatestBranchScores(orgName string, repoName string, branch
 		sql.Named("orgName", orgName),
 		sql.Named("repoName", repoName),
 		sql.Named("branchName", branchName),
+		sql.Named("typeName", typeName)).
+		Scan(&ret).Error
+	if err != nil {
+		return ret, err
+	}
+	return ret, err
+}
+
+type LatestPRScore struct {
+	Commit     string  `json:"commit"`
+	BranchName string  `json:"branch_name"`
+	Score      float64 `json:"score"`
+	TypeName   string  `json:"type_name"`
+	Metric     string  `json:"metric"`
+}
+
+func (c *Coverage) GetLatestPRScores(orgName string, repoName string, prNum int, typeName string) ([]LatestPRScore, error) {
+	var ret []LatestPRScore
+	query := `
+	SELECT
+		c.commit, c.branch_name,
+		Round(c.score, 1) as score
+	FROM coverages c
+	LEFT JOIN
+		orgs o ON c.org_id = o.id
+	LEFT JOIN
+		repos r ON c.repo_id = r.id
+	LEFT JOIN
+		types t ON c.type_id = t.id
+	WHERE
+		o.name = @orgName
+	AND
+		r.name = @repoName
+	AND
+		c.pr_num = @prNum
+	AND
+		t.name = @typeName
+	LIMIT 150;
+	`
+	err := db.Db().Raw(
+		query,
+		sql.Named("orgName", orgName),
+		sql.Named("repoName", repoName),
+		sql.Named("prNum", prNum),
 		sql.Named("typeName", typeName)).
 		Scan(&ret).Error
 	if err != nil {

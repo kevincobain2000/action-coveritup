@@ -26,6 +26,7 @@ type ChartRequest struct {
 	Type       string `json:"type" query:"type" validate:"ascii,required,excludes=/" message:"ascii type is required"`
 	Branches   string `json:"branches" query:"branches" validate:"ascii" message:"ascii branches is required"`
 	Users      string `json:"users" query:"users" validate:"ascii" message:"ascii users is required"`
+	PRNum      int    `json:"pr_num" query:"pr_num"`
 
 	Output string `json:"output" query:"output" default:"png" validate:"oneof=svg png" message:"output must be svg or png"`
 	Theme  string `json:"theme" query:"theme" default:"light" validate:"oneof=light dark" message:"theme must be light or dark"`
@@ -55,8 +56,15 @@ func (h *ChartHandler) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound, "type not found")
 	}
 
-	if req.Branches == "" && req.Users == "" && req.Branch == "" && req.User == "" {
-		return echo.NewHTTPError(http.StatusUnprocessableEntity, "branches, users, branch or user, branch or base_branch are required")
+	if req.Branches == "" && req.Users == "" && req.Branch == "" && req.User == "" && req.PRNum == 0 {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, "branches, users, pr, branch or user, branch or base_branch are required")
+	}
+	if req.PRNum > 0 {
+		buf, err := h.Chart.GetInstaChartForPR(req, t)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
 	}
 
 	if req.Branch != "" && req.BaseBranch == "" {

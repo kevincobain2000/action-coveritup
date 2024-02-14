@@ -31,6 +31,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		Rows:   [][]string{},
 	}
 	urls := []string{}
+	chUrls := []string{}
 	mdText.H4("CoverItUp Report")
 	mdText.PlainText("")
 
@@ -85,6 +86,9 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		}
 		u = u + "&data=" + string(jsonData)
 		urls = append(urls, u)
+
+		cu := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s", req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, req.PRNum, t.Name, req.Theme, 320, "fill")
+		chUrls = append(chUrls, cu)
 	}
 	mdText.Table(mdTable)
 	images := ""
@@ -92,6 +96,13 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		images += md.Image("chart", u)
 	}
 	mdText.PlainText(images)
+
+	cImages := ""
+	for _, u := range chUrls {
+		cImages += fmt.Sprintf("<img src='%s' alt='commit history' />", u)
+	}
+
+	mdText.Details(fmt.Sprintf("Commit history for this PR %d", req.PRNum), cImages)
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
