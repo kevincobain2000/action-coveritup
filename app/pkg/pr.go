@@ -30,8 +30,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		Header: []string{"Type", req.BaseBranch, req.Branch},
 		Rows:   [][]string{},
 	}
-	urls := []string{}
-	chUrls := []string{}
+	urls := []string{}   // stores urls for bar charts for comparison of base and branch
+	chUrls := []string{} // stores urls for commit history trends (line charts)
 	mdText.H4("CoverItUp Report")
 	mdText.PlainText("")
 
@@ -124,7 +124,7 @@ func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 
 func (p *PR) TypesChangedSince(req *PRRequest) ([]models.Type, error) {
 	typesChanged := []models.Type{}
-	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch})
+	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch}, req.Type)
 	if err != nil {
 		return typesChanged, err
 	}

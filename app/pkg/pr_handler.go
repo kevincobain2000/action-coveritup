@@ -25,6 +25,7 @@ type PRRequest struct {
 	BaseBranch string `json:"base_branch" query:"base_branch" validate:"required,ascii" message:"ascii base_branch is required"`
 	PRNum      int    `json:"pr_num" query:"pr_num"`
 	Theme      string `json:"theme" query:"theme" default:"light" validate:"oneof=light dark" message:"theme must be light or dark"`
+	Type       string `json:"type" query:"type" validate:"ascii" message:"ascii type is required"`
 
 	host   string
 	scheme string
