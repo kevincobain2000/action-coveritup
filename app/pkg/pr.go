@@ -24,6 +24,8 @@ func NewPR() *PR {
 	}
 }
 
+// Get pr comment, PR num is never empty
+// This endpoint is called when a PR is opened
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 
 	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
