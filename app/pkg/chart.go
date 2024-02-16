@@ -64,39 +64,31 @@ func (e *Chart) GetInstaChartForPR(req *ChartRequest, t *models.Type) ([]byte, e
 // Line chart with dates on x-axis and scores on y-axis
 func (e *Chart) GetInstaChartForBranch(req *ChartRequest, t *models.Type) ([]byte, error) {
 	cReq := e.makeChartRequest(req, t)
-	bar := instachart.NewBarChart()
-
-	if req.Branches == "all" {
-		bs, err := e.coverageModel.GetAllBranches(req.Org, req.Repo, t.Name)
-		if err != nil {
-			return nil, err
-		}
-		req.Branches = strings.Join(bs, ",")
-	}
-
+	line := instachart.NewLineChart()
 	xData := []string{}
 	yData := []float64{}
-	zData := []float64{}
-	names := []string{t.Name}
-	branches := strings.Split(req.Branches, ",")
-	var hasErr error
-	for _, branch := range branches {
-		ret, err := e.coverageModel.GetLatestBranchScore(req.Org, req.Repo, branch, t.Name)
-		if err != nil {
-			hasErr = err
-			break
-		}
-		xData = append(xData, ret.BranchName)
-		yData = append(yData, ret.Score)
-		zData = append(zData, ret.Score)
-	}
-	if hasErr != nil {
-		return nil, hasErr
-	}
-	yyData := [][]float64{yData}
-	zzData := [][]float64{zData}
+	yyData := [][]float64{}
 
-	return bar.GetStacked(xData, yyData, zzData, names, cReq)
+	names := []string{t.Name}
+	ret, err := e.coverageModel.GetLatestBranchScores(req.Org, req.Repo, req.Branch, t.Name)
+	if err != nil {
+		return nil, err
+	}
+
+	for i := len(ret) - 1; i >= 0; i-- {
+		r := ret[i]
+		xData = append(xData, r.CreatedAt)
+		yData = append(yData, r.Score)
+		yyData = append(yyData, yData)
+	}
+	if len(xData) == 0 {
+		xData = append(xData, "0")
+	}
+	if len(yyData) == 0 {
+		yyData = append(yyData, []float64{0})
+	}
+
+	return line.Get(xData, yyData, names, cReq)
 }
 
 // Line chart with dates on x-axis and scores on y-axis
