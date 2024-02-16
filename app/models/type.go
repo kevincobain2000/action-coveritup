@@ -93,8 +93,12 @@ func (t *Type) GetAllTypesFor(orgName string, repoName string) ([]Type, error) {
 
 	return ret, err
 }
-func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []string) ([]Type, error) {
+func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []string, typeName string) ([]Type, error) {
 	var ret []Type
+	andWhereType := ""
+	if typeName != "" {
+		andWhereType = "AND t.name = @typeName"
+	}
 
 	query := `SELECT t.* FROM types t
 			LEFT JOIN
@@ -109,6 +113,7 @@ func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []str
 				r.name = @repoName
 			AND
 				c.branch_name IN @branches
+			` + andWhereType + `
 			GROUP BY t.id
 			LIMIT @limit`
 
@@ -116,6 +121,7 @@ func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []str
 		sql.Named("orgName", orgName),
 		sql.Named("repoName", repoName),
 		sql.Named("branches", branches),
+		sql.Named("typeName", typeName),
 		sql.Named("limit", SAFE_LIMIT_TYPES)).
 		Scan(&ret).Error
 	if err != nil {

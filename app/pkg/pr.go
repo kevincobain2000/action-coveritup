@@ -25,14 +25,16 @@ func NewPR() *PR {
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
+
+	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
 	mdText := md.NewMarkdown(os.Stdout)
 	mdTable := md.TableSet{
 		Header: []string{"Type", req.BaseBranch, req.Branch},
 		Rows:   [][]string{},
 	}
-	urls := []string{}
+	urls := []string{}   // stores urls for bar charts for comparison of base and branch
+	chUrls := []string{} // stores urls for commit history trends (line charts)
 	mdText.H4("CoverItUp Report")
-	mdText.PlainText("")
 
 	for _, t := range types {
 		y := make([]float64, 2)
@@ -76,8 +78,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		data.Y = append(data.Y, y)
 		data.Z = append(data.Z, y)
 
-		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&grid=hide&output=%s&theme=%s",
-			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", "dark")
+		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&grid=hide&output=%s&theme=%s&grid=%s",
+			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", req.Theme, "hide")
 
 		jsonData, err := json.Marshal(data)
 		if err != nil {
@@ -85,13 +87,30 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		}
 		u = u + "&data=" + string(jsonData)
 		urls = append(urls, u)
+
+		cu := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s", req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, req.PRNum, t.Name, req.Theme, 320, "fill")
+		chUrls = append(chUrls, cu)
 	}
 	mdText.Table(mdTable)
 	images := ""
 	for _, u := range urls {
-		images += md.Image("chart", u)
+		images += fmt.Sprintf("<img src='%s' alt='base vs branch' />", u)
 	}
-	mdText.PlainText(images)
+
+	mdText.PlainText("")
+	if isFirstPR {
+		mdText.PlainText(images)
+	} else {
+		mdText.Details("Base vs Branch", images)
+	}
+
+	cImages := ""
+	for _, u := range chUrls {
+		cImages += fmt.Sprintf("<img src='%s' alt='commit history' />", u)
+	}
+
+	mdText.PlainText("")
+	mdText.Details("Commit History", cImages)
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
@@ -113,7 +132,7 @@ func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 
 func (p *PR) TypesChangedSince(req *PRRequest) ([]models.Type, error) {
 	typesChanged := []models.Type{}
-	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch})
+	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch}, req.Type)
 	if err != nil {
 		return typesChanged, err
 	}

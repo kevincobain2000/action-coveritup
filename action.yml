@@ -25,6 +25,9 @@ inputs:
   token:
     description: "Github token"
     default: '${{ github.token }}'
+  theme:
+    description: "Theme of the comment"
+    default: 'light'
 runs:
   using: "composite"
   steps:
@@ -53,6 +56,14 @@ runs:
     - id: branch-name
       if: ${{inputs.destroy != 'true'}}
       uses: tj-actions/branch-names@v8
+    - name: Branch name
+      shell: bash
+      if: ${{steps.branch-name.outputs.current_branch != ''}}
+      run: echo BRANCH_OR_TAG_NAME=${{ steps.branch-name.outputs.current_branch }} >> $GITHUB_ENV
+    - name: Tag name
+      shell: bash
+      if: ${{steps.branch-name.outputs.current_branch == ''}}
+      run: echo BRANCH_OR_TAG_NAME=${{ github.ref }}|sed 's|refs/tags/||' >> $GITHUB_ENV
 
     # Find the pull request number
     - name: pr-number-action
@@ -93,7 +104,7 @@ runs:
             "metric": "${{ inputs.metric }}",
             "score": "${{ env.SCORE }}",
             "user": "${{ github.actor }}",
-            "branch": "${{ steps.branch-name.outputs.current_branch }}",
+            "branch": "${{ env.BRANCH_OR_TAG_NAME }}",
             "pr_num": "${{ steps.pr-number-id.outputs.pr }}",
             "branches": "${{ env.CIU_ACTIVE_BRANCHES }}"
           }' \
@@ -109,7 +120,7 @@ runs:
           -x "${{ inputs.http_proxy }}" \
           -H 'Content-Type: application/json' \
           -w "%{http_code}" \
-          "${{inputs.host}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&type=${{ inputs.type }}&branch=${{ steps.branch-name.outputs.current_branch }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
+          "${{inputs.host}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&type=${{ inputs.type }}&theme=${{ inputs.theme }}&pr_num=${{ steps.pr-number-id.outputs.pr }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
           -o comment_body.txt)
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 
