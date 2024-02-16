@@ -103,7 +103,9 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	mdText.Details(fmt.Sprintf("Commit history for this PR %d", req.PRNum), cImages)
+	if req.PRNum > 0 {
+		mdText.Details(fmt.Sprintf("Commit history for this PR %d", req.PRNum), cImages)
+	}
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
