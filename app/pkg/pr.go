@@ -102,6 +102,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		cImages += fmt.Sprintf("<img src='%s' alt='commit history' />", u)
 	}
 
+	mdText.PlainText("")
 	mdText.Details(fmt.Sprintf("Commit history for this PR %d", req.PRNum), cImages)
 
 	mdText.PlainText("")
