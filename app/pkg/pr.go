@@ -25,6 +25,8 @@ func NewPR() *PR {
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
+
+	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
 	mdText := md.NewMarkdown(os.Stdout)
 	mdTable := md.TableSet{
 		Header: []string{"Type", req.BaseBranch, req.Branch},
@@ -33,7 +35,6 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	urls := []string{}   // stores urls for bar charts for comparison of base and branch
 	chUrls := []string{} // stores urls for commit history trends (line charts)
 	mdText.H4("CoverItUp Report")
-	mdText.PlainText("")
 
 	for _, t := range types {
 		y := make([]float64, 2)
@@ -95,7 +96,13 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	for _, u := range urls {
 		images += fmt.Sprintf("<img src='%s' alt='base vs branch' />", u)
 	}
-	mdText.PlainText(images)
+
+	mdText.PlainText("")
+	if isFirstPR {
+		mdText.PlainText(images)
+	} else {
+		mdText.Details("Base vs Branch", images)
+	}
 
 	cImages := ""
 	for _, u := range chUrls {
@@ -103,9 +110,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	if req.PRNum > 0 {
-		mdText.Details(fmt.Sprintf("Commit history for this PR %d", req.PRNum), cImages)
-	}
+	mdText.Details("Commit History", cImages)
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",

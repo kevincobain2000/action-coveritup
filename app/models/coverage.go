@@ -404,6 +404,49 @@ func (c *Coverage) GetLatestUserScores(orgName string, repoName string, userName
 	return ret, err
 }
 
+func (c *Coverage) IsFirstPR(org string, repo string, prNum int) bool {
+
+	var ret = []struct {
+		TypeID int `json:"type_id"`
+		Total  int `json:"total"`
+	}{}
+	query := `
+	SELECT
+		type_id,
+		COUNT(c.id) as total
+	FROM
+		coverages c
+	LEFT JOIN
+		orgs o ON c.org_id = o.id
+	LEFT JOIN
+		repos r ON c.repo_id = r.id
+	WHERE
+		o.name = @orgName
+	AND
+		r.name = @repoName
+	AND
+		pr_num = @prNum
+	GROUP BY
+		type_id
+	`
+	err := db.Db().Raw(
+		query,
+		sql.Named("orgName", org),
+		sql.Named("repoName", repo),
+		sql.Named("prNum", prNum)).
+		Scan(&ret).Error
+
+	if err != nil {
+		return false
+	}
+	for _, r := range ret {
+		if r.Total > 1 {
+			return false
+		}
+	}
+	return true
+
+}
 func (c *Coverage) DeleteCoveragesByType(org string, repo string, typeName string) error {
 	org = strings.TrimSpace(org)
 	repo = strings.TrimSpace(repo)
