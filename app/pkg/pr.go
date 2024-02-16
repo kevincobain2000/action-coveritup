@@ -25,8 +25,6 @@ func NewPR() *PR {
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
-
-	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
 	mdText := md.NewMarkdown(os.Stdout)
 	mdTable := md.TableSet{
 		Header: []string{"Type", req.BaseBranch, req.Branch},
@@ -98,11 +96,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	if isFirstPR {
-		mdText.PlainText(images)
-	} else {
-		mdText.Details("Base vs Branch", images)
-	}
+	mdText.Details("Base vs Branch", images)
 
 	cImages := ""
 	for _, u := range chUrls {
