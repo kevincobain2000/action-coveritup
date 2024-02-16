@@ -93,7 +93,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	mdText.Table(mdTable)
 	images := ""
 	for _, u := range urls {
-		images += md.Image("chart", u)
+		images += fmt.Sprintf("<img src='%s' alt='base vs branch' />", u)
 	}
 	mdText.PlainText(images)
 
