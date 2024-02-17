@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/fbiville/markdown-table-formatter/pkg/markdown"
 	md "github.com/go-spectest/markdown"
 	"github.com/kevincobain2000/action-coveritup/models"
 	"github.com/sirupsen/logrus"
@@ -25,10 +26,11 @@ func NewPR() *PR {
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
+	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
+
 	mdText := md.NewMarkdown(os.Stdout)
 	mdTable := md.TableSet{
-		Header: []string{"Type", req.BaseBranch, req.Branch},
-		Rows:   [][]string{},
+		Rows: [][]string{},
 	}
 	urls := []string{}   // stores urls for bar charts for comparison of base and branch
 	chUrls := []string{} // stores urls for commit history trends (line charts)
@@ -40,6 +42,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		row[0] = "*" + t.Name + "*"
 
 		sb, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.BaseBranch, t.Name)
+
 		if err != nil {
 			y[0] = 0
 			row[1] = ""
@@ -76,8 +79,17 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		data.Y = append(data.Y, y)
 		data.Z = append(data.Z, y)
 
-		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%s&height=%s&grid=hide&output=%s&theme=%s&grid=%s",
-			req.scheme, req.host, os.Getenv("BASE_URL"), req.Org+"/"+req.Repo, t.Metric, "385", "320", "svg", req.Theme, "hide")
+		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%d&height=%d&grid=hide&output=%s&theme=%s&grid=%s",
+			req.scheme,
+			req.host,
+			os.Getenv("BASE_URL"),
+			req.Org+"/"+req.Repo,
+			t.Metric,
+			385,
+			320,
+			"svg",
+			req.Theme,
+			"hide")
 
 		jsonData, err := json.Marshal(data)
 		if err != nil {
@@ -86,17 +98,47 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		u = u + "&data=" + string(jsonData)
 		urls = append(urls, u)
 
-		cu := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s", req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, req.PRNum, t.Name, req.Theme, 320, "fill")
+		cu := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s",
+			req.scheme,
+			req.host,
+			os.Getenv("BASE_URL"),
+			req.Org,
+			req.Repo,
+			req.PRNum,
+			t.Name,
+			req.Theme,
+			320,
+			"fill")
 		chUrls = append(chUrls, cu)
 	}
-	mdText.Table(mdTable)
+
+	basicTable, err := markdown.NewTableFormatterBuilder().
+		WithPrettyPrint().
+		Build("Type", fmt.Sprintf("`%s`", req.BaseBranch), fmt.Sprintf("`%s`", req.Branch)).
+		Format(mdTable.Rows)
+
+	if err != nil {
+		return "", err
+	}
+
+	mdText.PlainText("")
+	if isFirstPR {
+		mdText.PlainText(basicTable)
+	} else {
+		mdText.Details("Comparison Table", basicTable)
+	}
+
 	images := ""
 	for _, u := range urls {
 		images += fmt.Sprintf("<img src='%s' alt='base vs branch' />", u)
 	}
 
 	mdText.PlainText("")
-	mdText.Details("Base vs Branch", images)
+	if isFirstPR {
+		mdText.PlainText(images)
+	} else {
+		mdText.Details("Base vs Branch", images)
+	}
 
 	cImages := ""
 	for _, u := range chUrls {
@@ -108,8 +150,13 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
-		req.scheme, req.host, os.Getenv("BASE_URL"), req.Org, req.Repo, req.Branch)
-	mdText.PlainTextf(md.Link("Add Badges and Charts to Readme", readmeLink))
+		req.scheme,
+		req.host,
+		os.Getenv("BASE_URL"),
+		req.Org,
+		req.Repo,
+		req.Branch)
+	mdText.PlainTextf(md.Link("Embed into Readme➲", readmeLink))
 
 	return mdText.String(), nil
 }
@@ -124,33 +171,7 @@ func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 	return ""
 }
 
-func (p *PR) TypesChangedSince(req *PRRequest) ([]models.Type, error) {
-	typesChanged := []models.Type{}
+func (p *PR) TypesToReport(req *PRRequest) ([]models.Type, error) {
 	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch}, req.Type)
-	if err != nil {
-		return typesChanged, err
-	}
-
-	for _, t := range types {
-		sbs, err := p.coverageModel.GetLatestBranchScoresWithPR(req.Org, req.Repo, req.Branch, t.Name, 2)
-		if err != nil {
-			p.log.Error(err)
-			typesChanged = append(typesChanged, t)
-			continue
-		}
-		if len(sbs) < 2 {
-			typesChanged = append(typesChanged, t)
-			continue
-		}
-
-		if float64(sbs[0].PRNum) != float64(sbs[1].PRNum) {
-			typesChanged = append(typesChanged, t)
-			continue
-		}
-		if F64NumberToK(&sbs[0].Score) != F64NumberToK(&sbs[1].Score) {
-			typesChanged = append(typesChanged, t)
-			continue
-		}
-	}
-	return typesChanged, nil
+	return types, err
 }

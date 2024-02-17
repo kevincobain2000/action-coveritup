@@ -47,7 +47,7 @@ func (h *PRHandler) Get(c echo.Context) error {
 	req.host = c.Request().Host
 	req.scheme = c.Scheme()
 
-	types, err := h.PR.TypesChangedSince(req)
+	types, err := h.PR.TypesToReport(req)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
