@@ -2,6 +2,8 @@ package pkg
 
 import (
 	"hash/fnv"
+	"io"
+	"mime/multipart"
 	"strconv"
 	"strings"
 )
@@ -69,4 +71,17 @@ func MD5(s string) string {
 	}
 	u := h.Sum32()
 	return strconv.FormatUint(uint64(u), 16)
+}
+
+func GetFileContents(file *multipart.FileHeader) (string, error) {
+	src, err := file.Open()
+	if err != nil {
+		return "", err
+	}
+	defer src.Close()
+	contents, err := io.ReadAll(src)
+	if err != nil {
+		return "", err
+	}
+	return string(contents), nil
 }

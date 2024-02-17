@@ -9,6 +9,7 @@ require (
 	github.com/go-echarts/statsview v0.3.4
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-spectest/markdown v0.0.7
+	github.com/k0kubun/pp v3.0.1+incompatible
 	github.com/kevincobain2000/instachart v1.0.16
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/mcuadros/go-defaults v1.2.0
@@ -42,8 +43,10 @@ require (
 	github.com/imroc/req/v3 v3.42.3 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
+	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
 	github.com/karrick/godirwalk v1.17.0 // indirect
 	github.com/klauspost/compress v1.17.6 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
 	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -57,6 +60,7 @@ require (
 	github.com/quic-go/quic-go v0.41.0 // indirect
 	github.com/refraction-networking/utls v1.6.2 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
+	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	github.com/rs/cors v1.10.1 // indirect
 	github.com/sethvargo/go-retry v0.2.4 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
@@ -75,5 +79,6 @@ require (
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	golang.org/x/tools v0.18.0 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
