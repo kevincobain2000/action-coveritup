@@ -125,6 +125,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	if isFirstPR {
 		mdText.PlainText(basicTable)
 	} else {
+		basicTable = "\n" + basicTable + "\n"
 		mdText.Details("Comparison Table", basicTable)
 	}
 
