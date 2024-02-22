@@ -65,6 +65,17 @@ runs:
       if: ${{steps.branch-name.outputs.current_branch == ''}}
       run: echo BRANCH_OR_TAG_NAME=${{ github.ref }}|sed 's|refs/tags/||' >> $GITHUB_ENV
 
+    # Commit Hash
+    - name: Commit Hash
+      shell: bash
+      if: ${{github.event_name == 'pull_request'}}
+      run: echo COMMIT_HASH=${{ github.event.pull_request.head.sha }} >> $GITHUB_ENV
+
+    - name: Commit Hash
+      if: ${{github.event_name != 'pull_request'}}
+      shell: bash
+      run: echo COMMIT_HASH=${{ github.sha }} >> $GITHUB_ENV
+
     # Find the pull request number
     - name: pr-number-action
       if: ${{github.event_name == 'pull_request'}}
@@ -98,7 +109,7 @@ runs:
           -H 'Authorization: ${{ inputs.token }}' \
           -d '{
             "org": "${{github.repository_owner}}",
-            "commit": "${{ github.sha }}",
+            "commit": "${{ env.COMMIT_HASH }}",
             "repo": "${{ github.event.repository.name }}",
             "type": "${{ inputs.type }}",
             "metric": "${{ inputs.metric }}",
@@ -154,7 +165,7 @@ runs:
             "org": "${{github.repository_owner}}",
             "repo": "${{ github.event.repository.name }}",
             "type": "${{ inputs.type }}",
-            "commit": "${{ github.sha }}"
+            "commit": "${{ env.COMMIT_HASH }}"
           }' \
           "${{inputs.host}}/destroy"
     ###                End                ###
