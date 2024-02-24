@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	DOWN_SYMBOL      = "🔻"
-	UP_SYMBOL        = "➕"
+	DOWN_SYMBOL      = "📉"
+	UP_SYMBOL        = "📈"
 	NO_CHANGE_SYMBOL = ""
 )
 
@@ -30,6 +30,9 @@ func NewPR() *PR {
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
+	totalPlus := 0
+	totalMinus := 0
+	verdict := ""
 	commitBranch := ""
 	commitBaseBranch := ""
 	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
@@ -40,7 +43,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 	baseAndBranchImgUrls := []string{} // stores urls for bar charts for comparison of base and branch
 	commitHistoryImgUrls := []string{} // stores urls for commit history trends (line charts)
-	// userHistoryImgUrls := []string{}   // stores urls for user history trends (line charts)
+	userHistoryImgUrls := []string{}   // stores urls for user history trends (line charts)
 	mdText.H4("CoverItUp Report")
 
 	for _, t := range types {
@@ -61,7 +64,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			tableRow[1] = F64NumberToK(&scoreBaseBranch.Score) + "" + t.Metric
 		}
 
-		scoreBranch, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.Branch, t.Name)
+		scoreBranch, err := p.coverageModel.GetLatestBranchScoreByPR(req.Org, req.Repo, req.Branch, t.Name, req.PRNum)
 		if commitBranch == "" {
 			commitBranch = scoreBranch.Commit
 		}
@@ -76,6 +79,12 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			tableRow[3] = symbol
 			if symbol == UP_SYMBOL || symbol == DOWN_SYMBOL {
 				tableRow[2] = "**" + tableRow[2] + "**"
+			}
+			if symbol == UP_SYMBOL {
+				totalPlus++
+			}
+			if symbol == DOWN_SYMBOL {
+				totalMinus++
 			}
 		}
 		mdTable.Rows = append(mdTable.Rows, tableRow)
@@ -115,7 +124,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		baseAndBranchImgUrls = append(baseAndBranchImgUrls, bbUrl)
 
 		// this is dynamic bar chart, that changes upon new commits, so previous commits comments also change dynamically
-		chUrl := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s",
+		chUrl := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s&pr_history=%s&last_commit=%s",
 			req.scheme,
 			req.host,
 			os.Getenv("BASE_URL"),
@@ -125,8 +134,25 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			t.Name,
 			req.Theme,
 			320,
-			"fill")
+			"fill",
+			"commits",
+			commitBranch)
 		commitHistoryImgUrls = append(commitHistoryImgUrls, chUrl)
+
+		uhUrl := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s&pr_history=%s&last_commit=%s",
+			req.scheme,
+			req.host,
+			os.Getenv("BASE_URL"),
+			req.Org,
+			req.Repo,
+			req.PRNum,
+			t.Name,
+			req.Theme,
+			320,
+			"fill",
+			"users",
+			commitBranch)
+		userHistoryImgUrls = append(userHistoryImgUrls, uhUrl)
 	}
 
 	basicTable, err := markdown.NewTableFormatterBuilder().
@@ -150,11 +176,19 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		return "", err
 	}
 
+	if totalPlus > totalMinus {
+		verdict = UP_SYMBOL
+	} else if totalPlus < totalMinus {
+		verdict = DOWN_SYMBOL
+	}
 	mdText.PlainText("")
 	if isFirstPR {
 		mdText.PlainText(basicTable)
 	} else {
-		mdText.Details(fmt.Sprintf("Comparison Table - %d Types", len(types)), "\n"+basicTable+"\n")
+		mdText.Details(fmt.Sprintf("Comparison Table - <b>%d</b> Types %s",
+			len(types),
+			verdict),
+			"\n"+basicTable+"\n")
 	}
 
 	images := ""
@@ -163,7 +197,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	mdText.Details(fmt.Sprintf("Base vs Branch - <code>%s</code> from <code>%s</code>", req.BaseBranch, req.Branch), "\n"+images+"\n")
+	mdText.Details(fmt.Sprintf("Comparison Chart - <code>%s</code> from <code>%s</code>", req.BaseBranch, req.Branch), "\n"+images+"\n")
 
 	cImages := ""
 	for _, u := range commitHistoryImgUrls {
@@ -171,7 +205,14 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	mdText.Details("Commit History", "\n"+cImages+"\n")
+	mdText.Details(fmt.Sprintf("Commits History - upto <code>%s</code> for <b>#%d</b>", commitBranch, req.PRNum), "\n"+cImages+"\n")
+
+	uImages := ""
+	for _, u := range userHistoryImgUrls {
+		uImages += fmt.Sprintf("<img src='%s' alt='user history' />", u)
+	}
+	mdText.PlainText("")
+	mdText.Details(fmt.Sprintf("Users History - upto <code>%s</code> for <b>#%d</b>", commitBranch, req.PRNum), "\n"+uImages+"\n")
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
