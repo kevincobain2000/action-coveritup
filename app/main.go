@@ -35,7 +35,10 @@ var f Flags
 var version = "dev"
 
 func main() {
-	os.Setenv("VERSION", version)
+	err := os.Setenv("VERSION", version)
+	if err != nil {
+		pkg.Logger().Error(err)
+	}
 	if len(os.Args) > 1 && os.Args[1] == "version" {
 		fmt.Println(version)
 		return
