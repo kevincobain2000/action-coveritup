@@ -11,7 +11,11 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const ()
+const (
+	DOWN_SYMBOL      = "🔻"
+	UP_SYMBOL        = "➕"
+	NO_CHANGE_SYMBOL = ""
+)
 
 type PR struct {
 	coverageModel *models.Coverage
@@ -26,46 +30,57 @@ func NewPR() *PR {
 }
 
 func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
+	commitBranch := ""
+	commitBaseBranch := ""
 	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
 
 	mdText := md.NewMarkdown(os.Stdout)
 	mdTable := md.TableSet{
 		Rows: [][]string{},
 	}
-	urls := []string{}   // stores urls for bar charts for comparison of base and branch
-	chUrls := []string{} // stores urls for commit history trends (line charts)
+	baseAndBranchImgUrls := []string{} // stores urls for bar charts for comparison of base and branch
+	commitHistoryImgUrls := []string{} // stores urls for commit history trends (line charts)
+	// userHistoryImgUrls := []string{}   // stores urls for user history trends (line charts)
 	mdText.H4("CoverItUp Report")
 
 	for _, t := range types {
 		y := make([]float64, 2)
-		row := make([]string, 3)
-		row[0] = "*" + t.Name + "*"
+		tableRow := make([]string, 4)
+		tableRow[0] = "*" + t.Name + "*"
 
-		sb, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.BaseBranch, t.Name)
+		scoreBaseBranch, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.BaseBranch, t.Name)
+		if commitBaseBranch == "" {
+			commitBaseBranch = scoreBaseBranch.Commit
+		}
 
 		if err != nil {
 			y[0] = 0
-			row[1] = ""
+			tableRow[1] = ""
 		} else {
-			y[0] = sb.Score
-			row[1] = F64NumberToK(&sb.Score) + "" + t.Metric
+			y[0] = scoreBaseBranch.Score
+			tableRow[1] = F64NumberToK(&scoreBaseBranch.Score) + "" + t.Metric
 		}
 
-		s, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.Branch, t.Name)
+		scoreBranch, err := p.coverageModel.GetLatestBranchScore(req.Org, req.Repo, req.Branch, t.Name)
+		if commitBranch == "" {
+			commitBranch = scoreBranch.Commit
+		}
 		if err != nil {
 			y[1] = 0
-			row[2] = ""
+			tableRow[2] = ""
+			tableRow[3] = ""
 		} else {
-			ud := p.UpOrDown(&sb.Score, &s.Score)
-			y[1] = s.Score
-			row[2] = F64NumberToK(&s.Score) + "" + t.Metric + ud
-			if ud != "" && ud != "-" {
-				row[2] = "**" + row[2] + "**"
+			symbol := p.UpOrDown(&scoreBaseBranch.Score, &scoreBranch.Score)
+			y[1] = scoreBranch.Score
+			tableRow[2] = F64NumberToK(&scoreBranch.Score) + "" + t.Metric
+			tableRow[3] = symbol
+			if symbol == UP_SYMBOL || symbol == DOWN_SYMBOL {
+				tableRow[2] = "**" + tableRow[2] + "**"
 			}
 		}
-		mdTable.Rows = append(mdTable.Rows, row)
+		mdTable.Rows = append(mdTable.Rows, tableRow)
 
-		data := struct {
+		bbData := struct {
 			X []string    `json:"x"`
 			Y [][]float64 `json:"y"`
 			Z [][]float64 `json:"z"`
@@ -76,10 +91,11 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			Z: [][]float64{},
 			N: []string{t.Name},
 		}
-		data.Y = append(data.Y, y)
-		data.Z = append(data.Z, y)
+		bbData.Y = append(bbData.Y, y)
+		bbData.Z = append(bbData.Z, y)
 
-		u := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%d&height=%d&grid=hide&output=%s&theme=%s&grid=%s",
+		// this is a static bar chart, that doesn't change once commented
+		bbUrl := fmt.Sprintf("%s://%s%sbar?title=%s&metric=%s&width=%d&height=%d&grid=hide&output=%s&theme=%s&grid=%s",
 			req.scheme,
 			req.host,
 			os.Getenv("BASE_URL"),
@@ -91,14 +107,15 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			req.Theme,
 			"hide")
 
-		jsonData, err := json.Marshal(data)
+		jsonData, err := json.Marshal(bbData)
 		if err != nil {
 			return "", err
 		}
-		u = u + "&data=" + string(jsonData)
-		urls = append(urls, u)
+		bbUrl = bbUrl + "&data=" + string(jsonData)
+		baseAndBranchImgUrls = append(baseAndBranchImgUrls, bbUrl)
 
-		cu := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s",
+		// this is dynamic bar chart, that changes upon new commits, so previous commits comments also change dynamically
+		chUrl := fmt.Sprintf("%s://%s%schart?org=%s&repo=%s&pr_num=%d&type=%s&theme=%s&height=%d&line=%s",
 			req.scheme,
 			req.host,
 			os.Getenv("BASE_URL"),
@@ -109,12 +126,24 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 			req.Theme,
 			320,
 			"fill")
-		chUrls = append(chUrls, cu)
+		commitHistoryImgUrls = append(commitHistoryImgUrls, chUrl)
 	}
 
 	basicTable, err := markdown.NewTableFormatterBuilder().
 		WithPrettyPrint().
-		Build("Type", fmt.Sprintf("`%s`", req.BaseBranch), fmt.Sprintf("`%s`", req.Branch)).
+		Build("Type",
+			fmt.Sprintf("`%s`", req.BaseBranch),
+			fmt.Sprintf("`%s`", req.Branch),
+			fmt.Sprintf("[%s](/%s/%s/commit/%s) from [%s](/%s/%s/pull/%d/commits/%s)",
+				commitBaseBranch,
+				req.Org,
+				req.Repo,
+				commitBaseBranch,
+				commitBranch,
+				req.Org,
+				req.Repo,
+				req.PRNum,
+				commitBranch)).
 		Format(mdTable.Rows)
 
 	if err != nil {
@@ -125,29 +154,24 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	if isFirstPR {
 		mdText.PlainText(basicTable)
 	} else {
-		basicTable = "\n" + basicTable + "\n"
-		mdText.Details("Comparison Table", basicTable)
+		mdText.Details(fmt.Sprintf("Comparison Table - %d Types", len(types)), "\n"+basicTable+"\n")
 	}
 
 	images := ""
-	for _, u := range urls {
+	for _, u := range baseAndBranchImgUrls {
 		images += fmt.Sprintf("<img src='%s' alt='base vs branch' />", u)
 	}
 
 	mdText.PlainText("")
-	if isFirstPR {
-		mdText.PlainText(images)
-	} else {
-		mdText.Details("Base vs Branch", images)
-	}
+	mdText.Details(fmt.Sprintf("Base vs Branch - <code>%s</code> from <code>%s</code>", req.BaseBranch, req.Branch), "\n"+images+"\n")
 
 	cImages := ""
-	for _, u := range chUrls {
+	for _, u := range commitHistoryImgUrls {
 		cImages += fmt.Sprintf("<img src='%s' alt='commit history' />", u)
 	}
 
 	mdText.PlainText("")
-	mdText.Details("Commit History", cImages)
+	mdText.Details("Commit History", "\n"+cImages+"\n")
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
@@ -157,19 +181,19 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		req.Org,
 		req.Repo,
 		req.Branch)
-	mdText.PlainTextf(md.Link("Embed into Readme➲", readmeLink))
+	mdText.PlainTextf(md.Link("Embed README.md", readmeLink))
 
 	return mdText.String(), nil
 }
 
 func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 	if *baseScore > *branchScore {
-		return "-"
+		return DOWN_SYMBOL
 	}
 	if *baseScore < *branchScore {
-		return "+"
+		return UP_SYMBOL
 	}
-	return ""
+	return NO_CHANGE_SYMBOL
 }
 
 func (p *PR) TypesToReport(req *PRRequest) ([]models.Type, error) {

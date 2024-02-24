@@ -88,7 +88,7 @@ runs:
       if: ${{inputs.pr_comment != 'true' &&inputs.destroy != 'true'}}
       run: |
         git config remote.origin.prune true && git fetch
-        echo CIU_ACTIVE_BRANCHES=`git branch -r | grep -v HEAD | sed 's/origin\///' | tr '\n' ' '` >> "$GITHUB_ENV"
+        echo ACTIVE_BRANCHES=`git branch -r | grep -v HEAD | sed 's/origin\///' | tr '\n' ' '` >> "$GITHUB_ENV"
     ###              End                ###
     ### PREPARE ENVIRONMENT and VARIABLES ###
 
@@ -117,7 +117,7 @@ runs:
             "user": "${{ github.actor }}",
             "branch": "${{ env.BRANCH_OR_TAG_NAME }}",
             "pr_num": "${{ steps.pr-number-id.outputs.pr }}",
-            "branches": "${{ env.CIU_ACTIVE_BRANCHES }}"
+            "branches": "${{ env.ACTIVE_BRANCHES }}"
           }' \
           "${{inputs.host}}/upload"
 

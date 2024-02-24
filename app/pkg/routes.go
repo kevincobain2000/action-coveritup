@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"net/http"
+	"os"
 
 	instachart "github.com/kevincobain2000/instachart/pkg"
 	"github.com/labstack/echo/v4"
@@ -30,7 +31,7 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 		filename := fmt.Sprintf("%s/%s", DIST_DIR, "index.html")
 		content, err := publicDir.ReadFile(filename)
 		if err != nil {
-			return c.String(http.StatusNotFound, "404")
+			return c.String(http.StatusOK, os.Getenv("VERSION"))
 		}
 		return ResponseHTML(c, content)
 	})
@@ -56,6 +57,15 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 	// /bar
 	e.GET(baseURL+"bar", func(c echo.Context) error {
 		img, err := instachart.NewBarChartHandler().Get(c)
+		if err != nil {
+			return err
+		}
+		return c.Blob(http.StatusOK, "", img)
+	})
+
+	// /line
+	e.GET(baseURL+"line", func(c echo.Context) error {
+		img, err := instachart.NewLineChartHandler().Get(c)
 		if err != nil {
 			return err
 		}
