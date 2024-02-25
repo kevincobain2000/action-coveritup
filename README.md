@@ -61,6 +61,7 @@
 ![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&height=150&width=150&output=svg)
 ![go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&output=svg&width=160&height=160&branch=master&line=fill)
 
+---
 
 **Quick Setup:** Quickly set up code coverage or other useful metrics on your project.
 
@@ -79,16 +80,16 @@
 
 Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summary report for diff.
 
+See this pull request for example: https://github.com/kevincobain2000/action-coveritup/pull/15
+
 
 # Examples - Embedding
 
-#### Examples to create own dashboards that can be embedded in your README.md
-
-#### Coverage Trends for branch `master`
+### Coverage Trends for branch `master`
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branch=master&output=svg&theme=dark)
 
-#### Build Times Trends for branch `master`
+### Build Times Trends for branch `master`
 
 ![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branch=master&output=svg&theme=dark&line=fill)
 
@@ -102,11 +103,11 @@ Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summ
 
 <br>
 
-#### Code Coverage on branch trends
+### Code Coverage on branch trends
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branches=all&output=svg)
 
-#### Build Time on branch trends
+### Build Time on branch trends
 
 ![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branches=all&output=svg)
 
