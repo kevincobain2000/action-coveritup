@@ -6,6 +6,7 @@ on:
       - '**/*.sum'
       - '**/*.yml'
       - '**/*.astro'
+      - '**/*.md'
   push:
     tags-ignore:
       - '**'
