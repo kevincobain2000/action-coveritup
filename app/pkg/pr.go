@@ -197,7 +197,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	mdText.Details(fmt.Sprintf("Comparison Chart - <code>%s</code> from <code>%s</code>", req.BaseBranch, req.Branch), "\n"+images+"\n")
+	mdText.Details(fmt.Sprintf("Comparisons Chart - <code>%s</code> from <code>%s</code>", req.BaseBranch, req.Branch), "\n"+images+"\n")
 
 	cImages := ""
 	for _, u := range commitHistoryImgUrls {
@@ -205,14 +205,15 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	}
 
 	mdText.PlainText("")
-	mdText.Details(fmt.Sprintf("Commits History - upto <code>%s</code> for <b>#%d</b>", commitBranch, req.PRNum), "\n"+cImages+"\n")
+	uptoCommitsText := fmt.Sprintf("Upto <code>%s</code> for <b>#%d</b>", commitBranch, req.PRNum)
+	mdText.Details("Commits History", "\n"+uptoCommitsText+"\n"+cImages+"\n")
 
 	uImages := ""
 	for _, u := range userHistoryImgUrls {
 		uImages += fmt.Sprintf("<img src='%s' alt='user history' />", u)
 	}
 	mdText.PlainText("")
-	mdText.Details(fmt.Sprintf("Users History - upto <code>%s</code> for <b>#%d</b>", commitBranch, req.PRNum), "\n"+uImages+"\n")
+	mdText.Details("Users History", "\n"+uptoCommitsText+"\n"+uImages+"\n")
 
 	mdText.PlainText("")
 	readmeLink := fmt.Sprintf("%s://%s%sreadme?org=%s&repo=%s&branch=%s",
