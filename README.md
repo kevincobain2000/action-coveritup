@@ -75,6 +75,8 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
+**Read on Medium** - [Revolutionizing Code Tracking for Developers](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204), [Use Linters the Right way](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204)
+
 
 # Examples - Pull Request Comments
 
