@@ -72,6 +72,24 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
+**Table of Contents**
+
+- [Examples - Pull Request Comments](#examples---pull-request-comments)
+- [Examples - Embedding](#examples---embedding)
+      - [Coverage Trends for branch `master`](#coverage-trends-for-branch-master)
+      - [Build Times Trends for branch `master`](#build-times-trends-for-branch-master)
+      - [Code Coverage on branch trends](#code-coverage-on-branch-trends)
+      - [Build Time on branch trends](#build-time-on-branch-trends)
+- [Step 1) Using Action](#step-1-using-action)
+- [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
+  - [Scores `example code coverage`](#scores-example-code-coverage)
+  - [Time taken](#time-taken)
+  - [Bundle sizes](#bundle-sizes)
+  - [Counts](#counts)
+- [Step 3) Embedding badges and charts](#step-3-embedding-badges-and-charts)
+- [Compliance](#compliance)
+- [CHANGE LOG](#change-log)
+
 # Examples - Pull Request Comments
 
 Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summary report for diff.
@@ -114,19 +132,6 @@ Examples to create own dashboards that can be embedded in your README.md
 <img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg" />
 <img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg" />
 </details>
-
-- [Full size examples](#full-size-examples)
-      - [Code Coverage on branch trends](#code-coverage-on-branch-trends)
-      - [Build Time on branch trends](#build-time-on-branch-trends)
-- [Step 1) Using Action](#step-1-using-action)
-- [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
-  - [Scores](#scores)
-  - [Times](#times)
-  - [Sizes](#sizes)
-  - [Counts](#counts)
-- [Step 3) Embedding badges and charts](#step-3-embedding-badges-and-charts)
-- [Compliance](#compliance)
-- [CHANGE LOG](#change-log)
 
 
 # Step 1) Using Action

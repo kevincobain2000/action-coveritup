@@ -1,23 +1,10 @@
 on:
   pull_request:
-    paths:
-      - '**/*.go'
-      - '**/*.mod'
-      - '**/*.sum'
-      - '**/*.yml'
-      - '**/*.astro'
-      - '**/*.md'
   push:
     tags-ignore:
       - '**'
     branches:
       - '**'
-    paths:
-      - '**/*.go'
-      - '**/*.mod'
-      - '**/*.sum'
-      - '**/*.yml'
-      - '**/*.astro'
 
 name: "Cover It Up"
 concurrency:
