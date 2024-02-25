@@ -21,9 +21,9 @@ func NewPRHandler() *PRHandler {
 type PRRequest struct {
 	Org        string `json:"org"  query:"org" validate:"required,ascii,excludes=/" message:"org is required"`
 	Repo       string `json:"repo" query:"repo" validate:"required,ascii,excludes=/" message:"repo is required"`
-	Branch     string `json:"branch" query:"branch" validate:"required,ascii" message:"ascii branch is required"`
-	BaseBranch string `json:"base_branch" query:"base_branch" validate:"required,ascii" message:"ascii base_branch is required"`
-	PRNum      int    `json:"pr_num" query:"pr_num"`
+	Branch     string `json:"branch" query:"branch" validate:"required,ascii" message:"branch is required"`
+	BaseBranch string `json:"base_branch" query:"base_branch" validate:"required,ascii" message:"base_branch is required"`
+	PRNum      int    `json:"pr_num" query:"pr_num" validate:"required,numeric" message:"pr_num is required"`
 	Theme      string `json:"theme" query:"theme" default:"light" validate:"oneof=light dark" message:"theme must be light or dark"`
 	Type       string `json:"type" query:"type" validate:"ascii" message:"ascii type is required"`
 

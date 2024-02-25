@@ -129,7 +129,9 @@ func (c *Coverage) GetLatestBranchScore(orgName string, repoName string, branchN
 }
 
 type LatestBranchScorePR struct {
+	ID         int64   `json:"id"`
 	BranchName string  `json:"branch_name"`
+	Commit     string  `json:"commit"`
 	Score      float64 `json:"score"`
 	TypeName   string  `json:"type_name"`
 	Metric     string  `json:"metric"`
@@ -137,13 +139,19 @@ type LatestBranchScorePR struct {
 	CreatedAt  string  `json:"created_at"`
 }
 
-// GetLatestBranchScoresByLimit is same as GetLatestBranchScore but with limit and PR
-func (c *Coverage) GetLatestBranchScoresWithPR(orgName string, repoName string, branchName string, typeName string, limit int) ([]LatestBranchScorePR, error) {
+func (c *Coverage) GetLatestBranchScoreByPR(
+	orgName string,
+	repoName string,
+	branchName string,
+	typeName string,
+	prNum int) (LatestBranchScorePR, error) {
 
-	var ret []LatestBranchScorePR
+	var ret LatestBranchScorePR
 	query := `
 	SELECT
+		c.id,
 		c.branch_name,
+		c.commit,
 		c.pr_num,
 		Round(c.score, 1) as score,
 		t.name as type_name,
@@ -164,12 +172,12 @@ func (c *Coverage) GetLatestBranchScoresWithPR(orgName string, repoName string, 
 	AND
 		c.branch_name = @branchName
 	AND
-		t.name = @typeName
+		c.pr_num = @prNum
 	AND
-		c.pr_num != 0
+		t.name = @typeName
 	ORDER BY
 		c.created_at DESC, c.id DESC
-	LIMIT @limit;
+	LIMIT 1;
 	`
 	err := db.Db().Raw(
 		query,
@@ -177,11 +185,12 @@ func (c *Coverage) GetLatestBranchScoresWithPR(orgName string, repoName string, 
 		sql.Named("repoName", repoName),
 		sql.Named("branchName", branchName),
 		sql.Named("typeName", typeName),
-		sql.Named("limit", limit)).
+		sql.Named("prNum", prNum)).
 		Scan(&ret).Error
 	if err != nil {
 		return ret, err
 	}
+	ret.Metric = strings.TrimSpace(ret.Metric)
 
 	return ret, err
 }
@@ -227,7 +236,8 @@ func (c *Coverage) GetLatestBranchScores(orgName string, repoName string, branch
 	return ret, err
 }
 
-type LatestPRScore struct {
+type LatestPRScoreForCommits struct {
+	ID         int64   `json:"id"`
 	Commit     string  `json:"commit"`
 	BranchName string  `json:"branch_name"`
 	Score      float64 `json:"score"`
@@ -235,11 +245,59 @@ type LatestPRScore struct {
 	Metric     string  `json:"metric"`
 }
 
-func (c *Coverage) GetLatestPRScores(orgName string, repoName string, prNum int, typeName string) ([]LatestPRScore, error) {
-	var ret []LatestPRScore
+func (c *Coverage) GetIDFromCommit(orgName string, repoName string, typeName string, commit string) (int, error) {
+	var ret int
 	query := `
 	SELECT
-		c.commit, c.branch_name,
+		c.id
+	FROM coverages c
+	LEFT JOIN
+		orgs o ON c.org_id = o.id
+	LEFT JOIN
+		repos r ON c.repo_id = r.id
+	LEFT JOIN
+		types t ON c.type_id = t.id
+	WHERE
+		o.name = @orgName
+	AND
+		r.name = @repoName
+	AND
+		c.commit = @commit
+	AND
+		t.name = @typeName
+	ORDER BY
+		c.id DESC
+	LIMIT 1;
+	`
+	err := db.Db().Raw(
+		query,
+		sql.Named("orgName", orgName),
+		sql.Named("repoName", repoName),
+		sql.Named("commit", commit),
+		sql.Named("typeName", typeName)).
+		Scan(&ret).Error
+	if err != nil {
+		return ret, err
+	}
+	return ret, err
+}
+
+func (c *Coverage) GetLatestPRScoresForCommits(
+	orgName string,
+	repoName string,
+	prNum int,
+	typeName string,
+	lastCommit string) ([]LatestPRScoreForCommits, error) {
+
+	var ret []LatestPRScoreForCommits
+	fromID, err := c.GetIDFromCommit(orgName, repoName, typeName, lastCommit)
+	if err != nil {
+		return ret, err
+	}
+
+	query := `
+	SELECT
+		c.id, c.commit, c.branch_name,
 		Round(c.score, 1) as score
 	FROM coverages c
 	LEFT JOIN
@@ -256,14 +314,81 @@ func (c *Coverage) GetLatestPRScores(orgName string, repoName string, prNum int,
 		c.pr_num = @prNum
 	AND
 		t.name = @typeName
+	AND
+		c.id <= @fromID
+	ORDER BY c.id DESC
 	LIMIT 150;
 	`
-	err := db.Db().Raw(
+	err = db.Db().Raw(
 		query,
 		sql.Named("orgName", orgName),
 		sql.Named("repoName", repoName),
 		sql.Named("prNum", prNum),
-		sql.Named("typeName", typeName)).
+		sql.Named("typeName", typeName),
+		sql.Named("fromID", fromID)).
+		Scan(&ret).Error
+	if err != nil {
+		return ret, err
+	}
+	return ret, err
+}
+
+type LatestPRScoreForUsers struct {
+	ID         int64   `json:"id"`
+	UserName   string  `json:"user_name"`
+	BranchName string  `json:"branch_name"`
+	Score      float64 `json:"score"`
+	TypeName   string  `json:"type_name"`
+	Metric     string  `json:"metric"`
+}
+
+func (c *Coverage) GetLatestPRScoresForUsers(
+	orgName string,
+	repoName string,
+	prNum int,
+	typeName string,
+	lastCommit string) ([]LatestPRScoreForUsers, error) {
+	var ret []LatestPRScoreForUsers
+	fromID, err := c.GetIDFromCommit(orgName, repoName, typeName, lastCommit)
+	if err != nil {
+		return ret, err
+	}
+	query := `
+	SELECT
+	    max(c.id) as id,
+		u.name as user_name,
+		c.branch_name,
+		Round(c.score, 1) as score
+	FROM coverages c
+	LEFT JOIN
+		orgs o ON c.org_id = o.id
+	LEFT JOIN
+		repos r ON c.repo_id = r.id
+	LEFT JOIN
+		types t ON c.type_id = t.id
+	LEFT JOIN
+		users u ON c.user_id = u.id
+	WHERE
+		o.name = @orgName
+	AND
+		r.name = @repoName
+	AND
+		c.pr_num = @prNum
+	AND
+		t.name = @typeName
+	AND
+		c.id <= @fromID
+	GROUP BY user_name
+	ORDER BY id DESC
+	LIMIT 150;
+	`
+	err = db.Db().Raw(
+		query,
+		sql.Named("orgName", orgName),
+		sql.Named("repoName", repoName),
+		sql.Named("prNum", prNum),
+		sql.Named("typeName", typeName),
+		sql.Named("fromID", fromID)).
 		Scan(&ret).Error
 	if err != nil {
 		return ret, err
@@ -366,7 +491,7 @@ func (c *Coverage) GetLatestUserScores(orgName string, repoName string, userName
 	var ret []LatestUserScore
 	query := `
 	SELECT
-		c.branch_name,
+		u.name as user_name,
 		DATE_FORMAT(MAX(c.created_at), '%Y/%m/%d') as created_at,
 		Round(c.score, 1) as score
 	FROM coverages c

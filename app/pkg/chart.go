@@ -1,6 +1,7 @@
 package pkg
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/kevincobain2000/action-coveritup/models"
@@ -29,8 +30,8 @@ func (e *Chart) GetType(name string) (*models.Type, error) {
 	return e.typeModel.Get(name)
 }
 
-func (e *Chart) GetInstaChartForPR(req *ChartRequest, t *models.Type) ([]byte, error) {
-	ret, err := e.coverageModel.GetLatestPRScores(req.Org, req.Repo, req.PRNum, t.Name)
+func (e *Chart) GetInstaChartForPRCommits(req *ChartRequest, t *models.Type) ([]byte, error) {
+	ret, err := e.coverageModel.GetLatestPRScoresForCommits(req.Org, req.Repo, req.PRNum, t.Name, req.LastCommit)
 	if err != nil {
 		return nil, err
 	}
@@ -59,6 +60,41 @@ func (e *Chart) GetInstaChartForPR(req *ChartRequest, t *models.Type) ([]byte, e
 	}
 
 	return line.Get(xData, yyData, names, cReq)
+}
+func (e *Chart) GetInstaChartForPRUsers(req *ChartRequest, t *models.Type) ([]byte, error) {
+	ret, err := e.coverageModel.GetLatestPRScoresForUsers(req.Org, req.Repo, req.PRNum, t.Name, req.LastCommit)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(ret) > 0 {
+		req.Branch = fmt.Sprintf("%s #%d", ret[0].BranchName, req.PRNum)
+	}
+
+	cReq := e.makeChartRequest(req, t)
+	bar := instachart.NewBarChart()
+	xData := []string{}
+	yData := []float64{}
+	zData := []float64{}
+	names := []string{t.Name}
+
+	for i := len(ret) - 1; i >= 0; i-- {
+		r := ret[i]
+		xData = append(xData, r.UserName)
+		yData = append(yData, r.Score)
+		zData = append(zData, r.Score)
+	}
+	yyData := [][]float64{yData}
+	zzData := [][]float64{zData}
+
+	// this will never happen, to prevent errors and display blank chart
+	if len(xData) == 0 {
+		xData = append(xData, "0")
+		yyData = append(yyData, []float64{0})
+		zzData = append(zzData, []float64{0})
+	}
+
+	return bar.GetStacked(xData, yyData, zzData, names, cReq)
 }
 
 // Line chart with dates on x-axis and scores on y-axis
