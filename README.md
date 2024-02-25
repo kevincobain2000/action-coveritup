@@ -28,10 +28,6 @@
     >
 </p>
 
-<p align="center">
-    <b>Add Widgets To your README</b>
-</p>
-
 
 <p align="center">
     <b>Add Badges To your README</b>
@@ -50,6 +46,10 @@
 ![go-lint-errors](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&branch=master)
 
 ---
+
+<p align="center">
+    <b>Add Widgets To your README</b>
+</p>
 
 ![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg&line=fill)
 ![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg)
