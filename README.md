@@ -32,17 +32,6 @@
     <b>Add Widgets To your README</b>
 </p>
 
-![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg&line=fill)
-![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg)
-![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&height=150&width=150&output=svg&line=fill)
-![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&height=150&width=150&output=svg)
-![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&height=150&width=150&output=svg&line=fill)
-![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&height=150&width=150&output=svg)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&height=150&width=150&output=svg&line=fill)
-![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&height=150&width=150&output=svg)
-![go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&output=svg&width=160&height=160&branch=master)
-
-
 
 <p align="center">
     <b>Add Badges To your README</b>
@@ -60,6 +49,20 @@
 ![go-sec-issues](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master)
 ![go-lint-errors](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&branch=master)
 
+---
+
+![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg&line=fill)
+![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg)
+![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&height=150&width=150&output=svg&line=fill)
+![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&height=150&width=150&output=svg)
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&height=150&width=150&output=svg&line=fill)
+![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&height=150&width=150&output=svg)
+![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&height=150&width=150&output=svg&line=fill)
+![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&height=150&width=150&output=svg)
+![go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&output=svg&width=160&height=160&branch=master&line=fill)
+
+---
+
 **Quick Setup:** Quickly set up code coverage or other useful metrics on your project.
 
 **Self-Hosted:** Also available. Host your code coverage server.
@@ -72,32 +75,51 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
-# Full size examples
+**Read on Medium** - [Revolutionizing Code Tracking for Developers](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204), [Use Linters the Right way](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204)
+
+
+# Examples - Pull Request Comments
+
+Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summary report for diff.
+
+See this pull request for example: https://github.com/kevincobain2000/action-coveritup/pull/15
+
+
+# Examples - Embedding
+
+### Coverage Trends for branch `master`
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branch=master&output=svg&theme=dark)
+
+### Build Times Trends for branch `master`
+
 ![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branch=master&output=svg&theme=dark&line=fill)
-![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark)
-![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark)
-![unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark)
+
+<details>
+<summary>More Examples</summary>
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark" />
+</details>
+
+<br>
+
+### Code Coverage on branch trends
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branches=all&output=svg)
-![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branches=all&output=svg)
-![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg)
-![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg)
-![unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg)
 
-- [Full size examples](#full-size-examples)
-- [Step 1) Using Action](#step-1-using-action)
-- [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
-  - [Scores](#scores)
-  - [Times](#times)
-  - [Sizes](#sizes)
-  - [Counts](#counts)
-- [Step 3) Embedding badges and charts](#step-3-embedding-badges-and-charts)
-- [Compliance](#compliance)
-- [CHANGE LOG](#change-log)
+### Build Time on branch trends
+
+![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branches=all&output=svg)
+
+<details>
+<summary>More Examples</summary>
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg" />
+</details>
 
 
 # Step 1) Using Action
@@ -112,7 +134,7 @@ Before using this action, enable Github Actions
 
 # Step 2) Add to your workflow
 
-## Scores
+## Scores `example code coverage`
 
 ```yaml
     # Example: Clover
@@ -130,7 +152,7 @@ Before using this action, enable Github Actions
         pr_comment: true
 ```
 
-## Times
+## Time taken
 
 ```yaml
     # Example: Go
@@ -159,7 +181,7 @@ Before using this action, enable Github Actions
         pr_comment: true
 ```
 
-## Sizes
+## Bundle sizes
 
 ```yaml
     # Example: Go

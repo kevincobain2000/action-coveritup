@@ -1,22 +1,10 @@
 on:
   pull_request:
-    paths:
-      - '**/*.go'
-      - '**/*.mod'
-      - '**/*.sum'
-      - '**/*.yml'
-      - '**/*.astro'
   push:
     tags-ignore:
       - '**'
     branches:
       - '**'
-    paths:
-      - '**/*.go'
-      - '**/*.mod'
-      - '**/*.sum'
-      - '**/*.yml'
-      - '**/*.astro'
 
 name: "Cover It Up"
 concurrency:
@@ -106,7 +94,6 @@ jobs:
       - name: Coverage
         working-directory: app
         run: |
-          go tool cover -html=coverage.out -o coverage.html
           gocov convert coverage.out | gocov-xml > coverage.xml
       - name: Coveritup
         working-directory: app
