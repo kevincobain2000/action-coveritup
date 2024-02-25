@@ -72,23 +72,52 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
-# Full size examples
+# Examples - Pull Request Comments
+
+Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summary report for diff.
+
+
+# Examples - Embedding
+
+Examples to create own dashboards that can be embedded in your README.md
+
+#### Coverage Trends for branch `master`
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branch=master&output=svg&theme=dark)
+
+#### Build Times Trends for branch `master`
+
 ![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branch=master&output=svg&theme=dark&line=fill)
-![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark)
-![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark)
-![unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark)
+
+<details>
+<summary>More Examples</summary>
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark" />
+</details>
+
+<br>
+
+#### Code Coverage on branch trends
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branches=all&output=svg)
+
+#### Build Time on branch trends
+
 ![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branches=all&output=svg)
-![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg)
-![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg)
-![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg)
-![unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg)
+
+<details>
+<summary>More Examples</summary>
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg" />
+<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg" />
+</details>
 
 - [Full size examples](#full-size-examples)
+      - [Code Coverage on branch trends](#code-coverage-on-branch-trends)
+      - [Build Time on branch trends](#build-time-on-branch-trends)
 - [Step 1) Using Action](#step-1-using-action)
 - [Step 2) Add to your workflow](#step-2-add-to-your-workflow)
   - [Scores](#scores)
@@ -112,7 +141,7 @@ Before using this action, enable Github Actions
 
 # Step 2) Add to your workflow
 
-## Scores
+## Scores `example code coverage`
 
 ```yaml
     # Example: Clover
@@ -130,7 +159,7 @@ Before using this action, enable Github Actions
         pr_comment: true
 ```
 
-## Times
+## Time taken
 
 ```yaml
     # Example: Go
@@ -159,7 +188,7 @@ Before using this action, enable Github Actions
         pr_comment: true
 ```
 
-## Sizes
+## Bundle sizes
 
 ```yaml
     # Example: Go
