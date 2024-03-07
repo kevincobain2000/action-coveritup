@@ -180,6 +180,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		verdict = UP_SYMBOL
 	} else if totalPlus < totalMinus {
 		verdict = DOWN_SYMBOL
+	} else if totalPlus == totalMinus && totalPlus > 0 {
+		verdict = UP_SYMBOL + " and " + DOWN_SYMBOL
 	}
 	mdText.PlainText("")
 	if isFirstPR {
@@ -239,6 +241,6 @@ func (p *PR) UpOrDown(baseScore *float64, branchScore *float64) string {
 }
 
 func (p *PR) TypesToReport(req *PRRequest) ([]models.Type, error) {
-	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch}, req.Type)
+	types, err := p.typeModel.GetBranchTypesFor(req.Org, req.Repo, []string{req.BaseBranch, req.Branch}, req.Types)
 	return types, err
 }

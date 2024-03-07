@@ -1,0 +1,72 @@
+on:
+  pull_request:
+    # paths:
+    #   - '.github/workflows/stg-coveritup.yml'
+  push:
+    # paths:
+    #   - '.github/workflows/stg-coveritup.yml'
+
+name: "Stg - Cover It Up"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+jobs:
+  coveritup:
+    strategy:
+      matrix:
+        go-version: [latest]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: kevincobain2000/action-gobrew@v2
+        with:
+          version: ${{ matrix.go-version }}
+      - run: |
+          curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
+          go install github.com/axw/gocov/gocov@latest
+          go install github.com/AlekSi/gocov-xml@latest
+
+      - name: Runtime
+        uses: ./.github/actions/stg
+        with:
+          command: cd app; go list -m all|wc -l|awk '{$1=$1};1'
+          record: runtime
+          type: stg-go-mod-dependencies
+      - name: Score
+        uses: ./.github/actions/stg
+        with:
+          command: cd app; go list -m all|wc -l|awk '{$1=$1};1'
+          record: score
+          type: stg-go-mod-dependencies
+
+      - name: Score Test
+        uses: ./.github/actions/stg
+        with:
+          command: cd app; go mod tidy; go build main.go
+          record: runtime
+          type: stg-go-build-time
+
+      - run: |
+          mkdir -p frontend/dist
+          echo "test"  > index.html
+          go test -race -v ./... -count=1 -coverprofile=coverage.out; gocov convert coverage.out | gocov-xml > coverage.xml
+        working-directory: app
+      - name: Score Test
+        uses: ./.github/actions/stg
+        with:
+          command: ./cover-totalizer app/coverage.xml
+          record: score
+          type: stg-go-unit-test
+          metric: "%"
+
+      - name: PR Comment all types
+        uses: ./.github/actions/stg
+        with:
+          pr_comment: true
+
+      - name: PR Comment some types
+        uses: ./.github/actions/stg
+        with:
+          pr_comment: true
+          types: stg-go-mod-dependencies,stg-go-unit-test

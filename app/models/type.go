@@ -93,11 +93,12 @@ func (t *Type) GetAllTypesFor(orgName string, repoName string) ([]Type, error) {
 
 	return ret, err
 }
-func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []string, typeName string) ([]Type, error) {
+func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []string, types string) ([]Type, error) {
 	var ret []Type
+	typesArr := strings.Split(types, ",")
 	andWhereType := ""
-	if typeName != "" {
-		andWhereType = "AND t.name = @typeName"
+	if len(typesArr) > 0 {
+		andWhereType = "AND t.name IN @types"
 	}
 
 	query := `SELECT t.* FROM types t
@@ -121,7 +122,7 @@ func (t *Type) GetBranchTypesFor(orgName string, repoName string, branches []str
 		sql.Named("orgName", orgName),
 		sql.Named("repoName", repoName),
 		sql.Named("branches", branches),
-		sql.Named("typeName", typeName),
+		sql.Named("types", types),
 		sql.Named("limit", SAFE_LIMIT_TYPES)).
 		Scan(&ret).Error
 	if err != nil {

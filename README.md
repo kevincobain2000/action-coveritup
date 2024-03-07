@@ -138,13 +138,11 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Clover
-    - name: Code Coverage
-      run: |
-        curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
-        echo SCORE=`./cover-totalizer coverage.xml` >> "$GITHUB_ENV"
+    - run: curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: coverage
+        command: ./cover-totalizer coverage.xml
 
     # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
@@ -156,24 +154,18 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Go
-    - name: Build
-      run: |
-        BUILD_START=$SECONDS
-        go build main.go
-        echo SCORE=$(($SECONDS-BUILD_START)) >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: go-build-time
+        command: go build main.go
+        record: runtime
 
     # Example: NPM
-    - name: Build
-      run: |
-        BUILD_START=$SECONDS
-        npm install
-        echo SCORE=$(($SECONDS-BUILD_START)) >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: npm-build-time
+        command: npm run build
+        record: runtime
 
     # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
@@ -185,28 +177,22 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Go
-    - name: Go Binary Size
-      run: |
-        echo SCORE=`du -sk main | awk '{print $1}'` >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: go-binary-size
+        command: du -sk main | awk '{print $1}'
 
     # Example: NPM
-    - name: Node Modules Size
-      run: |
-        echo SCORE=`du -sm node_modules/ | awk '{print $1}'` >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: npm-modules-size
+        command: du -sm node_modules/ | awk '{print $1}'
 
     # Example: PHP
-    - name: PHP/Composer Vendor Size
-      run: |
-        echo SCORE=`du -sm vendor/ | awk '{print $1}'` >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: php-vendor-size
+        command: du -sm vendor/ | awk '{print $1}'
 
     # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
@@ -218,20 +204,16 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Go
-    - name: Number of dependencies
-      run: |
-        echo SCORE=`go list -m all|wc -l|awk '{$1=$1};1'` >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: go-mod-dependencies
+        command: go list -m all|wc -l|awk '{$1=$1};1'
 
     # Example: PHP
-    - name: PHP/Composer Vendor Size
-      run: |
-        echo SCORE=`composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'` >> "$GITHUB_ENV"
     - uses: kevincobain2000/action-coveritup@v1
       with:
         type: composer-dependencies
+        command: composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'
 
     # Finally comment on PR
     - uses: kevincobain2000/action-coveritup@v1
