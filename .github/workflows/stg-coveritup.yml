@@ -26,14 +26,12 @@ jobs:
           curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
           go install github.com/axw/gocov/gocov@latest
           go install github.com/AlekSi/gocov-xml@latest
-
-      - name: Runtime
-        uses: ./.github/actions/stg
+      - uses: shogo82148/actions-setup-mysql@v1
         with:
-          command: cd app; go list -m all|wc -l|awk '{$1=$1};1'
-          record: runtime
-          type: stg-go-mod-dependencies
-      - name: Score
+          mysql-version: "8.0"
+
+
+      - name: Score Mod dependencies
         uses: ./.github/actions/stg
         with:
           command: cd app; go list -m all|wc -l|awk '{$1=$1};1'
@@ -46,14 +44,14 @@ jobs:
           go test -race -v ./... -count=1 -coverprofile=coverage.out; gocov convert coverage.out | gocov-xml > coverage.xml
         working-directory: app
 
-      - name: Score Test
+      - name: Runtime Unit Tests
         uses: ./.github/actions/stg
         with:
           command: cd app; go mod tidy; go build main.go
           record: runtime
           type: stg-go-build-time
 
-      - name: Score Test
+      - name: Score Unit Test
         uses: ./.github/actions/stg
         with:
           command: ./cover-totalizer app/coverage.xml
