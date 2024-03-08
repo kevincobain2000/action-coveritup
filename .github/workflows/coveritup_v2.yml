@@ -6,7 +6,7 @@ on:
     branches:
       - '**'
 
-name: "Cover It Up"
+name: "Cover It Up v2"
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
@@ -46,7 +46,7 @@ jobs:
         uses: kevincobain2000/action-coveritup@v2
         with:
           type: npm-install-time
-          command: cd app; npm install
+          command: cd app/frontend; npm install
 
       - name: NPM Build
         uses: kevincobain2000/action-coveritup@v2
