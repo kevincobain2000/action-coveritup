@@ -117,7 +117,7 @@ func TestPROK(t *testing.T) {
 				Score:  "1999",
 				PRNum:  "2",
 			},
-			Query:       `?org=org&repo=repo&branch=branch&base_branch=master&pr_num=2&type=type`,
+			Query:       `?org=org&repo=repo&branch=branch&base_branch=master&pr_num=2&types=type`,
 			Status:      http.StatusCreated,
 			ContentType: "text/plain; charset=UTF-8",
 		},
