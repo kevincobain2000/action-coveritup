@@ -106,3 +106,7 @@ jobs:
       - uses: kevincobain2000/action-coveritup@v2
         with:
           pr_comment: true
+      - uses: kevincobain2000/action-coveritup@v2
+        with:
+          pr_comment: true
+          types: coverage, go-mod-dependencies
