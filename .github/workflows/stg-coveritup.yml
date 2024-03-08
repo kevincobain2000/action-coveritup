@@ -40,6 +40,12 @@ jobs:
           record: score
           type: stg-go-mod-dependencies
 
+      - run: |
+          mkdir -p frontend/dist
+          echo "test"  > frontend/dist/index.html
+          go test -race -v ./... -count=1 -coverprofile=coverage.out; gocov convert coverage.out | gocov-xml > coverage.xml
+        working-directory: app
+
       - name: Score Test
         uses: ./.github/actions/stg
         with:
@@ -47,11 +53,6 @@ jobs:
           record: runtime
           type: stg-go-build-time
 
-      - run: |
-          mkdir -p frontend/dist
-          echo "test"  > frontend/dist/index.html
-          go test -race -v ./... -count=1 -coverprofile=coverage.out; gocov convert coverage.out | gocov-xml > coverage.xml
-        working-directory: app
       - name: Score Test
         uses: ./.github/actions/stg
         with:
