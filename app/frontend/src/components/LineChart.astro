@@ -12,7 +12,7 @@
     <h1
       class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left"
     >
-      Code
+      Any
       <span
         class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
       >
@@ -23,7 +23,7 @@
       class="leading-normal text-slate-300 md:text-2xl mb-8 text-center md:text-left"
     >
 
-       Record code coverages and view trends over time.
+       Record code coverages, scores, runtimes - and view trends.
     </p>
 
     <div
@@ -33,13 +33,11 @@
         <label class="block text-blue-300 py-2 font-bold mb-2" for="code">
           <pre
             class="">{`
-- name: Code Coverage
-    run: |
-    curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
-    echo SCORE=\`./cover-totalizer coverage.xml\` >> "$GITHUB_ENV"
-- uses: kevincobain2000/action-coveritup@v1
+- uses: kevincobain2000/action-coveritup@v2
     with:
-    type: coverage`}</pre>
+    type: go-build-time
+    command: go build main.go
+    record: runtime`}</pre>
         </label>
       </div>
     </div>

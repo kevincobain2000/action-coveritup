@@ -139,13 +139,13 @@ Before using this action, enable Github Actions
 ```yaml
     # Example: Clover
     - run: curl -sLk https://raw.githubusercontent.com/kevincobain2000/cover-totalizer/master/install.sh | sh
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: coverage
         command: ./cover-totalizer coverage.xml
 
     # Finally comment on PR
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         pr_comment: true
 ```
@@ -154,21 +154,21 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Go
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: go-build-time
         command: go build main.go
         record: runtime
 
     # Example: NPM
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: npm-build-time
         command: npm run build
         record: runtime
 
     # Finally comment on PR
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         pr_comment: true
 ```
@@ -177,25 +177,25 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Go
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: go-binary-size
         command: du -sk main | awk '{print $1}'
 
     # Example: NPM
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: npm-modules-size
         command: du -sm node_modules/ | awk '{print $1}'
 
     # Example: PHP
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: php-vendor-size
         command: du -sm vendor/ | awk '{print $1}'
 
     # Finally comment on PR
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         pr_comment: true
 ```
@@ -204,19 +204,19 @@ Before using this action, enable Github Actions
 
 ```yaml
     # Example: Go
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: go-mod-dependencies
         command: go list -m all|wc -l|awk '{$1=$1};1'
 
     # Example: PHP
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         type: composer-dependencies
         command: composer show -i --name-only 2>/dev/null | wc -l | awk '{print $NF}'
 
     # Finally comment on PR
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         pr_comment: true
 ```
@@ -233,7 +233,7 @@ https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=ma
 **Delete just one type**
 
 ```yaml
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         destroy: true
         type: npm-modules-size
@@ -242,7 +242,7 @@ https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=ma
 **Delete everything**
 
 ```yaml
-    - uses: kevincobain2000/action-coveritup@v1
+    - uses: kevincobain2000/action-coveritup@v2
       with:
         destroy: true
 ```
