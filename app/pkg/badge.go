@@ -66,5 +66,8 @@ func (e *Badge) getBadgeColors(metric string) (badge.Color, badge.Color, badge.C
 		metric == "hr" {
 		return "#fff", "gray", "#FFFF00"
 	}
+	if metric == "alloc" {
+		return "#fff", "gray", "#00FF00"
+	}
 	return "#bbb", "#fff", "gray"
 }
