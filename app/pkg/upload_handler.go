@@ -28,7 +28,7 @@ type UploadRequest struct {
 	Branch   string `json:"branch" query:"branch" validate:"required,ascii,max=255" message:"ascii branch is required"`
 	Commit   string `json:"commit" query:"commit" validate:"required,ascii,max=255" message:"ascii commit is required"`
 	Score    string `json:"score" query:"score" validate:"ascii,max=12" message:"ascii score is required"`
-	Metric   string `json:"metric" query:"metric" validate:"ascii,max=3" message:"ascii metric is required"`
+	Metric   string `json:"metric" query:"metric" validate:"ascii,max=5" message:"ascii metric is required"`
 	Branches string `json:"branches" query:"branches" validate:"ascii" message:"ascii branches is required"`
 	PRNum    string `json:"pr_num" query:"pr_num" validate:"ascii,max=4" message:"ascii pr_num is required"`
 }
