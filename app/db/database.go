@@ -39,7 +39,8 @@ func syncDb() *gorm.DB {
 
 		var err error
 		db, err = gorm.Open(mysql.Open(fdsn), &gorm.Config{
-			Logger: logger.Default.LogMode(logger.LogLevel(2)),
+			Logger:      logger.Default.LogMode(logger.LogLevel(2)),
+			PrepareStmt: true,
 		})
 		if err != nil {
 			log.Fatal("cannot connect to database")
