@@ -12,7 +12,6 @@ import (
 )
 
 func TestPostUploadErrors(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
@@ -56,7 +55,6 @@ func TestPostUploadErrors(t *testing.T) {
 }
 
 func TestPostUploadOK(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
@@ -89,7 +87,6 @@ func TestPostUploadOK(t *testing.T) {
 	}
 }
 func TestPostCRUD(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()

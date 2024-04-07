@@ -28,7 +28,6 @@ type DestroyRequest struct {
 }
 
 func (h *DestroyHandler) Post(c echo.Context) error {
-
 	req := new(DestroyRequest)
 	if err := BindRequest(c, req); err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)

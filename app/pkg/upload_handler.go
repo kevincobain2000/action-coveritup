@@ -34,7 +34,6 @@ type UploadRequest struct {
 }
 
 func (h *UploadHandler) Post(c echo.Context) error {
-
 	req := new(UploadRequest)
 	if err := BindRequest(c, req); err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)

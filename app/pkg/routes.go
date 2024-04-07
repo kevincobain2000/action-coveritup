@@ -26,7 +26,6 @@ Disallow: /readme`
 )
 
 func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed.FS) {
-
 	e.GET(baseURL+"", func(c echo.Context) error {
 		filename := fmt.Sprintf("%s/%s", DIST_DIR, "index.html")
 		content, err := publicDir.ReadFile(filename)

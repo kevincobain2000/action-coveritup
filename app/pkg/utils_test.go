@@ -82,7 +82,6 @@ func TestF64To1DecimalF64(t *testing.T) {
 }
 
 func TestStringToInt(t *testing.T) {
-
 	type TestCase struct {
 		In  string
 		Out int64
@@ -120,7 +119,6 @@ func TestStringToInt(t *testing.T) {
 }
 
 func TestSToF32(t *testing.T) {
-
 	type TestCase struct {
 		In  string
 		Out float32
@@ -150,7 +148,6 @@ func TestSToF32(t *testing.T) {
 }
 
 func TestSToF64(t *testing.T) {
-
 	type TestCase struct {
 		In  string
 		Out float64
@@ -180,7 +177,6 @@ func TestSToF64(t *testing.T) {
 }
 
 func TestTakeFirst(t *testing.T) {
-
 	type TestCase struct {
 		In  string
 		N   int

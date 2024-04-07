@@ -11,7 +11,6 @@ import (
 )
 
 func TestDestroyErrors(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()

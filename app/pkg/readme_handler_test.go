@@ -10,7 +10,6 @@ import (
 )
 
 func TestReadmeNotOk(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
@@ -53,7 +52,6 @@ func TestReadmeNotOk(t *testing.T) {
 	}
 }
 func TestReadmeOK(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()

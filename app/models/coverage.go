@@ -70,7 +70,6 @@ func (c *Coverage) GetAllBranches(orgName string, repoName string, typeName stri
 	}
 
 	return ret, err
-
 }
 
 type LatestBranchScore struct {
@@ -83,7 +82,6 @@ type LatestBranchScore struct {
 }
 
 func (c *Coverage) GetLatestBranchScore(orgName string, repoName string, branchName string, typeName string) (LatestBranchScore, error) {
-
 	var ret LatestBranchScore
 	query := `
 	SELECT
@@ -145,7 +143,6 @@ func (c *Coverage) GetLatestBranchScoreByPR(
 	branchName string,
 	typeName string,
 	prNum int) (LatestBranchScorePR, error) {
-
 	var ret LatestBranchScorePR
 	query := `
 	SELECT
@@ -288,7 +285,6 @@ func (c *Coverage) GetLatestPRScoresForCommits(
 	prNum int,
 	typeName string,
 	lastCommit string) ([]LatestPRScoreForCommits, error) {
-
 	var ret []LatestPRScoreForCommits
 	fromID, err := c.GetIDFromCommit(orgName, repoName, typeName, lastCommit)
 	if err != nil {
@@ -532,7 +528,6 @@ func (c *Coverage) GetLatestUserScores(orgName string, repoName string, userName
 }
 
 func (c *Coverage) IsFirstPR(org string, repo string, prNum int) bool {
-
 	var ret = []struct {
 		TypeID int `json:"type_id"`
 		Total  int `json:"total"`
@@ -573,7 +568,6 @@ func (c *Coverage) IsFirstPR(org string, repo string, prNum int) bool {
 		}
 	}
 	return true
-
 }
 func (c *Coverage) DeleteCoveragesByType(org string, repo string, typeName string) error {
 	org = strings.TrimSpace(org)

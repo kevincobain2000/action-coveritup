@@ -11,7 +11,6 @@ import (
 )
 
 func TestPRErrors(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
@@ -72,7 +71,6 @@ func TestPRErrors(t *testing.T) {
 }
 
 func TestPROK(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()

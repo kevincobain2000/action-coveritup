@@ -11,7 +11,6 @@ import (
 )
 
 func TestGetChartErrors(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
@@ -72,7 +71,6 @@ func TestGetChartErrors(t *testing.T) {
 }
 
 func TestGetChartOK(t *testing.T) {
-
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
