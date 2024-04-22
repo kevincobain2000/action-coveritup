@@ -2,12 +2,10 @@ package pkg
 
 import (
 	"embed"
+	"fmt"
 	"net/http"
 	"os"
-	"path/filepath"
-	"strconv"
 
-	"github.com/fvbock/endless"
 	"github.com/go-echarts/statsview"
 	"github.com/go-echarts/statsview/viewer"
 	"github.com/labstack/echo/v4"
@@ -39,25 +37,8 @@ func NewEcho(baseURL string, publicDir embed.FS, favicon embed.FS) *echo.Echo {
 	return e
 }
 
-// GracefulServerWithPid reloads server with pid
-// kill -HUP when binary is changed
-// kill -9 when want to kill the process and make the application dead and want to restart
-// kill -9 is NOT FOR FAINT HEARTED and must not be done on prod unless SOUT
-func GracefulServerWithPid(e *echo.Echo, host string, port string) {
-	log := Logger()
-	server := endless.NewServer(host+":"+port, e)
-	server.BeforeBegin = func(add string) {
-		pidFile := filepath.Join(port + ".pid")
-		_ = os.Remove(pidFile)
-		err := os.WriteFile(pidFile, []byte(strconv.Itoa(os.Getpid())), 0600)
-		if err != nil {
-			log.Error("write pid file error: ", err)
-		}
-		log.Info("started server on localhost:", port)
-	}
-	if err := server.ListenAndServe(); err != nil {
-		log.Error("graceful error: ", err)
-	}
+func StartEcho(e *echo.Echo, host string, port string) {
+	e.Logger.Fatal(e.Start(fmt.Sprintf("%s:%s", host, port)))
 }
 
 // HTTPErrorResponse is the response for HTTP errors

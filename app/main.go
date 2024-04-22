@@ -56,7 +56,7 @@ func main() {
 		return
 	}
 
-	pkg.GracefulServerWithPid(pkg.NewEcho(f.baseUrl, publicDir, favicon), f.host, f.port)
+	pkg.StartEcho(pkg.NewEcho(f.baseUrl, publicDir, favicon), f.host, f.port)
 }
 
 func SetupFlags() {
