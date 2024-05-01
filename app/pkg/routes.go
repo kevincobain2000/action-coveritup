@@ -21,7 +21,8 @@ Disallow: /upload
 Disallow: /chart
 Disallow: /badge
 Disallow: /destroy
-Disallow: /pr`
+Disallow: /pr
+Disallow: /api/readme`
 )
 
 func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed.FS) {
@@ -39,7 +40,7 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 		if err != nil {
 			return c.String(http.StatusOK, os.Getenv("VERSION"))
 		}
-		return ResponseHTML(c, content, "10")
+		return ResponseHTML(c, content, "0")
 	})
 
 	// /robots.txt
