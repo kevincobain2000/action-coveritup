@@ -331,10 +331,12 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
   </div>
 </div>
 <script is:inline>
-  const test = "testme";
-  let hostURL = document
-    .querySelector("[data-host-url]")
-    .getAttribute("data-host-url");
+  let hostURL = "";
+
+  let hostURLQ = document.querySelector("[data-host-url]")
+  if (hostURLQ) {
+    hostURL = hostURLQ.getAttribute("data-host-url");
+  }
   if (!hostURL) {
     hostURL = window.location.origin;
   }
