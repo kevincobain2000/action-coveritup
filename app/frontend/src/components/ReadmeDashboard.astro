@@ -2,7 +2,6 @@
 const hostURL = import.meta.env.PUBLIC_HOST_URL;
 ---
 
-
 <div class="mx-auto" id="data" data-host-url={hostURL}>
   <p class="text-violet-400 font-bold text-center text-4xl select-none">
     Embeds
@@ -50,12 +49,12 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
       <div class="sm:col-span-2 bg-slate-900 rounded-md p-5">
         <h2 class="font-bold text-slate-200 pb-1 select-none">Stats</h2>
         <template x-if="types.length > 0">
-        <img
-          class="inline select-none mt-5 mb-5"
-          is:raw
-          :src="`//${types[0].url}/table?org=${types[0].org}&repo=${types[0].repo}&branch=${types[0].branch}&theme=dark`"
-        />
-    </template>
+          <img
+            class="inline select-none mt-5 mb-5"
+            is:raw
+            :src="`//${types[0].url}/table?org=${types[0].org}&repo=${types[0].repo}&branch=${types[0].branch}&theme=dark`"
+          />
+        </template>
         <table class="w-full select-none mb-5">
           <tbody class="text-left">
             <tr>
@@ -331,6 +330,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
     </dl>
   </div>
 </div>
+<script is:inline src="//unpkg.com/alpinejs"></script>
 <script is:inline>
   const updateBranch = () => {
     const url = new URL(window.location.href);
@@ -341,7 +341,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
 
   let hostURL = "";
 
-  let hostURLQ = document.querySelector("[data-host-url]")
+  let hostURLQ = document.querySelector("[data-host-url]");
   if (hostURLQ) {
     hostURL = hostURLQ.getAttribute("data-host-url");
   }
@@ -371,9 +371,8 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
       document
         .getElementById("data")
         .setAttribute("x-data", JSON.stringify(data));
+      Alpine.start();
     });
-
-
 </script>
-<script is:inline src="//unpkg.com/alpinejs"></script>
+
 <style></style>
