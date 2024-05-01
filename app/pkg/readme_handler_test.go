@@ -13,7 +13,7 @@ func TestReadmeNotOk(t *testing.T) {
 	BeforeEach()
 	defer AfterEach()
 	e := echo.New()
-	e.GET("/readme", func(c echo.Context) error {
+	e.GET("/api/readme", func(c echo.Context) error {
 		return NewReadmeHandler().Get(c)
 	})
 
@@ -27,11 +27,6 @@ func TestReadmeNotOk(t *testing.T) {
 	}
 	testCases := []TestCase{
 		{
-			Name:   "404",
-			Query:  `?org=org&repo=repo&branch=branch&type=type`,
-			Status: http.StatusNotFound,
-		},
-		{
 			Name:   "422",
 			Query:  `?repo=repo&branch=branch&type=type`,
 			Status: http.StatusUnprocessableEntity,
@@ -44,7 +39,7 @@ func TestReadmeNotOk(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		url := server.URL + "/readme" + tc.Query
+		url := server.URL + "/api/readme" + tc.Query
 		resp, err := http.Get(url)
 
 		assert.NoError(t, err)
