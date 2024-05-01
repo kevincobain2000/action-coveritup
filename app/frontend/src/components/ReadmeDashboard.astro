@@ -49,12 +49,13 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
     <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-4">
       <div class="sm:col-span-2 bg-slate-900 rounded-md p-5">
         <h2 class="font-bold text-slate-200 pb-1 select-none">Stats</h2>
+        <template x-if="types.length > 0">
         <img
-          x-if="types.length > 0"
           class="inline select-none mt-5 mb-5"
           is:raw
           :src="`//${types[0].url}/table?org=${types[0].org}&repo=${types[0].repo}&branch=${types[0].branch}&theme=dark`"
         />
+    </template>
         <table class="w-full select-none mb-5">
           <tbody class="text-left">
             <tr>
