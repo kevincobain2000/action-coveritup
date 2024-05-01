@@ -332,6 +332,13 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
   </div>
 </div>
 <script is:inline>
+  const updateBranch = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("branch", branch);
+    window.history.pushState({ path: url.toString() }, "", url.toString());
+    location.reload();
+  };
+
   let hostURL = "";
 
   let hostURLQ = document.querySelector("[data-host-url]")
@@ -366,11 +373,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
         .setAttribute("x-data", JSON.stringify(data));
     });
 
-  const updateBranch = () => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("branch", branch);
-    window.history.pushState({ path: url.toString() }, "", url.toString());
-    location.reload();
-  };
+
 </script>
+<script is:inline src="//unpkg.com/alpinejs"></script>
 <style></style>
