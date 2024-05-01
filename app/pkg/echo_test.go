@@ -10,6 +10,6 @@ import (
 func TestNewEcho(t *testing.T) {
 	var baseURL embed.FS
 	var publicDir embed.FS
-	e := NewEcho("", publicDir, baseURL)
+	e := NewEcho("", publicDir, baseURL, "")
 	assert.NotNil(t, e)
 }

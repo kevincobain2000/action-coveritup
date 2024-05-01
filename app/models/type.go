@@ -86,6 +86,7 @@ func (t *Type) GetAllTypesFor(orgName string, repoName string) ([]Type, error) {
 	if err != nil {
 		return ret, err
 	}
+
 	for i := range ret {
 		ret[i].Name = strings.TrimSpace(ret[i].Name)
 		ret[i].Metric = strings.TrimSpace(ret[i].Metric)

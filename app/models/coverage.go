@@ -36,7 +36,7 @@ func (c *Coverage) GetByBranchName(branchName string) ([]Coverage, error) {
 	return ret, err
 }
 
-func (c *Coverage) GetAllBranches(orgName string, repoName string, typeName string) ([]string, error) {
+func (c *Coverage) GetAllBranchesByType(orgName string, repoName string, typeName string) ([]string, error) {
 	var ret []string
 	query := `
 	SELECT
@@ -63,6 +63,38 @@ func (c *Coverage) GetAllBranches(orgName string, repoName string, typeName stri
 		sql.Named("orgName", orgName),
 		sql.Named("repoName", repoName),
 		sql.Named("typeName", typeName),
+		sql.Named("limit", SAFE_LIMIT_BRANCHES)).
+		Scan(&ret).Error
+	if err != nil {
+		return ret, err
+	}
+
+	return ret, err
+}
+func (c *Coverage) GetAllBranches(orgName string, repoName string) ([]string, error) {
+	var ret []string
+	query := `
+	SELECT
+		DISTINCT c.branch_name
+	FROM
+		coverages c
+	LEFT JOIN
+		orgs o ON c.org_id = o.id
+	LEFT JOIN
+		repos r ON c.repo_id = r.id
+	LEFT JOIN
+		types t ON c.type_id = t.id
+	WHERE
+		r.name = @repoName
+	AND
+		o.name = @orgName
+	ORDER BY FIELD(c.branch_name, 'develop', 'master', 'main') DESC
+	LIMIT @limit;
+	`
+	err := db.Db().Raw(
+		query,
+		sql.Named("orgName", orgName),
+		sql.Named("repoName", repoName),
 		sql.Named("limit", SAFE_LIMIT_BRANCHES)).
 		Scan(&ret).Error
 	if err != nil {

@@ -22,7 +22,7 @@ Disallow: /chart
 Disallow: /badge
 Disallow: /destroy
 Disallow: /pr
-Disallow: /readme`
+Disallow: /api/readme`
 )
 
 func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed.FS) {
@@ -32,7 +32,15 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 		if err != nil {
 			return c.String(http.StatusOK, os.Getenv("VERSION"))
 		}
-		return ResponseHTML(c, content)
+		return ResponseHTML(c, content, "86400")
+	})
+	e.GET(baseURL+"readme", func(c echo.Context) error {
+		filename := fmt.Sprintf("%s/%s", DIST_DIR, "readme/index.html")
+		content, err := publicDir.ReadFile(filename)
+		if err != nil {
+			return c.String(http.StatusOK, os.Getenv("VERSION"))
+		}
+		return ResponseHTML(c, content, "0")
 	})
 
 	// /robots.txt
@@ -48,7 +56,7 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 	e.POST(baseURL+"destroy", NewDestroyHandler().Post, HasAuthorizationHeader())
 
 	// /README.md to return markdown for embedings of badge and charts
-	e.GET(baseURL+"readme", NewReadmeHandler().Get)
+	e.GET(baseURL+"api/readme", NewReadmeHandler().Get)
 
 	// /badge to return badges
 	e.GET(baseURL+"badge", NewBadgeHandler().Get)
@@ -70,6 +78,8 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 		}
 		return c.Blob(http.StatusOK, "", img)
 	})
+	// /line
+	e.GET(baseURL+"table", NewTableHandler().Get)
 
 	// /chart to return charts
 	e.GET(baseURL+"chart", NewChartHandler().Get)

@@ -15,12 +15,10 @@ const { title, description } = Astro.props;
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <link rel="canonical" href={Astro.url} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://coveritup.app/favicon.ico" />
-    <meta property="og:url" content={Astro.url} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -41,8 +39,8 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {measurementID && (
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8C3R3RDHSV"></script>
-        <script type="text/javascript">
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8C3R3RDHSV"></script>
+        <script is:inline type="text/javascript">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -66,6 +64,8 @@ const { title, description } = Astro.props;
   }
   body {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-optical-sizing: auto;
+    font-style: normal;
   }
 
   .bg-gradient {

@@ -124,7 +124,7 @@ func TestPostCRUD(t *testing.T) {
 	}
 
 	cm := models.Coverage{}
-	ret, err := cm.GetAllBranches("org", "repo", "type")
+	ret, err := cm.GetAllBranchesByType("org", "repo", "type")
 	assert.NoError(t, err)
 	assert.Equal(t, []string{"branch1", "branch2"}, ret)
 }

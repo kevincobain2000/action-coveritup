@@ -163,7 +163,7 @@ func (e *Chart) GetInstaChartForBranches(req *ChartRequest, t *models.Type) ([]b
 	bar := instachart.NewBarChart()
 
 	if req.Branches == "all" {
-		bs, err := e.coverageModel.GetAllBranches(req.Org, req.Repo, t.Name)
+		bs, err := e.coverageModel.GetAllBranchesByType(req.Org, req.Repo, t.Name)
 		if err != nil {
 			return nil, err
 		}

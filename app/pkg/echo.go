@@ -12,7 +12,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func NewEcho(baseURL string, publicDir embed.FS, favicon embed.FS) *echo.Echo {
+func NewEcho(baseURL string, publicDir embed.FS, favicon embed.FS, cors string) *echo.Echo {
 	if os.Getenv("PPROF_HOST") != "" && os.Getenv("PPROF_PORT") != "" {
 		Logger().Info("pprof enabled and listening on: ", os.Getenv("PPROF_HOST")+":"+os.Getenv("PPROF_PORT"))
 		addr := os.Getenv("PPROF_HOST") + ":" + os.Getenv("PPROF_PORT")
@@ -34,7 +34,18 @@ func NewEcho(baseURL string, publicDir embed.FS, favicon embed.FS) *echo.Echo {
 	}))
 	SetupRoutes(e, baseURL, publicDir, favicon)
 
+	if cors != "" {
+		SetupCors(e, cors)
+	}
+
 	return e
+}
+
+func SetupCors(e *echo.Echo, cors string) {
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:" + cors},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 }
 
 func StartEcho(e *echo.Echo, host string, port string) {

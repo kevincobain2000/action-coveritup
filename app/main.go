@@ -22,6 +22,7 @@ var embedMigrations embed.FS
 type Flags struct {
 	host         string
 	port         string
+	cors         string
 	baseUrl      string
 	databaseDSN  string
 	databaseName string
@@ -55,13 +56,13 @@ func main() {
 		}
 		return
 	}
-
-	pkg.StartEcho(pkg.NewEcho(f.baseUrl, publicDir, favicon), f.host, f.port)
+	pkg.StartEcho(pkg.NewEcho(f.baseUrl, publicDir, favicon, f.cors), f.host, f.port)
 }
 
 func SetupFlags() {
 	flag.StringVar(&f.host, "host", "localhost", "host to serve")
 	flag.StringVar(&f.port, "port", "3003", "port to serve")
+	flag.StringVar(&f.cors, "cors", "", "cors port to allow")
 	flag.StringVar(&f.baseUrl, "base-url", "/", "base url with slash")
 	flag.StringVar(&f.databaseDSN, "db-dsn", "root:@tcp(127.0.0.1:3306)/", "databaseURL url")
 	flag.StringVar(&f.databaseName, "db-name", "coveritup", "database name")
