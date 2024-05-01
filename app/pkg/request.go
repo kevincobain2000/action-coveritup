@@ -60,9 +60,9 @@ func SetHeadersResponseJSON(header http.Header) {
 	header.Set("Content-Security-Policy", "default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self'; script-src 'self';")
 }
 
-func SetHeadersResponseHTML(header http.Header) {
-	header.Set("Cache-Control", "max-age=86400")
-	header.Set("Expires", "86400")
+func SetHeadersResponseHTML(header http.Header, cacheMS string) {
+	header.Set("Cache-Control", "max-age="+cacheMS)
+	header.Set("Expires", cacheMS)
 	header.Set("Content-Type", "text/html; charset=utf-8")
 	// security headers
 	header.Set("X-Content-Type-Options", "nosniff")
@@ -89,7 +89,7 @@ func ResponsePNG(c echo.Context, b []byte) error {
 	return c.Blob(http.StatusOK, "image/png", b)
 }
 
-func ResponseHTML(c echo.Context, b []byte) error {
-	SetHeadersResponseHTML(c.Response().Header())
+func ResponseHTML(c echo.Context, b []byte, cacheMS string) error {
+	SetHeadersResponseHTML(c.Response().Header(), cacheMS)
 	return c.Blob(http.StatusOK, "text/html", b)
 }

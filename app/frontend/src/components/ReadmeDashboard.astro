@@ -1,0 +1,367 @@
+---
+const hostURL = import.meta.env.PUBLIC_HOST_URL;
+---
+
+<div data-host-url={hostURL}></div>
+<div class="mx-auto" id="data">
+  <p class="text-violet-400 font-bold text-center text-4xl select-none">
+    Embeds
+  </p>
+
+  <p
+    class="text-violet-200 font-bold text-center text-xl select-none"
+    id="org-repo-name"
+  >
+  </p>
+  <hr class="w-48 h-1 mx-auto my-4 bg-gray-500 border-0 rounded md:my-10" />
+  <p
+    class="text-center font-mono text-2xl text-slate-400 font-bold select-none"
+  >
+    README.md
+    <br />
+    <span class="text-sm text-slate-500"
+      >Press <b class="text-white">CMD + A</b> to select all markdown embeds</span
+    >
+  </p>
+  <form class="text-left text-black select-none">
+    <label for="countries" class="block mt-2 text-slate-500 text-sm"
+      >Choose a branch</label
+    >
+
+    <select
+      x-model="branch"
+      class="mt-2 w-48 rounded text-sm bg-slate-700 p-1 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent select-none"
+      x-on:change="updateBranch()"
+    >
+      <template x-for="b in branches">
+        <option x-text="b" is:raw :selected="b === branch"></option>
+      </template>
+    </select>
+  </form>
+
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-5 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none"># Quick Docs</h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      API Documentation for Embeds
+    </p>
+    <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-4">
+      <div class="sm:col-span-2 bg-slate-900 rounded-md p-5">
+        <h2 class="font-bold text-slate-200 pb-1 select-none">Stats</h2>
+        <img
+          x-if="types.length > 0"
+          class="inline select-none mt-5 mb-5"
+          is:raw
+          :src="`//${types[0].url}/table?org=${types[0].org}&repo=${types[0].repo}&branch=${types[0].branch}&theme=dark`"
+        />
+        <table class="w-full select-none mb-5">
+          <tbody class="text-left">
+            <tr>
+              <th class="text-slate-700">Types</th>
+              <td class="font-semibold font-mono"
+                ><span x-text="types.length"></span></td
+              >
+            </tr>
+            <tr>
+              <th class="text-slate-700">Branches</th>
+              <td class="font-semibold font-mono"
+                ><span x-text="branches.length"></span></td
+              >
+            </tr>
+          </tbody>
+        </table>
+        <code class="font-mono text-slate-700 break-words text-sm">
+          ![<span x-text="types[0].name"></span>](<span x-text="types[0].url"
+          ></span>/table?org=<span x-text="types[0].org"></span>&repo=<span
+            x-text="types[0].repo"></span>&branch=<span x-text="types[0].branch"
+          ></span>&theme=dark)</code>
+      </div>
+      <div class="sm:col-span-1 bg-slate-900 rounded-md p-5 select-none">
+        <h2 class="font-bold text-slate-200 pb-1">API Endpoints</h2>
+        <table class="w-full">
+          <tbody class="text-left">
+            <tr>
+              <td class="font-bold text-green-300 font-mono"><code>/badge</code></td>
+            </tr>
+            <tr>
+              <td class="font-bold text-green-300 font-mono"><code>/chart</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <hr
+          class="w-12 h-1 mx-auto my-4 bg-gray-700 border-0 rounded md:my-10"
+        />
+        <h2 class="font-bold text-red-300 pb-1">Required*</h2>
+        <table class="w-full">
+          <tbody class="text-left">
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">?org</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-thin text-sm font-mono"
+                ><code x-text="org"></code></td
+              >
+            </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&repo</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-thin text-sm font-mono"
+                ><code x-text="repo"></code></td
+              >
+            </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&branch</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-thin text-sm font-mono"
+                ><code x-text="branch"></code></td
+              >
+            </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&type</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-thin text-sm font-mono"
+                ><code x-text="types[0].name"></code></td
+              >
+            </tr>
+          </tbody>
+        </table>
+        <h2 class="font-bold text-slate-300 pt-3 pb-1">Charts</h2>
+        <table class="w-full">
+          <tbody class="text-left">
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&width</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-mono text-sm">chart width</td>
+            </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&height</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-mono text-sm">chart height</td>
+            </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&line</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-mono text-sm">fill or nofill</td>
+            </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&theme</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-mono text-sm">dark or light</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sm:col-span-1 bg-slate-900 rounded-md p-5 select-none">
+        <h2 class="font-bold text-slate-200 pb-10">Quick Trends</h2>
+        <div class="border-slate-800 border-2 rounded p-5 text-center">
+          <template x-for="t in types">
+            <img
+              class="inline select-none"
+              is:raw
+              :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=120&height=120`"
+            />
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none"># Badges</h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      Best Suited for README.md
+    </p>
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <template class="mx-auto" x-for="t in types">
+        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
+          <dt class="text-white font-bold select-none pb-2" x-text="t.name">
+          </dt>
+          <dd class="text-gray-600">
+            <div class="pb-2 select-none">
+              <img
+                is:raw
+                :src="`//${t.url}/badge?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}`"
+              />
+            </div>
+            <code class="font-mono text-slate-700 break-words text-sm">
+              ![<span x-text="t.name"></span>](<span x-text="t.url"
+              ></span>/badge?org=<span x-text="t.org"></span>&repo=<span
+                x-text="t.repo"></span>&branch=<span x-text="t.branch"
+              ></span>&type=<span x-text="t.name"></span>)
+            </code>
+          </dd>
+        </div>
+      </template>
+    </dl>
+  </div>
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none"># Mini Charts</h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      Best Suited for README.md
+    </p>
+
+    <div class="text-center">
+      <template x-for="t in types">
+        <img
+          class="inline select-none"
+          is:raw
+          :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=175&height=160`"
+        />
+      </template>
+    </div>
+    <div class="pt-5"></div>
+    <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+    <template x-for="t in types" class="mx-auto">
+      <div class="text-gray-500 bg-slate-900 mb-3 rounded-md p-5">
+        <div class="text-white font-bold select-none pb-2" x-text="t.name">
+        </div>
+        <code class="font-mono text-slate-700 break-words text-sm">
+          ![<span x-text="t.name"></span>](<span x-text="t.url"
+          ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
+            x-text="t.repo"></span>&branch=<span x-text="t.branch"
+          ></span>&type=<span x-text="t.name"
+          ></span>&theme=dark&line=fill&width=175&height=160)
+        </code>
+      </div>
+    </template>
+</div>
+  </div>
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none"># Full Charts</h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      Visualize the full chart for trends on a branch over time for a specific
+      type
+    </p>
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <template class="mx-auto" x-for="t in types">
+        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
+          <dt class="text-white font-bold select-none pb-2" x-text="t.name">
+          </dt>
+          <dd class="text-gray-600">
+            <div class="pb-2 select-none flex justify-center items-center">
+              <img
+                is:raw
+                :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill`"
+              />
+            </div>
+            <code class="font-mono text-slate-700 break-words text-sm">
+              ![<span x-text="t.name"></span>](<span x-text="t.url"
+              ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
+                x-text="t.repo"></span>&branch=<span x-text="t.branch"
+              ></span>&type=<span x-text="t.name"></span>)
+            </code>
+          </dd>
+        </div>
+      </template>
+    </dl>
+  </div>
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none">
+      # Comparison Charts for Branches
+    </h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      Visualize comparison charts for branches over time for a specific type
+    </p>
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <template class="mx-auto" x-for="t in types">
+        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
+          <dt class="text-white font-bold select-none pb-2" x-text="t.name">
+          </dt>
+          <dd class="text-gray-600">
+            <div class="pb-2 select-none flex justify-center items-center">
+              <img
+                is:raw
+                :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branches=all&type=${t.name}&theme=dark&line=fill`"
+              />
+            </div>
+            <code class="font-mono text-slate-700 break-words text-sm">
+              ![<span x-text="t.name"></span>] (<span x-text="t.url"
+              ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
+                x-text="t.repo"></span>&branches=all&type=<span x-text="t.name"></span>)
+            </code>
+          </dd>
+        </div>
+      </template>
+    </dl>
+  </div>
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none">
+      # Comparison Charts for Users
+    </h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      Visualize comparison charts for users over time for a specific type
+    </p>
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+      <template class="mx-auto" x-for="t in types">
+        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
+          <dt class="text-white font-bold select-none pb-2" x-text="t.name">
+          </dt>
+          <dd class="text-gray-600">
+            <div class="pb-2 select-none flex justify-center items-center">
+              <img
+                is:raw
+                :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&users=all&type=${t.name}&theme=dark&line=fill`"
+              />
+            </div>
+            <code class="font-mono text-slate-700 break-words text-sm">
+              ![<span x-text="t.name"></span>] (<span x-text="t.url"
+              ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
+                x-text="t.repo"></span>&branch=<span x-text="t.branch"
+              ></span>&type=<span x-text="t.name"></span>)
+            </code>
+          </dd>
+        </div>
+      </template>
+    </dl>
+  </div>
+</div>
+<script is:inline>
+    const test = "testme";
+  let hostURL = document
+    .querySelector("[data-host-url]")
+    .getAttribute("data-host-url");
+  if (!hostURL) {
+    hostURL = window.location.origin;
+  }
+  const urlParams = new URLSearchParams(window.location.search);
+  const org = urlParams.get("org");
+  const repo = urlParams.get("repo");
+  let branch = urlParams.get("branch");
+  document.getElementById("org-repo-name").innerText = `${org}/${repo}`;
+  fetch(`${hostURL}/api/readme?org=${org}&repo=${repo}`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (!branch && data.branches.length > 0) {
+        data.branch = data.branches[0];
+        branch = data.branch;
+        updateBranch();
+      }
+      data.types.map((d) => {
+        d.org = org;
+        d.repo = repo;
+        d.branch = branch;
+        d.url = hostURL.replace("https://", "").replace("http://", "");
+      });
+
+      document
+        .getElementById("data")
+        .setAttribute("x-data", JSON.stringify(data));
+    });
+
+  const updateBranch = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.set("branch", branch);
+    window.history.pushState({ path: url.toString() }, "", url.toString());
+    location.reload();
+  };
+</script>
+<style></style>

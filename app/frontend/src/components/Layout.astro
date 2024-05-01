@@ -41,8 +41,8 @@ const { title, description } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     {measurementID && (
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8C3R3RDHSV"></script>
-        <script type="text/javascript">
+        <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-8C3R3RDHSV"></script>
+        <script is:inline type="text/javascript">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -50,6 +50,7 @@ const { title, description } = Astro.props;
         gtag('config', 'G-8C3R3RDHSV');
         </script>
     )}
+    <script is:inline src="//unpkg.com/alpinejs" defer></script>
 
 
   </head>
@@ -66,6 +67,8 @@ const { title, description } = Astro.props;
   }
   body {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-optical-sizing: auto;
+    font-style: normal;
   }
 
   .bg-gradient {
