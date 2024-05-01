@@ -3,7 +3,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
 ---
 
 <div class="mx-auto" id="data" data-host-url={hostURL}>
-  <p class="text-violet-400 font-bold text-center text-4xl select-none">
+  <p class="text-violet-400 font-bold text-center text-4xl select-none pt-20">
     Embeds
   </p>
 
@@ -12,7 +12,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
     id="org-repo-name"
   >
   </p>
-  <hr class="w-48 h-1 mx-auto my-4 bg-gray-500 border-0 rounded md:my-10" />
+  <hr class="w-48 h-1 mx-auto bg-gray-500 border-0 rounded my-10" />
   <p
     class="text-center font-mono text-2xl text-slate-400 font-bold select-none"
   >
@@ -213,7 +213,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
         <img
           class="inline select-none"
           is:raw
-          :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=175&height=160`"
+          :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150`"
         />
       </template>
     </div>
