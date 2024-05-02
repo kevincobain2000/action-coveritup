@@ -3,6 +3,18 @@
     <img alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
   </a>
 </p>
+<p align="center">
+  The Hassle-Free Code Coverage and Metrics Tracking Tool
+  <br>
+  A CodeCov and SonarQube alternative.
+  <br>
+  <br>
+  <b>
+     <a href="https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=master" target="_blank">DEMO!</a>
+  </b>
+  <br>
+  <br>
+</p>
 
 <p align="center">
   <a href="https://coveritup.app">
@@ -11,7 +23,7 @@
 </p>
 
 <p align="center">
-  Action for uploading Code Metrics to <a href="https://coveritup.app">coveritup.app</a>
+  Action and Self Hosted app for uploading Code Metrics to <a href="https://coveritup.app">coveritup.app</a>
 </p>
 
 <p align="center">
@@ -256,6 +268,37 @@ https://coveritup.app doesn't store the token.
 You can see usage in `action.yml` file
 
 
+# Development notes
+
+```sh
+# for backend
+cd app/
+air # or go run main.go
+
+# for frontend
+cd app/fronend
+npm install
+npm run dev
+```
+
+
+# Self Hosting Options
+
+## Just the Api
+
+Download the binary from [releases](https://github.com/kevincobain2000/action-coveritup/releases)
+
+## Build from source (with UI)
+
+```sh
+git clone https://github.com/kevincobain2000/action-coveritup
+cd app
+cp frontend/.env.example frontend/.env
+./build.sh
+./main
+```
+
 # CHANGE LOG
 
 - **v1.0.0** - Initial release with `self hosted` and `action`.
+- **v2.0.0** - Better action that wraps the command.
