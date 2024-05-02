@@ -153,6 +153,11 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
               <th class="text-slate-700 font-mono text-sm">=</th>
               <td class="font-mono text-sm">dark or light</td>
             </tr>
+            <tr>
+              <th class="text-slate-700 font-mono text-sm">&output</th>
+              <th class="text-slate-700 font-mono text-sm">=</th>
+              <td class="font-mono text-sm">svg or png</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -163,7 +168,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
             <img
               class="inline select-none"
               is:raw
-              :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=120&height=120`"
+              :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=120&height=120&output=svg`"
             />
           </template>
         </div>
@@ -213,7 +218,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
         <img
           class="inline select-none"
           is:raw
-          :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150`"
+          :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"
         />
       </template>
     </div>
