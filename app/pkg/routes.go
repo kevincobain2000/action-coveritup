@@ -2,9 +2,7 @@ package pkg
 
 import (
 	"embed"
-	"fmt"
 	"net/http"
-	"os"
 
 	instachart "github.com/kevincobain2000/instachart/pkg"
 	"github.com/labstack/echo/v4"
@@ -14,37 +12,14 @@ const (
 	DIST_DIR     = "frontend/dist"
 	DOCS_URL     = "https://github.com/kevincobain2000/action-coveritup"
 	FAVICON_FILE = "favicon.ico"
-	ROBOTS_FILE  = "robots.txt"
-	ROBOTS_TXT   = `User-agent: *
-Allow: /
-Disallow: /upload
-Disallow: /chart
-Disallow: /badge
-Disallow: /destroy
-Disallow: /pr
-Disallow: /api/readme`
 )
 
 func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed.FS) {
-	e.GET(baseURL+"", func(c echo.Context) error {
-		filename := fmt.Sprintf("%s/%s", DIST_DIR, "index.html")
-		content, err := publicDir.ReadFile(filename)
-		if err != nil {
-			return c.String(http.StatusOK, os.Getenv("VERSION"))
-		}
-		return ResponseHTML(c, content, "86400")
-	})
-	e.GET(baseURL+"readme", func(c echo.Context) error {
-		filename := fmt.Sprintf("%s/%s", DIST_DIR, "readme/index.html")
-		content, err := publicDir.ReadFile(filename)
-		if err != nil {
-			return c.String(http.StatusOK, os.Getenv("VERSION"))
-		}
-		return ResponseHTML(c, content, "0")
-	})
+	e.GET(baseURL+"", NewAssetsHandler(publicDir, "index.html").GetHTML)
+	e.GET(baseURL+"readme", NewAssetsHandler(publicDir, "readme/index.html").GetHTML)
 
-	// /robots.txt
-	e.GET(baseURL+ROBOTS_FILE, NewRobotsHandler().Get)
+	e.GET(baseURL+"robots.txt", NewAssetsHandler(publicDir, "robots.txt").GetPlain)
+	e.GET(baseURL+"ads.txt", NewAssetsHandler(publicDir, "ads.txt").GetPlain)
 
 	// /favicon.ico
 	e.GET(baseURL+FAVICON_FILE, NewFaviconHandler(&favicon).Get)

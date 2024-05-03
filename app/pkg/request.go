@@ -70,6 +70,18 @@ func SetHeadersResponseHTML(header http.Header, cacheMS string) {
 	header.Set("X-XSS-Protection", "1; mode=block")
 }
 
+func SetHeadersResponsePlainText(header http.Header, cacheMS string) {
+	header.Set("Cache-Control", "max-age="+cacheMS)
+	header.Set("Expires", cacheMS)
+	header.Set("Content-Type", "text/plain")
+	// security headers
+	header.Set("X-Content-Type-Options", "nosniff")
+	header.Set("X-Frame-Options", "DENY")
+	header.Set("X-XSS-Protection", "1; mode=block")
+	// content policy
+	header.Set("Content-Security-Policy", "default-src 'none'; img-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self'; script-src 'self';")
+}
+
 func ResponseMedia(c echo.Context, b []byte, media string) error {
 	if media == "svg" {
 		return ResponseSVG(c, b)
@@ -92,4 +104,8 @@ func ResponsePNG(c echo.Context, b []byte) error {
 func ResponseHTML(c echo.Context, b []byte, cacheMS string) error {
 	SetHeadersResponseHTML(c.Response().Header(), cacheMS)
 	return c.Blob(http.StatusOK, "text/html", b)
+}
+func ResponsePlain(c echo.Context, b []byte, cacheMS string) error {
+	SetHeadersResponsePlainText(c.Response().Header(), cacheMS)
+	return c.Blob(http.StatusOK, "text/plain", b)
 }
