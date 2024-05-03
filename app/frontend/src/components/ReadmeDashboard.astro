@@ -1,8 +1,8 @@
 ---
-const hostURL = import.meta.env.PUBLIC_HOST_URL;
+const baseURL = import.meta.env.PUBLIC_BASE_URL;
 ---
 
-<div class="mx-auto" id="data" data-host-url={hostURL}>
+<div class="mx-auto" id="data" data-base-url={baseURL}>
   <p class="text-violet-400 font-bold text-center text-4xl select-none pt-20">
     Embeds
   </p>
@@ -344,21 +344,25 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
     location.reload();
   };
 
-  let hostURL = "";
+  const currentURL = window.location.origin;
 
-  let hostURLQ = document.querySelector("[data-host-url]");
-  if (hostURLQ) {
-    hostURL = hostURLQ.getAttribute("data-host-url");
+  let baseURL = document
+    .querySelector("[data-base-url]")
+    ?.getAttribute("data-base-url");
+
+  if (!baseURL) {
+    baseURL = currentURL;
   }
-  if (!hostURL) {
-    hostURL = window.location.origin;
+  if (!baseURL.startsWith("http")) {
+    baseURL = currentURL + baseURL;
   }
+
   const urlParams = new URLSearchParams(window.location.search);
   const org = urlParams.get("org");
   const repo = urlParams.get("repo");
   let branch = urlParams.get("branch");
   document.getElementById("org-repo-name").innerText = `${org}/${repo}`;
-  fetch(`${hostURL}/api/readme?org=${org}&repo=${repo}`)
+  fetch(`${baseURL}/api/readme?org=${org}&repo=${repo}`)
     .then((response) => response.json())
     .then((data) => {
       if (!branch && data.branches.length > 0) {
@@ -370,7 +374,7 @@ const hostURL = import.meta.env.PUBLIC_HOST_URL;
         d.org = org;
         d.repo = repo;
         d.branch = branch;
-        d.url = hostURL.replace("https://", "").replace("http://", "");
+        d.url = baseURL.replace("https://", "").replace("http://", "");
       });
 
       document
