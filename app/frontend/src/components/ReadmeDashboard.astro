@@ -52,7 +52,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
           <img
             class="inline select-none mt-5 mb-5"
             is:raw
-            :src="`//${types[0].url}/table?org=${types[0].org}&repo=${types[0].repo}&branch=${types[0].branch}&theme=dark`"
+            :src="`//${url}/table?org=${org}&repo=${repo}&branch=${branch}&theme=dark`"
           />
         </template>
         <table class="w-full select-none mb-5">
@@ -168,7 +168,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             <img
               class="inline select-none"
               is:raw
-              :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=120&height=120&output=svg`"
+              :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=120&height=120&output=svg`"
             />
           </template>
         </div>
@@ -191,13 +191,13 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             <div class="pb-2 select-none">
               <img
                 is:raw
-                :src="`//${t.url}/badge?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}`"
+                :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
               />
             </div>
             <code class="font-mono text-slate-700 break-words text-sm">
-              ![<span x-text="t.name"></span>](<span x-text="t.url"
-              ></span>/badge?org=<span x-text="t.org"></span>&repo=<span
-                x-text="t.repo"></span>&branch=<span x-text="t.branch"
+              ![<span x-text="t.name"></span>](<span x-text="url"
+              ></span>/badge?org=<span x-text="org"></span>&repo=<span
+                x-text="repo"></span>&branch=<span x-text="branch"
               ></span>&type=<span x-text="t.name"></span>)
             </code>
           </dd>
@@ -218,7 +218,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         <img
           class="inline select-none"
           is:raw
-          :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"
+          :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"
         />
       </template>
     </div>
@@ -229,9 +229,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
           <div class="text-white font-bold select-none pb-2" x-text="t.name">
           </div>
           <code class="font-mono text-slate-700 break-words text-sm">
-            ![<span x-text="t.name"></span>](<span x-text="t.url"
-            ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
-              x-text="t.repo"></span>&branch=<span x-text="t.branch"
+            ![<span x-text="t.name"></span>](<span x-text="url"
+            ></span>/chart?org=<span x-text="org"></span>&repo=<span
+              x-text="repo"></span>&branch=<span x-text="branch"
             ></span>&type=<span x-text="t.name"
             ></span>&theme=dark&line=fill&width=175&height=160)
           </code>
@@ -256,13 +256,13 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             <div class="pb-2 select-none flex justify-center items-center">
               <img
                 is:raw
-                :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branch=${t.branch}&type=${t.name}&theme=dark&line=fill`"
+                :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill`"
               />
             </div>
             <code class="font-mono text-slate-700 break-words text-sm">
-              ![<span x-text="t.name"></span>](<span x-text="t.url"
-              ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
-                x-text="t.repo"></span>&branch=<span x-text="t.branch"
+              ![<span x-text="t.name"></span>](<span x-text="url"
+              ></span>/chart?org=<span x-text="org"></span>&repo=<span
+                x-text="repo"></span>&branch=<span x-text="branch"
               ></span>&type=<span x-text="t.name"></span>)
             </code>
           </dd>
@@ -288,13 +288,13 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             <div class="pb-2 select-none flex justify-center items-center">
               <img
                 is:raw
-                :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&branches=all&type=${t.name}&theme=dark&line=fill`"
+                :src="`//${url}/chart?org=${org}&repo=${repo}&branches=all&type=${t.name}&theme=dark&line=fill`"
               />
             </div>
             <code class="font-mono text-slate-700 break-words text-sm">
-              ![<span x-text="t.name"></span>](<span x-text="t.url"
-              ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
-                x-text="t.repo"></span>&branches=all&type=<span x-text="t.name"
+              ![<span x-text="t.name"></span>](<span x-text="url"
+              ></span>/chart?org=<span x-text="org"></span>&repo=<span
+                x-text="repo"></span>&branches=all&type=<span x-text="t.name"
               ></span>)
             </code>
           </dd>
@@ -320,13 +320,13 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             <div class="pb-2 select-none flex justify-center items-center">
               <img
                 is:raw
-                :src="`//${t.url}/chart?org=${t.org}&repo=${t.repo}&users=all&type=${t.name}&theme=dark&line=fill`"
+                :src="`//${url}/chart?org=${org}&repo=${repo}&users=all&type=${t.name}&theme=dark&line=fill`"
               />
             </div>
             <code class="font-mono text-slate-700 break-words text-sm">
-              ![<span x-text="t.name"></span>](<span x-text="t.url"
-              ></span>/chart?org=<span x-text="t.org"></span>&repo=<span
-                x-text="t.repo"></span>&branch=<span x-text="t.branch"
+              ![<span x-text="t.name"></span>](<span x-text="url"
+              ></span>/chart?org=<span x-text="org"></span>&repo=<span
+                x-text="repo"></span>&branch=<span x-text="branch"
               ></span>&type=<span x-text="t.name"></span>)
             </code>
           </dd>
@@ -341,7 +341,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
     const url = new URL(window.location.href);
     url.searchParams.set("branch", branch);
     window.history.pushState({ path: url.toString() }, "", url.toString());
-    location.reload();
+    window.location.reload();
   };
 
   const currentURL = window.location.origin;
@@ -370,12 +370,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         branch = data.branch;
         updateBranch();
       }
-      data.types.map((d) => {
-        d.org = org;
-        d.repo = repo;
-        d.branch = branch;
-        d.url = baseURL.replace("https://", "").replace("http://", "");
-      });
+      data.url = baseURL.replace("https://", "").replace("http://", "");
+      data.org = org;
+      data.repo = repo;
 
       document
         .getElementById("data")
