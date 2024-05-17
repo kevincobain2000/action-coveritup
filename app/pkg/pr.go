@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/fbiville/markdown-table-formatter/pkg/markdown"
-	md "github.com/go-spectest/markdown"
 	"github.com/kevincobain2000/action-coveritup/models"
+	md "github.com/nao1215/markdown"
 	"github.com/sirupsen/logrus"
 )
 
