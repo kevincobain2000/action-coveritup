@@ -65,8 +65,8 @@ github.com/karrick/godirwalk v1.17.0 h1:b4kY7nqDdioR/6qnbHQyDvmA17u5G1cZ6J+CZXwS
 github.com/karrick/godirwalk v1.17.0/go.mod h1:j4mkqPuvaLI8mp1DroR3P6ad7cyYd4c1qeJ3RV7ULlk=
 github.com/kevincobain2000/go-badge v0.0.0-20240124060355-fd6eab96e50a h1:CkCV+A4oTpP+1jYEhe/rUJSvde3hK9wnYKqMmxAYP0c=
 github.com/kevincobain2000/go-badge v0.0.0-20240124060355-fd6eab96e50a/go.mod h1:m9BzkaxwU4IfPQi9ko23cmuFltayFe8iS0dlRlnEWiM=
-github.com/kevincobain2000/instachart v1.0.19 h1:kSnkvX+b2YqbXxmCfAaJylfQolLUPKwRk7JDa0z6jww=
-github.com/kevincobain2000/instachart v1.0.19/go.mod h1:Bey/ZhZCD3jweAKwDXw5Jz9c9yJEJgW9HLjJTqXOZmw=
+github.com/kevincobain2000/instachart v1.0.20 h1:pGhgXYE5rlhBHXqwIc1UBLhdOM/EkAnKPA9rzq3J7Ik=
+github.com/kevincobain2000/instachart v1.0.20/go.mod h1:Bey/ZhZCD3jweAKwDXw5Jz9c9yJEJgW9HLjJTqXOZmw=
 github.com/klauspost/compress v1.17.8 h1:YcnTYrq7MikUT7k0Yb5eceMmALQPYBW/Xltxn0NAMnU=
 github.com/klauspost/compress v1.17.8/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=

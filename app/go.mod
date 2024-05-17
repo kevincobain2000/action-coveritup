@@ -7,7 +7,7 @@ require (
 	github.com/fbiville/markdown-table-formatter v0.3.0
 	github.com/go-echarts/statsview v0.3.4
 	github.com/go-playground/validator v9.31.0+incompatible
-	github.com/kevincobain2000/instachart v1.0.19
+	github.com/kevincobain2000/instachart v1.0.20
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/mcuadros/go-defaults v1.2.0
 	github.com/nao1215/markdown v0.4.0
