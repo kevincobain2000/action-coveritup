@@ -300,5 +300,6 @@ cp frontend/.env.example frontend/.env
 
 # CHANGE LOG
 
-- **v1.0.0** - Initial release with `self hosted` and `action`.
-- **v2.0.0** - Better action that wraps the command.
+- **v1.0** - Initial release with `self hosted` and `action`.
+- **v2.0** - Better action that wraps the command.
+- **v2.4** - Smoothed bar charts.
