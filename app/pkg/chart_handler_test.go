@@ -33,24 +33,24 @@ func TestGetChartErrors(t *testing.T) {
 			Name:        "404",
 			Query:       `?org=org&repo=repo&branch=branch&type=type`,
 			Status:      http.StatusNotFound,
-			ContentType: "application/json; charset=UTF-8",
+			ContentType: "application/json",
 		},
 		{
 			Name:        "422",
 			Query:       `?repo=repo&branch=branch&type=type`,
-			ContentType: "application/json; charset=UTF-8",
+			ContentType: "application/json",
 			Status:      http.StatusUnprocessableEntity,
 		},
 		{
 			Name:        "422",
 			Query:       `?org=org&branch=branch&type=type`,
-			ContentType: "application/json; charset=UTF-8",
+			ContentType: "application/json",
 			Status:      http.StatusUnprocessableEntity,
 		},
 		{
 			Name:        "422",
 			Query:       `?org=org&repo=repo&branch=branch`,
-			ContentType: "application/json; charset=UTF-8",
+			ContentType: "application/json",
 			Status:      http.StatusUnprocessableEntity,
 		},
 	}
