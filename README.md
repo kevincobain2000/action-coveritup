@@ -117,6 +117,12 @@ See this pull request for example: https://github.com/kevincobain2000/action-cov
 
 <br>
 
+### Code Coverage on same metric
+
+![go-mod-dependencies,go-sec-issues,go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&theme=dark&branch=master&types=go-mod-dependencies,go-sec-issues,go-lint-errors)
+
+![build-time,unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&theme=dark&branch=master&types=build-time,unit-test-run-time)
+
 ### Code Coverage on branch trends
 
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branches=all&output=svg)
