@@ -157,6 +157,36 @@ func (e *Chart) GetInstaChartForUser(req *ChartRequest, t *models.Type) ([]byte,
 	return line.Get(xData, yyData, names, cReq)
 }
 
+// bar chart for all types with type names on x-axis and scores on y-axis
+func (e *Chart) GetInstaChartForTypes(req *ChartRequest, branch string, types []*models.Type) ([]byte, error) {
+	cReq := e.makeChartRequest(req, types[0])
+	bar := instachart.NewBarChart()
+
+	xData := []string{}
+	yData := []float64{}
+	zData := []float64{}
+	names := []string{}
+	var hasErr error
+	for _, t := range types {
+		ret, err := e.coverageModel.GetLatestBranchScore(req.Org, req.Repo, branch, t.Name)
+		if err != nil {
+			hasErr = err
+			break
+		}
+		xData = append(xData, t.Name)
+		yData = append(yData, ret.Score)
+		zData = append(zData, ret.Score)
+		names = append(names, t.Name)
+	}
+	if hasErr != nil {
+		return nil, hasErr
+	}
+	yyData := [][]float64{yData}
+	zzData := [][]float64{zData}
+
+	return bar.GetStacked(xData, yyData, zzData, names, cReq)
+}
+
 // bar chart with branch names on x-axis and scores on y-axis
 func (e *Chart) GetInstaChartForBranches(req *ChartRequest, t *models.Type) ([]byte, error) {
 	cReq := e.makeChartRequest(req, t)

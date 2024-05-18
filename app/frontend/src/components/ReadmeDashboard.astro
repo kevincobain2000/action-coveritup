@@ -8,7 +8,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
   </p>
 
   <p
-    class="text-violet-200 font-bold text-center text-xl select-none"
+    class="text-violet-200 font-mono mt-3 font-bold text-center text-xl select-none"
     id="org-repo-name"
   >
   </p>
@@ -24,7 +24,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
   </p>
   <form class="text-left text-black select-none">
     <label for="countries" class="block mt-2 text-slate-500 text-sm"
-      >Choose a branch</label
+      >Choose from <span
+        class="font-bold text-slate-300"
+        x-text="branches.length"></span> branches</label
     >
 
     <select
@@ -55,23 +57,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             :src="`//${url}/table?org=${org}&repo=${repo}&branch=${branch}&theme=dark`"
           />
         </template>
-        <table class="w-full select-none mb-5">
-          <tbody class="text-left">
-            <tr>
-              <th class="text-slate-700">Types</th>
-              <td class="font-semibold font-mono"
-                ><span x-text="types.length"></span></td
-              >
-            </tr>
-            <tr>
-              <th class="text-slate-700">Branches</th>
-              <td class="font-semibold font-mono"
-                ><span x-text="branches.length"></span></td
-              >
-            </tr>
-          </tbody>
-        </table>
-        <code class="font-mono text-slate-700 break-words text-sm">
+        <code class="font-mono text-slate-500 break-words text-sm">
           ![<span x-text="types[0].name"></span>](https://<span x-text="url"
           ></span>/table?org=<span x-text="types[0].org"></span>&repo=<span
             x-text="types[0].repo"></span>&branch=<span x-text="types[0].branch"
@@ -101,29 +87,29 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         <table class="w-full">
           <tbody class="text-left">
             <tr>
-              <th class="text-slate-700 font-mono text-sm">?org</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">?org</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-thin text-sm font-mono"
                 ><code x-text="org"></code></td
               >
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&repo</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&repo</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-thin text-sm font-mono"
                 ><code x-text="repo"></code></td
               >
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&branch</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&branch</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-thin text-sm font-mono"
                 ><code x-text="branch"></code></td
               >
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&type</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&type</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-thin text-sm font-mono"
                 ><code x-text="types[0].name"></code></td
               >
@@ -134,28 +120,28 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         <table class="w-full">
           <tbody class="text-left">
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&width</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&width</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-mono text-sm">chart width</td>
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&height</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&height</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-mono text-sm">chart height</td>
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&line</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&line</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-mono text-sm">fill or nofill</td>
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&theme</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&theme</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-mono text-sm">dark or light</td>
             </tr>
             <tr>
-              <th class="text-slate-700 font-mono text-sm">&output</th>
-              <th class="text-slate-700 font-mono text-sm">=</th>
+              <th class="text-slate-400 font-mono text-sm">&output</th>
+              <th class="text-slate-400 font-mono text-sm">=</th>
               <td class="font-mono text-sm">svg or png</td>
             </tr>
           </tbody>
@@ -180,9 +166,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
   >
     <h2 class="text-white font-bold text-xl pb-2 select-none"># Badges</h2>
     <p class="pb-6 font-semibold text-sm select-none">
-      Best Suited for README.md
+      Best Suited for README.md. Badges for each type.
     </p>
-    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-3">
       <template class="mx-auto" x-for="t in types">
         <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
           <dt class="text-white font-bold select-none pb-2" x-text="t.name">
@@ -194,7 +180,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                 :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
               />
             </div>
-            <code class="font-mono text-slate-700 break-words text-sm">
+            <code class="font-mono text-slate-500 break-words text-sm">
               ![<span x-text="t.name"></span>](https://<span x-text="url"
               ></span>/badge?org=<span x-text="org"></span>&repo=<span
                 x-text="repo"></span>&branch=<span x-text="branch"
@@ -210,7 +196,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
   >
     <h2 class="text-white font-bold text-xl pb-2 select-none"># Mini Charts</h2>
     <p class="pb-6 font-semibold text-sm select-none">
-      Best Suited for README.md
+      Best Suited for README.md. Mini charts for each type.
     </p>
 
     <div class="text-center">
@@ -228,7 +214,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         <div class="text-gray-500 bg-slate-900 mb-3 rounded-md p-5">
           <div class="text-white font-bold select-none pb-2" x-text="t.name">
           </div>
-          <code class="font-mono text-slate-700 break-words text-sm">
+          <code class="font-mono text-slate-500 break-words text-sm">
             ![<span x-text="t.name"></span>](https://<span x-text="url"
             ></span>/chart?org=<span x-text="org"></span>&repo=<span
               x-text="repo"></span>&branch=<span x-text="branch"
@@ -247,7 +233,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
       Visualize the full chart for trends on a branch over time for a specific
       type
     </p>
-    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-3">
       <template class="mx-auto" x-for="t in types">
         <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
           <dt class="text-white font-bold select-none pb-2" x-text="t.name">
@@ -259,7 +245,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                 :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill`"
               />
             </div>
-            <code class="font-mono text-slate-700 break-words text-sm">
+            <code class="font-mono text-slate-500 break-words text-sm">
               ![<span x-text="t.name"></span>](https://<span x-text="url"
               ></span>/chart?org=<span x-text="org"></span>&repo=<span
                 x-text="repo"></span>&branch=<span x-text="branch"
@@ -270,6 +256,39 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
       </template>
     </dl>
   </div>
+  <div
+    class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  >
+    <h2 class="text-white font-bold text-xl pb-2 select-none">
+      # Comparison Charts for Types
+    </h2>
+    <p class="pb-6 font-semibold text-sm select-none">
+      Visualize comparison charts for types for latest scores for same metrics
+    </p>
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-2">
+        <template class="mx-auto" x-for="(ts, metric) in groupedTypes" :key="metric">
+            <template x-if="ts.length > 1">
+            <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
+              <dt class="text-white font-bold select-none pb-2" x-text="metric">
+              </dt>
+              <dd class="text-gray-600">
+                <div class="pb-2 select-none flex justify-center items-center">
+                  <img
+                    is:raw
+                    :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&types=${ts.map(t => t.name).join(',')}&theme=dark`"
+                    alt="Chart"
+                  />
+                </div>
+                <code class="font-mono text-slate-500 break-words text-sm">
+                    ![<span x-text="ts.map(t => t.name).join(',')"></span>](https://<span x-text="url"></span>/chart?org=<span x-text="org"></span>&repo=<span x-text="repo"></span>&branch=<span x-text="branch"></span>&types=<span x-text="ts.map(t => t.name).join(',')"></span>)
+                  </code>
+              </dd>
+            </div>
+          </template>
+          </template>
+      </dl>
+  </div>
+
   <div
     class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
   >
@@ -291,7 +310,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                 :src="`//${url}/chart?org=${org}&repo=${repo}&branches=all&type=${t.name}&theme=dark&line=fill`"
               />
             </div>
-            <code class="font-mono text-slate-700 break-words text-sm">
+            <code class="font-mono text-slate-500 break-words text-sm">
               ![<span x-text="t.name"></span>](https://<span x-text="url"
               ></span>/chart?org=<span x-text="org"></span>&repo=<span
                 x-text="repo"></span>&branches=all&type=<span x-text="t.name"
@@ -311,7 +330,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
     <p class="pb-6 font-semibold text-sm select-none">
       Visualize comparison charts for users over time for a specific type
     </p>
-    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-3">
       <template class="mx-auto" x-for="t in types">
         <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
           <dt class="text-white font-bold select-none pb-2" x-text="t.name">
@@ -323,7 +342,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                 :src="`//${url}/chart?org=${org}&repo=${repo}&users=all&type=${t.name}&theme=dark&line=fill`"
               />
             </div>
-            <code class="font-mono text-slate-700 break-words text-sm">
+            <code class="font-mono text-slate-500 break-words text-sm">
               ![<span x-text="t.name"></span>](https://<span x-text="url"
               ></span>/chart?org=<span x-text="org"></span>&repo=<span
                 x-text="repo"></span>&branch=<span x-text="branch"
@@ -342,6 +361,16 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
     url.searchParams.set("branch", branch);
     window.history.pushState({ path: url.toString() }, "", url.toString());
     window.location.reload();
+  };
+  const groupByMetric = (types) => {
+    return types.reduce((acc, type) => {
+      const metric = type.metric;
+      if (!acc[metric]) {
+        acc[metric] = [];
+      }
+      acc[metric].push(type);
+      return acc;
+    }, {});
   };
 
   const currentURL = window.location.origin;
@@ -370,9 +399,12 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         branch = data.branch;
         updateBranch();
       }
+
+      data.groupedTypes = groupByMetric(data.types);
       data.url = baseURL.replace("https://", "").replace("http://", "");
       data.org = org;
       data.repo = repo;
+      console.log(data);
 
       document
         .getElementById("data")
