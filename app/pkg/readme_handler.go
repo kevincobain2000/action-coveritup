@@ -49,6 +49,7 @@ func (h *ReadmeHandler) Get(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
+
 	res := &ReadmeResponse{
 		Types:    types,
 		Branches: branches,

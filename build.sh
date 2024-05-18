@@ -1,6 +1,6 @@
 #! /bin/bash
 
-cd frontend
+cd app/frontend
 npm install
 npm run build
 cd ..

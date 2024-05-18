@@ -3,6 +3,7 @@ package pkg
 import (
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/mcuadros/go-defaults"
@@ -42,6 +43,9 @@ func (h *UploadHandler) Post(c echo.Context) error {
 	msgs, err := ValidateRequest(req)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
+	}
+	if strings.Contains(req.Type, ",") {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, "type cannot contain comma")
 	}
 
 	// set by default to api.github and "" on tests

@@ -2,7 +2,9 @@ package pkg
 
 import (
 	"net/http"
+	"strings"
 
+	"github.com/kevincobain2000/action-coveritup/models"
 	"github.com/labstack/echo/v4"
 	"github.com/mcuadros/go-defaults"
 )
@@ -23,7 +25,8 @@ type ChartRequest struct {
 	Branch     string `json:"branch" query:"branch" validate:"ascii" message:"ascii branch is required"`
 	User       string `json:"user" query:"user" validate:"ascii,excludes=/" message:"ascii user is required"`
 	BaseBranch string `json:"base_branch" query:"base_branch" validate:"ascii" message:"ascii base_branch is required"`
-	Type       string `json:"type" query:"type" validate:"ascii,required,excludes=/" message:"ascii type is required"`
+	Type       string `json:"type" query:"type" validate:"ascii,excludes=/" message:"ascii type is required"`
+	Types      string `json:"types" query:"types" validate:"ascii,excludes=/" message:"ascii types are required"`
 	Branches   string `json:"branches" query:"branches" validate:"ascii" message:"ascii branches is required"`
 	Users      string `json:"users" query:"users" validate:"ascii" message:"ascii users is required"`
 	PRNum      int    `json:"pr_num" query:"pr_num"`
@@ -48,6 +51,35 @@ func (h *ChartHandler) Get(c echo.Context) error {
 	msgs, err := ValidateRequest(req)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
+	}
+	if req.Types == "" && req.Type == "" {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, "types or type is required")
+	}
+	if req.Types != "" {
+		if req.Branch == "" {
+			return echo.NewHTTPError(http.StatusUnprocessableEntity, "branch for types is required")
+		}
+		types := []*models.Type{}
+		for _, t := range strings.Split(req.Types, ",") {
+			tt, err := h.Chart.GetType(t)
+			if err != nil {
+				return echo.NewHTTPError(http.StatusUnprocessableEntity, err.Error())
+			}
+			if tt.ID == 0 {
+				return echo.NewHTTPError(http.StatusNotFound, "type from types not found")
+			}
+			types = append(types, tt)
+		}
+		for i := 1; i < len(types); i++ {
+			if types[i].Metric != types[0].Metric {
+				return echo.NewHTTPError(http.StatusUnprocessableEntity, "types must have same metric")
+			}
+		}
+		buf, err := h.Chart.GetInstaChartForTypes(req, req.Branch, types)
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
+		return ResponseMedia(c, buf, req.Output)
 	}
 
 	t, err := h.Chart.GetType(req.Type)
