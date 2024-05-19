@@ -25,7 +25,7 @@ type UploadRequest struct {
 	Org      string `json:"org"  query:"org" validate:"required,ascii,excludes=/,max=255" message:"org is required"`
 	Repo     string `json:"repo" query:"repo" validate:"required,ascii,excludes=/,max=255" message:"repo is required"`
 	User     string `json:"user" query:"user" validate:"required,ascii,excludes=/,max=255" message:"user is required"`
-	Type     string `json:"type" query:"type" validate:"required,ascii,required,excludes=/,max=32" message:"ascii type is required"`
+	Type     string `json:"type" query:"type" validate:"required,ascii,required,max=32" message:"ascii type is required"`
 	Branch   string `json:"branch" query:"branch" validate:"required,ascii,max=255" message:"ascii branch is required"`
 	Commit   string `json:"commit" query:"commit" validate:"required,ascii,max=255" message:"ascii commit is required"`
 	Score    string `json:"score" query:"score" validate:"ascii,max=12" message:"ascii score is required"`
