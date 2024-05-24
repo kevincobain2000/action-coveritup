@@ -11,22 +11,30 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
     <p class="text-lg font-semibold pb-6">Contents</p>
     <ul>
       <li class="pt-2">
-        <a href="#quick-docs" class="text-violet-400 font-semibold hover:text-violet-300"
+        <a
+          href="#quick-docs"
+          class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Quick Docs</a
         >
       </li>
       <li class="pt-2">
-        <a href="#badges" class="text-violet-400 font-semibold hover:text-violet-300"
+        <a
+          href="#badges"
+          class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Badges</a
         >
       </li>
       <li class="pt-2">
-        <a href="#mini-charts" class="text-violet-400 font-semibold hover:text-violet-300"
+        <a
+          href="#mini-charts"
+          class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Mini Charts</a
         >
       </li>
       <li class="pt-2">
-        <a href="#full-charts" class="text-violet-400 font-semibold hover:text-violet-300"
+        <a
+          href="#full-charts"
+          class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Full Charts</a
         >
       </li>
@@ -60,7 +68,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
 
       <select
         x-model="branch"
-        class="mt-2 w-48 rounded  bg-slate-700 p-1 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent select-none"
+        class="mt-2 w-48 rounded bg-slate-700 p-1 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent select-none"
         x-on:change="updateBranch()"
       >
         <template x-for="b in branches">
@@ -102,7 +110,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         API Documentation for Embeds
       </p>
       <div class="grid grid-cols-1 gap-x-4 gap-y-8 xl:grid-cols-4">
-        <div class="sm:col-span-2 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5">
+        <div
+          class="lg:col-span-2 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5"
+        >
           <h2 class="font-bold text-slate-900 pb-1 select-none">Stats</h2>
           <template x-if="types.length > 0">
             <img
@@ -117,17 +127,20 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
               x-text="types[0].repo"></span>&branch=<span
               x-text="types[0].branch"></span>&theme=dark)</code
           >
-
-          <template class="" x-for="t in types">
-            <div class="pt-3 select-none flex">
+          <div class="mt-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600">
+            <template x-for="t in types">
+              <div class="pt-3 select-none flex">
                 <img
-                is:raw
-                :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
-              />
-            </div>
-          </template>
+                  is:raw
+                  :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
+                />
+              </div>
+            </template>
+          </div>
         </div>
-        <div class="sm:col-span-1 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600">
+        <div
+          class="sm:col-span-2 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600"
+        >
           <h2 class="font-bold text-slate-200 pb-1">API Endpoints</h2>
           <table class="w-full">
             <tbody class="text-left">
@@ -210,9 +223,11 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             </tbody>
           </table>
         </div>
-        <div class="sm:col-span-1 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5 select-none">
+        <div
+          class="sm:col-span-4 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5 select-none"
+        >
           <h2 class="font-bold text-slate-900 pb-10">Quick Trends</h2>
-          <div class="border-slate-800 border-2 rounded-lg p-2 text-center">
+          <div class="border-slate-600 border-2 rounded-lg p-2 text-center">
             <template x-for="t in types">
               <img
                 class="inline select-none rounded-xl p-1"
@@ -228,7 +243,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
       class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
       id="badges"
     >
-      <h2 class="text-violet-300 font-bold text-xl pb-2 select-none"># Badges</h2>
+      <h2 class="text-violet-300 font-bold text-xl pb-2 select-none">
+        # Badges
+      </h2>
       <p class="pb-6 font-semibold text-sm select-none">
         Best Suited for README.md. Badges for each type.
       </p>
