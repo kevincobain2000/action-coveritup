@@ -25,7 +25,8 @@ type ChartRequest struct {
 	Branch     string `json:"branch" query:"branch" validate:"ascii" message:"ascii branch is required"`
 	User       string `json:"user" query:"user" validate:"ascii,excludes=/" message:"ascii user is required"`
 	BaseBranch string `json:"base_branch" query:"base_branch" validate:"ascii" message:"ascii base_branch is required"`
-	Type       string `json:"type" query:"type" validate:"required,ascii" message:"ascii type is required"`
+	Type       string `json:"type" query:"type" validate:"ascii" message:"ascii type is required"`
+	Types      string `json:"types" query:"types" validate:"ascii" message:"ascii types are required"`
 	Branches   string `json:"branches" query:"branches" validate:"ascii" message:"ascii branches is required"`
 	Users      string `json:"users" query:"users" validate:"ascii" message:"ascii users is required"`
 	PRNum      int    `json:"pr_num" query:"pr_num"`
@@ -46,16 +47,17 @@ func (h *ChartHandler) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, err)
 	}
 	defaults.SetDefaults(req)
+	TrimStringFields(req)
 
 	msgs, err := ValidateRequest(req)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusUnprocessableEntity, msgs)
 	}
-
-	typesMany := []string{}
-	if strings.Contains(req.Type, ",") {
-		typesMany = strings.Split(req.Type, ",")
+	if req.Type == "" && req.Types == "" {
+		return echo.NewHTTPError(http.StatusUnprocessableEntity, "type or types are required")
 	}
+
+	typesMany := strings.Split(req.Types, ",")
 
 	if len(typesMany) > 1 {
 		if req.Branch == "" {

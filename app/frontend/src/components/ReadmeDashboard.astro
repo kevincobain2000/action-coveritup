@@ -8,62 +8,62 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
     class="hidden select-none lg:block lg:w-1/6 bg-slate-800 p-4 mt-20 rounded-lg sticky top-5 self-start"
   >
     <!-- Sidebar content here -->
-    <p class="text-lg font-semibold pb-6">Contents</p>
-    <ul>
-      <li class="pt-2">
+    <p class="text-lg font-semibold">Contents</p>
+    <ul class="mt-2">
+      <li class="pt-1">
         <a
           href="#quick-docs"
           class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Quick Docs</a
         >
       </li>
-      <li class="pt-2">
+      <li class="pt-1">
         <a
           href="#badges"
           class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Badges</a
         >
       </li>
-      <li class="pt-2">
+      <li class="pt-1">
         <a
           href="#mini-charts"
           class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Mini Charts</a
         >
       </li>
-      <li class="pt-2">
+      <li class="pt-1">
         <a
           href="#full-charts"
           class="text-violet-400 font-semibold hover:text-violet-300"
           ><span class="text-slate-500">#</span> Full Charts</a
         >
       </li>
-      <li class="pt-2">
+      <li class="pt-1">
         <a
           href="#comparison-charts-types"
           class="text-violet-400 font-semibold hover:text-violet-300"
-          ><span class="text-slate-500">#</span> Comparison Charts for Types</a
+          ><span class="text-slate-500">#</span> Charts for Types</a
         >
       </li>
-      <li class="pt-2">
+      <li class="pt-1">
         <a
           href="#comparison-charts-branches"
           class="text-violet-400 font-semibold hover:text-violet-300"
-          ><span class="text-slate-500">#</span> Comparison Charts for Branches</a
+          ><span class="text-slate-500">#</span> Charts for Branches</a
         >
       </li>
-      <li class="pt-2">
+      <li class="pt-1">
         <a
           href="#comparison-charts-users"
           class="text-violet-400 font-semibold hover:text-violet-300"
-          ><span class="text-slate-500">#</span> Comparison Charts for Users</a
+          ><span class="text-slate-500">#</span> Charts for Users</a
         >
       </li>
     </ul>
     <hr class="w-24 h-0.5 mx-auto bg-gray-500 border-0 rounded my-10" />
     <form class="text-left text-black select-none">
-      <label for="countries" class="block mt-2 text-slate-400 text-sm"
-        >Change branch. Total <span x-text="branches.length"></span>.</label
+      <label for="countries" class="block mt-2 text-slate-500 text-sm"
+        >Switch from <span x-text="branches.length"></span> branches</label
       >
 
       <select
@@ -87,6 +87,9 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
       class="text-violet-200 font-mono mt-3 font-bold text-center text-xl select-none"
       id="org-repo-name"
     >
+    </p>
+    <p class="text-green-600 font-mono mt-3 font-bold text-center text-xl select-none">
+        <span class="text-slate- font-semibold select-none" x-text="branch"></span>
     </p>
     <hr class="w-48 h-1 mx-auto bg-gray-500 border-0 rounded my-10" />
     <p
@@ -177,17 +180,31 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                 >
               </tr>
               <tr>
-                <th class="text-slate-400 font-mono text-sm">&branch</th>
-                <th class="text-slate-400 font-mono text-sm">=</th>
-                <td class="font-thin text-sm font-mono"
+                <th class="pt-2 text-slate-400 font-mono text-sm">&branch</th>
+                <th class="pt-2 text-slate-400 font-mono text-sm">=</th>
+                <td class="pt-2 font-thin text-sm font-mono"
                   ><code x-text="branch"></code></td
                 >
               </tr>
               <tr>
-                <th class="text-slate-400 font-mono text-sm">&type</th>
+                <th class="text-slate-500 font-thin font-mono text-sm">&branches</th>
                 <th class="text-slate-400 font-mono text-sm">=</th>
-                <td class="font-thin text-sm font-mono"
+                <td class="text-slate-500 font-thin text-sm font-mono"
+                  ><code x-text="branches[0]"></code>,<code x-text="branches[1]"></code>...</td
+                >
+              </tr>
+              <tr>
+                <th class="pt-2 text-slate-400 font-mono text-sm">&type</th>
+                <th class="pt-2 text-slate-400 font-mono text-sm">=</th>
+                <td class="pt-2 font-thin text-sm font-mono"
                   ><code x-text="types[0].name"></code></td
+                >
+              </tr>
+              <tr>
+                <th class="text-slate-500 font-thin font-mono text-sm">&types</th>
+                <th class="text-slate-400 font-mono text-sm">=</th>
+                <td class="text-slate-500 font-thin text-sm font-mono"
+                  ><code x-text="types[0].name"></code>,<code x-text="types[1].name"></code>...</td
                 >
               </tr>
             </tbody>
@@ -367,7 +384,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                 <div class="pb-2 select-none flex justify-center items-center">
                   <img
                     is:raw
-                    :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${ts.map(t => t.name).join(',')}&theme=dark`"
+                    :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&types=${ts.map(t => t.name).join(',')}&theme=dark`"
                     alt="Chart"
                   />
                 </div>
@@ -375,7 +392,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
                   ![<span x-text="ts.map(t => t.name).join(',')"
                   ></span>](https://<span x-text="url"></span>/chart?org=<span
                     x-text="org"></span>&repo=<span x-text="repo"
-                  ></span>&branch=<span x-text="branch"></span>&type=<span
+                  ></span>&branch=<span x-text="branch"></span>&types=<span
                     x-text="ts.map(t => t.name).join(',')"></span>)
                 </code>
               </dd>

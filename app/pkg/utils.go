@@ -2,6 +2,7 @@ package pkg
 
 import (
 	"hash/fnv"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -69,4 +70,15 @@ func MD5(s string) string {
 	}
 	u := h.Sum32()
 	return strconv.FormatUint(uint64(u), 16)
+}
+
+// TrimStringFields uses reflection to trim all string fields in a struct.
+func TrimStringFields(v interface{}) {
+	val := reflect.ValueOf(v).Elem()
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		if field.Kind() == reflect.String {
+			field.SetString(strings.TrimSpace(field.String()))
+		}
+	}
 }
