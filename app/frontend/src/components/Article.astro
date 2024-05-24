@@ -1,93 +1,61 @@
 ---
 
 ---
-
 <div class="mx-auto md:pt-16 font-mono">
-  <p class="text-violet-400 font-bold pb-6 lg:pb-6 text-center text-3xl">
-    <br />What is <br />
-    CoverItUp?
-  </p>
-  <p class="text-center font-mono text-lg text-white font-bold">
-    All in One Developer's KPI Tool
-  </p>
+    <p class="text-violet-400 font-bold pb-6 lg:pb-6 text-center text-3xl">
+      <br />What is <br />
+      CoverItUp?
+    </p>
+    <p class="text-center font-mono text-lg text-white font-bold">
+      All in One Developer's KPI Tool
+    </p>
 
-  <div
-    class="md:pl-48 md:pr-48 pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-5 rounded-lg"
-  >
-    <b>CoverItUp</b> - is a new, one of it's kind, complete solution for software
-    engineers to measure code metrics.
-    <br />
-    <br />
-    <span class="text-white">
-        This tool empowers developers to take control of their code coverage analysis
-    for any type of matrices, all in one place.
-    </span>
-    <br />
-    <br />
-    This tool is fully customizable tool to track metrics that should matter to you
-    the most. Such as, not just the code coverage, but equally important other metrics.
-    Such as, build times ・number of dependencies ・bundle sizes etc. Together with
-    additional features, which I share further in this post.
-    <br />
-    <br />
-    <b>Context:</b> mostly all repos use services like CodeCov, Coveralls badges
-    to display the code-coverage of unit tests on their README on Github. Over years,
-    many other badges, such as, number of downloads ・number of people online on
-    Discord etc also made their way into the README.
-    <br />
-    <br />
-    However, there are other indicators that are equally important. And developers
-    have less control as developers are mostly restricted to the tools that are available
-    right now to record those metrics.
-    <br />
-    Therefore, I designed this tool in such a way, that developers can record any
-    types of scores that they see fit.
-    <br />
-    <br />
-
-    <br />
-    <span>
-      Generally for any software project, we use tools like SonarQube for code
-      inspection, CodeCov for code coverage, Code Climate for smells and others.
-      <br />
-      For enterprise users, this also means expensive licenses and managing several
-      self hosting. Therefore, some may consider is as a free alternative to CodeCov
-      or SonarQube.
-      <br />
-      And for users, using the cloud services for these respective tools, involves
-      managing separate accounts, authentications etc.
-      <br />
-      <br />
-
-      All these tools provide solutions to one or two metrics. Hence, users end
-      up using multiple services for different use cases in same project.
-      <br />
-      <br />
-
-      We didn’t want to do either. Instead, provide full control to developer
-      with the choice of indicator a developer wants to measure.
-    </span>
-
-    Over my years of development, I have realized that just badges may not be
-    enough to determine the trajectory of a repository. Therefore, I implemented
-    trend charts that can be embedded inside the README as images, same way we
-    embed badges.
-    <br /><br />
-    On top of the core feature to track code wellness, the tool provides badges and
-    charts that can be embed into the README. It also provides smart feedback to
-    user on pull requests by sharing difference in the indicators for 2 branches.
-    The tool doesn’t spam the comment box, and upon new commits filters out the diff
-    that have already been commented.
-    <br /><br />
-
-    It comes in dark and light themes. The embedding of charts come in 2
-    different themes. The width and heights are fully adjustable and output can
-    be either png or svg if you prefer smaller sizes. SVG are best suited to
-    embed in the README or pull request comments. While PNG are used if you want
-    to create your own dashboards on a Wiki or Confluence page for all the
-    repositories in an organization.
-  </div>
-</div>
-<style>
+    <article class="max-w-4xl mx-auto p-10 text-slate-400 bg-slate-800 mt-5 rounded-lg">
+      <h1 class="text-3xl font-bold mb-4 text-white">CoverItUp</h1>
+      <p class="mb-4">
+        <b>CoverItUp</b> - is a new, one of its kind, complete solution for software engineers to measure code metrics.
+      </p>
+      <p class="mb-4 text-white">
+        This tool empowers developers to take control of their code coverage analysis for any type of matrices, all in one place.
+      </p>
+      <p class="mb-4">
+        This tool is fully customizable tool to track metrics that should matter to you the most. Such as, not just the code coverage, but equally important other metrics. Such as, build times, number of dependencies, bundle sizes etc. Together with additional features, which I share further in this post.
+      </p>
+      <h2 class="text-2xl font-bold mb-2">Context:</h2>
+      <p class="mb-4">
+        Mostly all repos use services like CodeCov, Coveralls badges to display the code-coverage of unit tests on their README on Github. Over years, many other badges, such as, number of downloads, number of people online on Discord etc also made their way into the README.
+      </p>
+      <p class="mb-4">
+        However, there are other indicators that are equally important. And developers have less control as developers are mostly restricted to the tools that are available right now to record those metrics.
+      </p>
+      <p class="mb-4">
+        Therefore, I designed this tool in such a way, that developers can record any types of scores that they see fit.
+      </p>
+      <p class="mb-4 text-white">
+        Generally for any software project, we use tools like SonarQube for code inspection, CodeCov for code coverage, Code Climate for smells and others.
+      </p>
+      <p class="mb-4">
+        For enterprise users, this also means expensive licenses and managing several self-hosting. Therefore, some may consider it as a free alternative to CodeCov or SonarQube.
+      </p>
+      <p class="mb-4">
+        And for users, using the cloud services for these respective tools, involves managing separate accounts, authentications etc.
+      </p>
+      <p class="mb-4">
+        All these tools provide solutions to one or two metrics. Hence, users end up using multiple services for different use cases in the same project.
+      </p>
+      <p class="mb-4">
+        We didn’t want to do either. Instead, provide full control to developer with the choice of indicator a developer wants to measure.
+      </p>
+      <p class="mb-4 text-white">
+        Over my years of development, I have realized that just badges may not be enough to determine the trajectory of a repository. Therefore, I implemented trend charts that can be embedded inside the README as images, the same way we embed badges.
+      </p>
+      <p class="mb-4">
+        On top of the core feature to track code wellness, the tool provides badges and charts that can be embedded into the README. It also provides smart feedback to users on pull requests by sharing the difference in the indicators for 2 branches. The tool doesn’t spam the comment box, and upon new commits filters out the diff that have already been commented.
+      </p>
+      <p class="mb-4 text-white">
+        It comes in dark and light themes. The embedding of charts comes in 2 different themes. The width and heights are fully adjustable and output can be either png or svg if you prefer smaller sizes. SVG are best suited to embed in the README or pull request comments. While PNG are used if you want to create your own dashboards on a Wiki or Confluence page for all the repositories in an organization.
+      </p>
+    </article>
+  </div><style>
 
 </style>

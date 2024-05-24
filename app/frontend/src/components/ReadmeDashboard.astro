@@ -102,8 +102,8 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         API Documentation for Embeds
       </p>
       <div class="grid grid-cols-1 gap-x-4 gap-y-8 xl:grid-cols-4">
-        <div class="sm:col-span-2 bg-slate-900 rounded-md p-5">
-          <h2 class="font-bold text-slate-200 pb-1 select-none">Stats</h2>
+        <div class="sm:col-span-2 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5">
+          <h2 class="font-bold text-slate-900 pb-1 select-none">Stats</h2>
           <template x-if="types.length > 0">
             <img
               class="inline select-none mt-5 mb-5 rounded-lg"
@@ -111,14 +111,23 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
               :src="`//${url}/table?org=${org}&repo=${repo}&branch=${branch}&theme=dark`"
             />
           </template>
-          <code class="font-mono text-slate-500 break-words text-sm">
+          <code class="font-mono text-slate-900 break-words text-sm">
             ![<span x-text="types[0].name"></span>](https://<span x-text="url"
             ></span>/table?org=<span x-text="types[0].org"></span>&repo=<span
               x-text="types[0].repo"></span>&branch=<span
               x-text="types[0].branch"></span>&theme=dark)</code
           >
+
+          <template class="" x-for="t in types">
+            <div class="pt-3 select-none flex">
+                <img
+                is:raw
+                :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
+              />
+            </div>
+          </template>
         </div>
-        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5 select-none">
+        <div class="sm:col-span-1 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600">
           <h2 class="font-bold text-slate-200 pb-1">API Endpoints</h2>
           <table class="w-full">
             <tbody class="text-left">
@@ -201,14 +210,14 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
             </tbody>
           </table>
         </div>
-        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5 select-none">
-          <h2 class="font-bold text-slate-200 pb-10">Quick Trends</h2>
-          <div class="border-slate-800 border-2 rounded p-2 text-center">
+        <div class="sm:col-span-1 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5 select-none">
+          <h2 class="font-bold text-slate-900 pb-10">Quick Trends</h2>
+          <div class="border-slate-800 border-2 rounded-lg p-2 text-center">
             <template x-for="t in types">
               <img
-                class="inline select-none rounded-lg p-1"
+                class="inline select-none rounded-xl p-1"
                 is:raw
-                :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=120&height=120&output=svg`"
+                :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"
               />
             </template>
           </div>
