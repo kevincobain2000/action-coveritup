@@ -13,14 +13,14 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
 
 <div class="lg:flex" id="data" data-base-url={baseURL}>
   <div
-    class="hidden select-none lg:block lg:w-1/6 bg-slate-800 p-4 mt-20 rounded-lg sticky top-5 self-start"
+    class="select-none lg:w-1/6 bg-slate-800 p-4 mt-20 rounded-lg xl:sticky xl:top-5 xl:self-start"
   >
+    <Heading />
+    <hr class="w-24 h-0.5 mx-auto bg-gray-500 border-0 rounded my-10" />
     <Sidebar />
   </div>
 
   <div class="mx-auto lg:w-4/5">
-    <Heading />
-
     <QuickDocs />
     <Badges />
     <MiniCharts />
