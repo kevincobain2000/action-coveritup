@@ -51,17 +51,10 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
   };
 
   const currentURL = window.location.origin;
-
-  let baseURL = document
-    .querySelector("[data-base-url]")
-    ?.getAttribute("data-base-url");
-
-  if (!baseURL) {
-    baseURL = currentURL;
-  }
-  if (!baseURL.startsWith("http")) {
-    baseURL = currentURL + baseURL;
-  }
+  let baseURL =
+    document.querySelector("[data-base-url]")?.getAttribute("data-base-url") ||
+    currentURL;
+  baseURL = baseURL.startsWith("http") ? baseURL : currentURL + baseURL;
 
   const urlParams = new URLSearchParams(window.location.search);
   const org = urlParams.get("org");
@@ -72,15 +65,16 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
     .then((response) => response.json())
     .then((data) => {
       if (!branch && data.branches.length > 0) {
-        data.branch = data.branches[0];
-        branch = data.branch;
+        branch = data.branch = data.branches[0];
         updateBranch();
       }
 
-      data.groupedTypes = groupByMetric(data.types);
-      data.url = baseURL.replace("https://", "").replace("http://", "");
-      data.org = org;
-      data.repo = repo;
+      Object.assign(data, {
+        groupedTypes: groupByMetric(data.types),
+        url: baseURL.replace(/^https?:\/\//, ""),
+        org,
+        repo,
+      });
 
       document
         .getElementById("data")
