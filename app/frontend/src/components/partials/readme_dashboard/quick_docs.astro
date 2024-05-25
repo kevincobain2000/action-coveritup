@@ -1,0 +1,161 @@
+---
+
+---
+
+<div
+  class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-5 rounded-lg"
+  id="quick-docs"
+>
+  <h2 class="text-violet-300 font-bold text-xl pb-2 select-none">
+    # Quick Docs
+  </h2>
+  <p class="pb-6 font-semibold text-sm select-none">
+    API Documentation for Embeds
+  </p>
+  <div class="grid grid-cols-1 gap-x-4 gap-y-8 xl:grid-cols-4">
+    <div
+      class="lg:col-span-2 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5"
+    >
+      <h2 class="font-bold text-slate-900 pb-1 select-none">Stats</h2>
+      <template x-if="types.length > 0">
+        <img
+          class="inline select-none mt-5 mb-5 rounded-lg"
+          is:raw
+          :src="`//${url}/table?org=${org}&repo=${repo}&branch=${branch}&theme=dark`"
+        />
+      </template>
+      <code class="font-mono text-slate-900 break-words text-sm">
+        ![<span x-text="types[0].name"></span>](https://<span x-text="url"
+        ></span>/table?org=<span x-text="types[0].org"></span>&repo=<span
+          x-text="types[0].repo"></span>&branch=<span x-text="types[0].branch"
+        ></span>&theme=dark)</code
+      >
+      <div
+        class="mt-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600"
+      >
+        <template x-for="t in types">
+          <div class="pt-3 select-none flex">
+            <img
+              is:raw
+              :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
+            />
+          </div>
+        </template>
+      </div>
+    </div>
+    <div
+      class="sm:col-span-2 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600"
+    >
+      <h2 class="font-bold text-slate-200 pb-1">API Endpoints</h2>
+      <table class="w-full">
+        <tbody class="text-left">
+          <tr>
+            <td class="font-bold text-green-300 font-mono"
+              ><code>/badge</code></td
+            >
+          </tr>
+          <tr>
+            <td class="font-bold text-green-300 font-mono"
+              ><code>/chart</code></td
+            >
+          </tr>
+        </tbody>
+      </table>
+      <hr class="w-12 h-1 mx-auto my-4 bg-gray-700 border-0 rounded md:my-10" />
+      <h3 class="font-bold text-red-300 pb-1">Required*</h3>
+      <table class="w-full">
+        <tbody class="text-left">
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">?org</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-thin text-sm font-mono"
+              ><code x-text="org"></code></td
+            >
+          </tr>
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">&repo</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-thin text-sm font-mono"
+              ><code x-text="repo"></code></td
+            >
+          </tr>
+          <tr>
+            <th class="pt-2 text-slate-400 font-mono text-sm">&branch</th>
+            <th class="pt-2 text-slate-400 font-mono text-sm">=</th>
+            <td class="pt-2 font-thin text-sm font-mono"
+              ><code x-text="branch"></code></td
+            >
+          </tr>
+          <tr>
+            <th class="text-slate-500 font-thin font-mono text-sm">&branches</th
+            >
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="text-slate-500 font-thin text-sm font-mono"
+              ><code x-text="branches[0]"></code>,<code x-text="branches[1]"
+              ></code>...</td
+            >
+          </tr>
+          <tr>
+            <th class="pt-2 text-slate-400 font-mono text-sm">&type</th>
+            <th class="pt-2 text-slate-400 font-mono text-sm">=</th>
+            <td class="pt-2 font-thin text-sm font-mono"
+              ><code x-text="types[0].name"></code></td
+            >
+          </tr>
+          <tr>
+            <th class="text-slate-500 font-thin font-mono text-sm">&types</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="text-slate-500 font-thin text-sm font-mono"
+              ><code x-text="types[0].name"></code>,<code x-text="types[1].name"
+              ></code>...</td
+            >
+          </tr>
+        </tbody>
+      </table>
+      <h3 class="font-bold text-slate-300 pt-3 pb-1">Charts</h3>
+      <table class="w-full">
+        <tbody class="text-left">
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">&width</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-mono text-sm">chart width</td>
+          </tr>
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">&height</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-mono text-sm">chart height</td>
+          </tr>
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">&line</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-mono text-sm">fill or nofill</td>
+          </tr>
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">&theme</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-mono text-sm">dark or light</td>
+          </tr>
+          <tr>
+            <th class="text-slate-400 font-mono text-sm">&output</th>
+            <th class="text-slate-400 font-mono text-sm">=</th>
+            <td class="font-mono text-sm">svg or png</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="sm:col-span-4 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5 select-none"
+    >
+      <h2 class="font-bold text-slate-900 pb-10">Quick Trends</h2>
+      <div class="border-slate-600 border-2 rounded-lg p-2 text-center">
+        <template x-for="t in types">
+          <img
+            class="inline select-none rounded-xl p-1"
+            is:raw
+            :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"
+          />
+        </template>
+      </div>
+    </div>
+  </div>
+</div>

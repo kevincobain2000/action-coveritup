@@ -1,0 +1,40 @@
+---
+
+---
+
+<div
+  class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  id="mini-charts"
+>
+  <h2 class="text-violet-300 font-bold text-xl pb-2 select-none">
+    # Mini Charts
+  </h2>
+  <p class="pb-6 font-semibold text-sm select-none">
+    Best Suited for README.md. Mini charts for each type.
+  </p>
+
+  <div class="text-center">
+    <template x-for="t in types">
+      <img
+        class="inline select-none p-1 rounded-lg"
+        is:raw
+        :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"
+      />
+    </template>
+  </div>
+  <div class="pt-5"></div>
+  <div class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+    <template x-for="t in types" class="mx-auto">
+      <div class="text-gray-500 bg-slate-900 mb-3 rounded-md p-5">
+        <div class="text-white font-bold select-none pb-2" x-text="t.name">
+        </div>
+        <code class="font-mono text-slate-500 break-words text-sm">
+          ![<span x-text="t.name"></span>](https://<span x-text="url"
+          ></span>/chart?org=<span x-text="org"></span>&repo=<span x-text="repo"
+          ></span>&branch=<span x-text="branch"></span>&type=<span
+            x-text="t.name"></span>&theme=light&line=fill&width=150&height=150)
+        </code>
+      </div>
+    </template>
+  </div>
+</div>

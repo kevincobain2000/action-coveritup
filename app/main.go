@@ -84,6 +84,7 @@ func SetupFlags() {
 			pkg.Logger().Error(err)
 		}
 	}
+
 	if f.githubAPI != "" && os.Getenv("GITHUB_API") == "" {
 		err := os.Setenv("GITHUB_API", f.githubAPI)
 		if err != nil {

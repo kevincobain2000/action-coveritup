@@ -1,0 +1,45 @@
+---
+
+---
+
+<div
+  class="pl-5 pr-5 pt-10 pb-10 text-slate-400 bg-slate-800 mt-24 rounded-lg"
+  id="comparison-charts-types"
+>
+  <h2 class="text-violet-300 font-bold text-xl pb-2 select-none">
+    # Comparison Charts for Types
+  </h2>
+  <p class="pb-6 font-semibold text-sm select-none">
+    Visualize comparison charts for types for latest scores for same metrics
+  </p>
+  <dl class="grid grid-cols-1 gap-x-4 gap-y-8 lg:grid-cols-2">
+    <template
+      class="mx-auto"
+      x-for="(ts, metric) in groupedTypes"
+      :key="metric"
+    >
+      <template x-if="ts.length > 1">
+        <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
+          <dt class="text-white font-bold select-none pb-2" x-text="metric">
+          </dt>
+          <dd class="text-gray-600">
+            <div class="pb-2 select-none flex justify-center items-center">
+              <img
+                is:raw
+                :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&types=${ts.map(t => t.name).join(',')}&theme=dark`"
+                alt="Chart"
+              />
+            </div>
+            <code class="font-mono text-slate-500 break-words text-sm">
+              ![<span x-text="ts.map(t => t.name).join(',')"
+              ></span>](https://<span x-text="url"></span>/chart?org=<span
+                x-text="org"></span>&repo=<span x-text="repo"
+              ></span>&branch=<span x-text="branch"></span>&types=<span
+                x-text="ts.map(t => t.name).join(',')"></span>)
+            </code>
+          </dd>
+        </div>
+      </template>
+    </template>
+  </dl>
+</div>

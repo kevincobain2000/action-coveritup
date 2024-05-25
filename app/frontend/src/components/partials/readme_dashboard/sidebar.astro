@@ -1,0 +1,73 @@
+---
+
+---
+
+<!-- Sidebar content here -->
+<p class="text-lg font-semibold">Contents</p>
+<ul class="mt-2">
+  <li class="pt-1">
+    <a
+      href="#quick-docs"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Quick Docs</a
+    >
+  </li>
+  <li class="pt-1">
+    <a
+      href="#badges"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Badges</a
+    >
+  </li>
+  <li class="pt-1">
+    <a
+      href="#mini-charts"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Mini Charts</a
+    >
+  </li>
+  <li class="pt-1">
+    <a
+      href="#full-charts"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Full Charts</a
+    >
+  </li>
+  <li class="pt-1">
+    <a
+      href="#comparison-charts-types"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Types</a
+    >
+  </li>
+  <li class="pt-1">
+    <a
+      href="#comparison-charts-branches"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Branches</a
+    >
+  </li>
+  <li class="pt-1">
+    <a
+      href="#comparison-charts-users"
+      class="text-violet-400 font-semibold hover:text-violet-300"
+      ><span class="text-slate-500">#</span> Users</a
+    >
+  </li>
+</ul>
+<hr class="w-24 h-0.5 mx-auto bg-gray-500 border-0 rounded my-10" />
+<form class="text-left text-black select-none">
+  <label for="countries" class="block mt-2 text-slate-500 text-sm"
+    >Switch from <span x-text="branches.length"></span> branches</label
+  >
+
+  <select
+    x-model="branch"
+    class="mt-2 w-48 md:w-32 rounded bg-slate-700 p-1 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent select-none"
+    x-on:change="updateBranch()"
+  >
+    <template x-for="b in branches">
+      <option x-text="b" is:raw :selected="b === branch"></option>
+    </template>
+  </select>
+</form>
