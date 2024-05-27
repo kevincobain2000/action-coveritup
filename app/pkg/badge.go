@@ -5,7 +5,6 @@ import (
 
 	"github.com/kevincobain2000/action-coveritup/models"
 	"github.com/narqo/go-badge"
-	stars "github.com/soulteary/go-counting-stars/pkg/go-badge"
 )
 
 type Badge struct {
@@ -27,8 +26,10 @@ func (b *Badge) Get(req *BadgeRequest, t *models.Type) ([]byte, error) {
 	label := t.Name + " | " + req.Branch
 
 	if t.Metric == "" {
-		return stars.RenderBytes("social", label, scoreStr, "")
+		badge.SetSocialTemplate()
+		return badge.RenderBytes(label, scoreStr, "#00000", "#00000", "#fff")
 	}
+	badge.SetFlatTemplate()
 
 	scoreStr += ret.Metric
 	badgeColor, labelColor, color := b.getBadgeColors(t.Metric)

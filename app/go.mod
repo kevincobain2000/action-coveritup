@@ -14,13 +14,12 @@ require (
 	github.com/narqo/go-badge v0.0.0-20230821190521-c9a75c019a59
 	github.com/pressly/goose/v3 v3.20.0
 	github.com/sirupsen/logrus v1.9.3
-	github.com/soulteary/go-counting-stars v0.0.0-20230506171455-895778e076b0
 	github.com/stretchr/testify v1.8.4
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/gorm v1.25.10
 )
 
-replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge v0.0.0-20240124060355-fd6eab96e50a
+replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge v0.0.0-20240527052429-de9eb158774b
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
