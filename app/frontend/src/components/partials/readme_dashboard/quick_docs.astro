@@ -26,9 +26,8 @@
       </template>
       <code class="font-mono text-slate-900 break-words text-sm">
         ![<span x-text="types[0].name"></span>](https://<span x-text="url"
-        ></span>/table?org=<span x-text="org"></span>&repo=<span
-          x-text="repo"></span>&branch=<span x-text="types[0].branch"
-        ></span>&theme=dark)</code
+        ></span>/table?org=<span x-text="org"></span>&repo=<span x-text="repo"
+        ></span>&branch=<span x-text="types[0].branch"></span>&theme=dark)</code
       >
       <div
         class="mt-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600"
@@ -57,6 +56,11 @@
           <tr>
             <td class="font-bold text-green-300 font-mono"
               ><code>/chart</code></td
+            >
+          </tr>
+          <tr>
+            <td class="font-bold text-green-300 font-mono"
+              ><code>/progress</code></td
             >
           </tr>
         </tbody>
@@ -144,10 +148,21 @@
       </table>
     </div>
     <div
-      class="sm:col-span-4 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5 select-none"
+      class="sm:col-span-4 bg-gradient-to-b from-slate-900 to-slate-800 rounded-md p-5 select-none"
     >
-      <h2 class="font-bold text-slate-900 pb-10">Quick Trends</h2>
-      <div class="border-slate-600 border-2 rounded-lg p-2 text-center">
+      <h2 class="font-bold text-slate-300 pb-5">Quick Trends</h2>
+      <div class="border-slate-600 text-center">
+        <template x-for="t in types">
+          <template x-if="t.metric === '%'">
+            <img
+              class="inline select-none rounded-xl p-1"
+              is:raw
+              :src="`//${url}/progress?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=light`"
+            />
+          </template>
+        </template>
+      </div>
+      <div class="border-slate-600 border-2 rounded-lg p-2 text-center mt-5">
         <template x-for="t in types">
           <img
             class="inline select-none rounded-xl p-1"

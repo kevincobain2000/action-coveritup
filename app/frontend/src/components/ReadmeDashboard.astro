@@ -3,6 +3,7 @@ import Sidebar from "@components/partials/readme_dashboard/sidebar.astro";
 import Heading from "@components/partials/readme_dashboard/heading.astro";
 import QuickDocs from "@components/partials/readme_dashboard/quick_docs.astro";
 import Badges from "@components/partials/readme_dashboard/badges.astro";
+import Progress from "@components/partials/readme_dashboard/progress.astro";
 import MiniCharts from "@components/partials/readme_dashboard/mini_charts.astro";
 import FullCharts from "@components/partials/readme_dashboard/full_charts.astro";
 import TypesCharts from "@components/partials/readme_dashboard/types_charts.astro";
@@ -22,6 +23,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
 
   <div class="mx-auto lg:w-4/5">
     <QuickDocs />
+    <Progress />
     <Badges />
     <MiniCharts />
     <FullCharts />
@@ -75,7 +77,6 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
         org,
         repo,
       });
-
       document
         .getElementById("data")
         .setAttribute("x-data", JSON.stringify(data));

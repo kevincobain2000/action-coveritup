@@ -36,6 +36,9 @@ func SetupRoutes(e *echo.Echo, baseURL string, publicDir embed.FS, favicon embed
 	// /badge to return badges
 	e.GET(baseURL+"badge", NewBadgeHandler().Get)
 
+	// /badge to return badges
+	e.GET(baseURL+"progress", NewProgressHandler().Get)
+
 	// /bar
 	e.GET(baseURL+"bar", func(c echo.Context) error {
 		img, err := instachart.NewBarChartHandler().Get(c)
