@@ -30,26 +30,46 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 	switch req.Theme {
 	case "dark":
 		circleColor = "#333333"
-		textColor = "#FFFFFF"
-		backgroundColor = "#000000"
-		captionColor = "gray"
+		textColor = "#36454F"
 	case "light":
 		circleColor = "#DDDDDD"
 		textColor = "#36454F"
-		backgroundColor = "#FFFFFF"
-		captionColor = "gray"
 	}
 
 	switch {
-	case ret.Score > 70:
+	case ret.Score > 50:
 		progressColor = "#77DD77" // pastel green
+		captionColor = "#00FF00"
+		backgroundColor = "#D1E2C4"
 	case ret.Score >= 30:
 		progressColor = "#FFB347" // pastel yellow
+		captionColor = "#FFA500"
+		backgroundColor = "#FFD1A4"
 	default:
 		progressColor = "#FF6961" // pastel red
+		captionColor = "#FF0000"
+		backgroundColor = "#FFD1A4"
+	}
+	if req.Style == "bar" {
+		bar, err := gps.NewBar(func(o *gps.BarOptions) error {
+			o.Progress = int(ret.Score)
+			o.Width = 180
+			o.Height = 40
+			o.ProgressColor = progressColor
+			o.TextColor = textColor
+			o.TextSize = 14
+			o.ShowPercentage = true
+			o.Caption = t.Name
+			o.CaptionSize = 14
+			o.CaptionColor = captionColor
+			o.BackgroundColor = backgroundColor
+			o.CornerRadius = 10
+			return nil
+		})
+		return []byte(bar.SVG()), err
 	}
 
-	circular, err := gps.NewCircular(func(o *gps.CircularOptions) error {
+	circle, err := gps.NewCircular(func(o *gps.CircularOptions) error {
 		o.Progress = int(ret.Score)
 		o.Size = 120
 		o.CircleWidth = 15
@@ -67,5 +87,5 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 		return nil
 	})
 
-	return []byte(circular.SVG()), err
+	return []byte(circle.SVG()), err
 }

@@ -23,6 +23,7 @@ type ProgressRequest struct {
 	Branch string `json:"branch" query:"branch" validate:"required,ascii" message:"ascii branch is required"`
 	Type   string `json:"type" query:"type" validate:"ascii,required,excludes=/" message:"ascii type is required"`
 	Theme  string `json:"theme" query:"theme" default:"light" validate:"oneof=light dark" message:"theme must be light or dark"`
+	Style  string `json:"style" query:"style" default:"circle" validate:"oneof=circle bar" message:"style must be circle"`
 }
 
 func (h *ProgressHandler) Get(c echo.Context) error {

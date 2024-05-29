@@ -20,14 +20,19 @@
             <img
               class="inline select-none rounded-xl p-1"
               is:raw
-              :src="`//${url}/progress?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
+              :src="`//${url}/progress?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&style=bar`"
+            />
+            <img
+              class="inline select-none rounded-xl p-10 mb-5"
+              is:raw
+              :src="`//${url}/progress?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&style=circle`"
             />
           </div>
           <code class="font-mono text-slate-500 break-words text-sm">
             ![<span x-text="t.name"></span>](https://<span x-text="url"
             ></span>/progress?org=<span x-text="org"></span>&repo=<span
               x-text="repo"></span>&branch=<span x-text="branch"
-            ></span>&type=<span x-text="t.name"></span>)
+            ></span>&type=<span x-text="t.name"></span>&theme=dark&style=bar)
           </code>
         </dd>
       </div>
