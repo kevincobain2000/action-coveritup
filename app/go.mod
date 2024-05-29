@@ -7,7 +7,7 @@ require (
 	github.com/fbiville/markdown-table-formatter v0.3.0
 	github.com/go-echarts/statsview v0.3.4
 	github.com/go-playground/validator v9.31.0+incompatible
-	github.com/kevincobain2000/go-progress-svg v1.0.0
+	github.com/kevincobain2000/go-progress-svg v1.0.1
 	github.com/kevincobain2000/instachart v1.0.20
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/mcuadros/go-defaults v1.2.0
@@ -40,7 +40,7 @@ require (
 	github.com/google/pprof v0.0.0-20240528025155-186aa0362fba // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
-	github.com/imroc/req/v3 v3.43.5 // indirect
+	github.com/imroc/req/v3 v3.43.6 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/karrick/godirwalk v1.17.0 // indirect
@@ -67,7 +67,7 @@ require (
 	go.uber.org/mock v0.4.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	golang.org/x/crypto v0.23.0 // indirect
-	golang.org/x/exp v0.0.0-20240525044651-4c93da0ed11d // indirect
+	golang.org/x/exp v0.0.0-20240529005216-23cca8864a10 // indirect
 	golang.org/x/image v0.16.0 // indirect
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
