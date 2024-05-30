@@ -1,6 +1,8 @@
 package pkg
 
 import (
+	"fmt"
+
 	"github.com/kevincobain2000/action-coveritup/models"
 	gps "github.com/kevincobain2000/go-progress-svg"
 )
@@ -51,14 +53,14 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 		backgroundColor = "#FFD1A4"
 	}
 	if req.Style == "bar" {
-		bar, err := gps.NewBar(func(o *gps.BarOptions) error {
+		bar, err := gps.NewBattery(func(o *gps.BatteryOptions) error {
 			o.Progress = int(ret.Score)
 			o.Width = 180
 			o.Height = 40
 			o.ProgressColor = progressColor
 			o.TextColor = textColor
 			o.TextSize = 14
-			o.ShowPercentage = true
+			o.ProgressCaption = fmt.Sprintf("%d%%", int(ret.Score))
 			o.Caption = t.Name
 			o.CaptionSize = 14
 			o.CaptionColor = captionColor
@@ -71,7 +73,7 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 
 	circle, err := gps.NewCircular(func(o *gps.CircularOptions) error {
 		o.Progress = int(ret.Score)
-		o.Size = 120
+		o.Size = 100
 		o.CircleWidth = 15
 		o.ProgressWidth = 15
 		o.CircleColor = circleColor
@@ -81,9 +83,9 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 		o.ShowPercentage = true
 		o.BackgroundColor = backgroundColor
 		o.Caption = t.Name
-		o.CaptionPos = "bottom"
 		o.CaptionSize = 30
 		o.CaptionColor = captionColor
+		o.SegmentGap = 0
 		return nil
 	})
 
