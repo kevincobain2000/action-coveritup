@@ -40,6 +40,18 @@
     >
 </p>
 
+---
+
+<br>
+<p align="center">
+    <b>Add Progress To your README</b>
+    <br>
+    <br>
+    <img src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=bar" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=circle" />
+</p>
+
+---
 
 <p align="center">
     <b>Add Badges To your README</b>
@@ -64,7 +76,7 @@
 </p>
 
 ![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg&line=fill)
-![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg)
+![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg&)
 ![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&height=150&width=150&output=svg&line=fill)
 ![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&height=150&width=150&output=svg)
 ![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&height=150&width=150&output=svg&line=fill)
