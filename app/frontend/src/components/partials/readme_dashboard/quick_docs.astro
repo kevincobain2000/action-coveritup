@@ -14,7 +14,7 @@
   </p>
   <div class="grid grid-cols-1 gap-x-4 gap-y-8 xl:grid-cols-4">
     <div
-      class="lg:col-span-2 bg-gradient-to-b from-slate-500 to-slate-600 rounded-md p-5"
+      class="lg:col-span-2 bg-gradient-to-t from-yellow-500 to-yellow-600 rounded-md p-5"
     >
       <h2 class="font-bold text-slate-900 pb-1 select-none">Stats</h2>
       <template x-if="types.length > 0">
@@ -30,7 +30,7 @@
         ></span>&branch=<span x-text="types[0].branch"></span>&theme=dark)</code
       >
       <div
-        class="mt-5 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600"
+        class="mt-5 rounded-md p-5 select-none border-4 border-yellow-400"
       >
         <template x-for="t in types">
           <div class="pt-3 select-none flex">
@@ -159,7 +159,7 @@
       </table>
     </div>
     <div
-      class="sm:col-span-4 bg-gradient-to-b from-slate-900 to-slate-800 rounded-md p-5 select-none"
+      class="sm:col-span-4 bg-gradient-to-b from-gray-900 to-gray-900 rounded-md p-5 select-none"
     >
       <h2 class="font-bold text-slate-300 pb-5">Quick Trends</h2>
       <div class="border-slate-600 text-center">
