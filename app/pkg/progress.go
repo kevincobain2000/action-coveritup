@@ -55,8 +55,8 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 	if req.Style == "bar" {
 		bar, err := gps.NewBattery(func(o *gps.BatteryOptions) error {
 			o.Progress = int(ret.Score)
-			o.Width = 180
-			o.Height = 40
+			o.Width = 150
+			o.Height = 35
 			o.ProgressColor = progressColor
 			o.TextColor = textColor
 			o.TextSize = 14
@@ -73,7 +73,7 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 
 	circle, err := gps.NewCircular(func(o *gps.CircularOptions) error {
 		o.Progress = int(ret.Score)
-		o.Size = 100
+		o.Size = 80
 		o.CircleWidth = 15
 		o.ProgressWidth = 15
 		o.CircleColor = circleColor
@@ -83,7 +83,7 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 		o.ShowPercentage = true
 		o.BackgroundColor = backgroundColor
 		o.Caption = t.Name
-		o.CaptionSize = 30
+		o.CaptionSize = 35
 		o.CaptionColor = captionColor
 		o.SegmentGap = 0
 		return nil

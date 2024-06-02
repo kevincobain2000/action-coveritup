@@ -36,7 +36,6 @@ github.com/go-playground/validator v9.31.0+incompatible/go.mod h1:yrEkQXlcI+Pugk
 github.com/go-sql-driver/mysql v1.7.0/go.mod h1:OXbVy3sEdcQ2Doequ6Z5BW6fXNQTmx+9S1MCJN5yJMI=
 github.com/go-sql-driver/mysql v1.8.1 h1:LedoTUt/eveggdHS9qUFC1EFSa8bU2+1pZjSRpvNJ1Y=
 github.com/go-sql-driver/mysql v1.8.1/go.mod h1:wEBSXgmK//2ZFJyE+qWnIsVGmvmEKlqwuVSjsCm7DZg=
-github.com/go-task/slim-sprig v0.0.0-20230315185526-52ccab3ef572 h1:tfuBGBXKqDEevZMzYi5KSi8KkcZtzBcTgAUUtapy0OI=
 github.com/go-task/slim-sprig/v3 v3.0.0 h1:sUs3vkvUymDpBKi3qH1YSqBQk9+9D/8M2mN1vB6EwHI=
 github.com/go-task/slim-sprig/v3 v3.0.0/go.mod h1:W848ghGpv3Qj3dhTPRyJypKRiqCdHZiAzKg9hl15HA8=
 github.com/golang-jwt/jwt v3.2.2+incompatible h1:IfV12K8xAKAnZqdXVzCZ+TOjboZ2keLg81eXfW3O+oY=
@@ -66,8 +65,6 @@ github.com/karrick/godirwalk v1.17.0 h1:b4kY7nqDdioR/6qnbHQyDvmA17u5G1cZ6J+CZXwS
 github.com/karrick/godirwalk v1.17.0/go.mod h1:j4mkqPuvaLI8mp1DroR3P6ad7cyYd4c1qeJ3RV7ULlk=
 github.com/kevincobain2000/go-badge v0.0.0-20240527052429-de9eb158774b h1:rszueD1SXo5shNhpRxP9s1JQz4urhf7E8kmjTgF4RJE=
 github.com/kevincobain2000/go-badge v0.0.0-20240527052429-de9eb158774b/go.mod h1:m9BzkaxwU4IfPQi9ko23cmuFltayFe8iS0dlRlnEWiM=
-github.com/kevincobain2000/go-progress-svg v1.0.3 h1:JRdC608vIWfbjtyLgdl3CBPnqj28SA4m1KFcfxzjYNg=
-github.com/kevincobain2000/go-progress-svg v1.0.3/go.mod h1:EgVTknvGHrate4BkvANG2QRqrClN3BHIFO666bwqz8A=
 github.com/kevincobain2000/go-progress-svg v1.0.4 h1:ZGRVAPNBcwdqP4knxqcTD5vM3IfOAvKbTqRaVPf2jDo=
 github.com/kevincobain2000/go-progress-svg v1.0.4/go.mod h1:EgVTknvGHrate4BkvANG2QRqrClN3BHIFO666bwqz8A=
 github.com/kevincobain2000/instachart v1.0.20 h1:pGhgXYE5rlhBHXqwIc1UBLhdOM/EkAnKPA9rzq3J7Ik=
