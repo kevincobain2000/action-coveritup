@@ -73,14 +73,13 @@ func (b *Progress) Get(req *ProgressRequest, t *models.Type) ([]byte, error) {
 
 	circle, err := gps.NewCircular(func(o *gps.CircularOptions) error {
 		o.Progress = int(ret.Score)
-		o.Size = 80
+		o.CircleSize = 80
 		o.CircleWidth = 15
 		o.ProgressWidth = 15
 		o.CircleColor = circleColor
 		o.ProgressColor = progressColor
 		o.TextColor = textColor
 		o.TextSize = 52
-		o.ShowPercentage = true
 		o.BackgroundColor = backgroundColor
 		o.Caption = t.Name
 		o.CaptionSize = 35
