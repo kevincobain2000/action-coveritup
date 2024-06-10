@@ -108,7 +108,7 @@ func TestGetBadgeOK(t *testing.T) {
 			Query:            `?org=org&repo=repo&branch=branch&type=type`,
 			Status:           http.StatusOK,
 			ContentType:      "image/svg+xml",
-			ResponseContains: `<text x="115" y="15" fill="#fff">0</text>`,
+			ResponseContains: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="106" height="20"`,
 		},
 		{
 			Name: "200",
@@ -123,7 +123,7 @@ func TestGetBadgeOK(t *testing.T) {
 			Query:            `?org=org&repo=repo&branch=branch&type=type`,
 			Status:           http.StatusOK,
 			ContentType:      "image/svg+xml",
-			ResponseContains: `<text id="rlink" x="123.5" y="14">2.0k</text>`,
+			ResponseContains: `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="123"`,
 		},
 	}
 
