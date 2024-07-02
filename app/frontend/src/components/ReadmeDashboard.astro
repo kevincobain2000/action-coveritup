@@ -9,6 +9,8 @@ import FullCharts from "@components/partials/readme_dashboard/full_charts.astro"
 import TypesCharts from "@components/partials/readme_dashboard/types_charts.astro";
 import BranchesCharts from "@components/partials/readme_dashboard/branches_charts.astro";
 import UsersCharts from "@components/partials/readme_dashboard/users_charts.astro";
+import Alpine from "@components/Alpine.astro";
+
 const baseURL = import.meta.env.PUBLIC_BASE_URL;
 ---
 
@@ -33,7 +35,7 @@ const baseURL = import.meta.env.PUBLIC_BASE_URL;
   </div>
 </div>
 
-<script is:inline src="//unpkg.com/alpinejs@3.0.7/dist/cdn.js"></script>
+<Alpine />
 <script is:inline>
   const updateBranch = () => {
     const url = new URL(window.location.href);
