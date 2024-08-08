@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-echarts/statsview"
 	"github.com/go-echarts/statsview/viewer"
@@ -79,12 +80,11 @@ func HTTPErrorHandler(err error, c echo.Context) {
 }
 
 func ltsv() string {
-	time_custom := "2006-01-02 15:04:05"
-	_ = time_custom
+	timeCustom := time.Now().Format("2006-01-02 15:04:05")
 	var format string
-	format += "time:${time_custom}\t"
+	format += fmt.Sprintf("time:%s\t", timeCustom)
 	format += "host:${remote_ip}\t"
-	format += "forwardedfor:${header:x-forwarded-for}\t"
+	format += "xff:${header:x-forwarded-for}\t"
 	format += "req:-\t"
 	format += "status:${status}\t"
 	format += "method:${method}\t"

@@ -26,18 +26,16 @@ func (b *Badge) Get(req *BadgeRequest, t *models.Type) ([]byte, error) {
 	label := t.Name + " | " + req.Branch
 
 	if t.Metric == "" {
-		badge.SetSocialTemplate()
-		return badge.RenderBytes(label, scoreStr, "#00000", "#00000", "#fff")
+		return badge.RenderBytesSocial(label, scoreStr, "#00000", "#00000", "#fff")
 	}
-	badge.SetFlatTemplate()
 
 	scoreStr += ret.Metric
-	badgeColor, labelColor, color := b.getBadgeColors(t.Metric)
-	return badge.RenderBytes(label, scoreStr, badgeColor, labelColor, color)
+	badgeColor, labelColor, color := b.getBadgeColors(t.Metric, ret.Score)
+	return badge.RenderBytesFlat(label, scoreStr, badgeColor, labelColor, color)
 }
 
 func (b *Badge) Get404(req *BadgeRequest) ([]byte, error) {
-	return badge.RenderBytes(req.Branch+"|"+req.Type, "404", "#fff", "white", "red")
+	return badge.RenderBytesFlat(req.Branch+"|"+req.Type, "404", "#fff", "white", "red")
 }
 
 func (b *Badge) GetType(name string) (*models.Type, error) {
@@ -49,13 +47,32 @@ func (b *Badge) GetType(name string) (*models.Type, error) {
 	return b.typeModel.Get(name)
 }
 
-func (e *Badge) getBadgeColors(metric string) (badge.Color, badge.Color, badge.Color) {
+func (e *Badge) getBadgeColors(metric string, score float64) (badge.Color, badge.Color, badge.Color) {
 	metric = strings.ToLower(metric)
 	if metric == "%" {
-		return "#fff", "#fff", "blue"
+		var color badge.Color
+		var textColor badge.Color
+		switch {
+		case score >= 90:
+			color = "green"
+			textColor = "black"
+		case score >= 75:
+			color = "blue"
+			textColor = "white"
+		case score >= 50:
+			color = "orange"
+			textColor = "black"
+		case score < 50:
+			color = "red"
+			textColor = "white"
+		default:
+			color = "white"
+			textColor = "black"
+		}
+		return "#fff", textColor, color
 	}
 	if metric == "kb" || metric == "mb" || metric == "gb" {
-		return "#fff", "gray", "#F8C8DC"
+		return "#fff", "gray", "yellow"
 	}
 	if metric == "ms" ||
 		metric == "s" ||

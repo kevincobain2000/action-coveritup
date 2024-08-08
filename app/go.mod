@@ -21,7 +21,10 @@ require (
 )
 
 // github.com/kevincobain2000/go-progress-svg => /Users/pulkit.kathuria/git/go-progress-svg
-replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge v0.0.0-20240527052429-de9eb158774b
+// replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge master
+replace github.com/narqo/go-badge => github.com/kevincobain2000/go-badge v0.0.0-20240808031701-59995e0da671
+
+// replace github.com/narqo/go-badge => /Users/pulkit.kathuria/git/go-badge
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
