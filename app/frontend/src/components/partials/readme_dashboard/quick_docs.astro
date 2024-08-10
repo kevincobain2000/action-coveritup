@@ -7,16 +7,16 @@
   id="quick-docs"
 >
   <h2 class="text-violet-300 font-bold text-xl pb-2 select-none">
-    # Quick Docs
+    <span class="text-slate-500"># </span>Quick Docs
   </h2>
   <p class="pb-6 font-semibold text-sm select-none">
     API Documentation for Embeds
   </p>
   <div class="grid grid-cols-1 gap-x-4 gap-y-8 xl:grid-cols-4">
     <div
-      class="lg:col-span-2 bg-gradient-to-t from-yellow-500 to-yellow-600 rounded-md p-5"
+      class="lg:col-span-2 bg-gradient-to-b from-slate-700 to-slate-800 rounded-md p-5 select-none border border-slate-600"
     >
-      <h2 class="font-bold text-slate-900 pb-1 select-none">Stats</h2>
+      <h2 class="font-bold text-slate-200 pb-1 select-none">Stats</h2>
       <template x-if="types.length > 0">
         <img
           class="inline select-none mt-5 mb-5 rounded-lg"
@@ -24,13 +24,13 @@
           :src="`//${url}/table?org=${org}&repo=${repo}&branch=${branch}&theme=dark`"
         />
       </template>
-      <code class="font-mono text-slate-900 break-words text-sm">
+      <code class="font-mono text-slate-500 break-words text-sm">
         ![<span x-text="types[0].name"></span>](https://<span x-text="url"
         ></span>/table?org=<span x-text="org"></span>&repo=<span x-text="repo"
         ></span>&branch=<span x-text="types[0].branch"></span>&theme=dark)</code
       >
       <div
-        class="mt-5 rounded-md p-5 select-none border-4 border-yellow-400"
+        class="mt-5 rounded-md p-5 select-none border-2 border-slate-400"
       >
         <template x-for="t in types">
           <div class="pt-3 select-none flex">
