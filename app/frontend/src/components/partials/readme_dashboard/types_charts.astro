@@ -18,7 +18,7 @@
       x-for="(ts, metric) in groupedTypes"
       :key="metric"
     >
-      <template x-if="ts.length > 1">
+      <div x-show="ts.length > 1">
         <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
           <dt class="text-white font-bold select-none pb-2" x-text="metric">
           </dt>
@@ -39,7 +39,7 @@
             </code>
           </dd>
         </div>
-      </template>
+      </div>
     </template>
   </dl>
 </div>
