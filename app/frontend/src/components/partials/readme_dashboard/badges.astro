@@ -16,7 +16,7 @@
         <dt class="text-white font-bold select-none pb-2" x-text="t.name"></dt>
         <dd class="text-gray-600">
           <div class="pb-2 select-none">
-            <img
+            <img loading='eager'
               is:raw
               :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
             />

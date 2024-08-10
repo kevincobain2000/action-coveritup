@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://coveritup.app">
-    <img alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
+    <img loading='eager' alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
   </a>
 </p>
 <p align="center">
@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="https://coveritup.app">
-    <img alt="coveritup app url" src="https://imgur.com/7pQEwvT.png" width="460">
+    <img loading='eager' alt="coveritup app url" src="https://imgur.com/7pQEwvT.png" width="460">
   </a>
 </p>
 
@@ -30,7 +30,7 @@
     <a
         href="https://www.producthunt.com/posts/coveritup?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-coveritup"
         target="_blank"
-        ><img
+        ><img loading='eager'
         src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=433114&theme=light"
         alt="CoverItUp - All&#0032;in&#0032;one&#0032;code&#0032;coverage&#0032;and&#0032;badges&#0032;tool&#0046; | Product Hunt"
         style="width: 250px; height: 54px;"
@@ -47,8 +47,8 @@
     <b>Add Progress To your README</b>
     <br>
     <br>
-    <img src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=bar" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=circle" />
+    <img loading='eager' src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=bar" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img loading='eager' src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=circle" />
 </p>
 
 ---
@@ -121,10 +121,10 @@ See this pull request for example: https://github.com/kevincobain2000/action-cov
 
 <details>
 <summary>More Examples</summary>
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark" />
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark" />
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark" />
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark" />
 </details>
 
 <br>
@@ -145,10 +145,10 @@ See this pull request for example: https://github.com/kevincobain2000/action-cov
 
 <details>
 <summary>More Examples</summary>
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg" />
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg" />
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg" />
-<img src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg" />
 </details>
 
 

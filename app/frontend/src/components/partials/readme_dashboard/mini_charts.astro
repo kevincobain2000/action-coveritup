@@ -15,7 +15,7 @@
 
   <div class="text-center">
     <template x-for="t in types">
-      <img
+      <img loading='eager'
         class="inline select-none p-1 rounded-lg"
         is:raw
         :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"

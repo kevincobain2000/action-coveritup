@@ -18,7 +18,7 @@
     >
       <h2 class="font-bold text-slate-200 pb-1 select-none">Stats</h2>
       <template x-if="types.length > 0">
-        <img
+        <img loading='eager'
           class="inline select-none mt-5 mb-5 rounded-lg"
           is:raw
           :src="`//${url}/table?org=${org}&repo=${repo}&branch=${branch}&theme=dark`"
@@ -34,7 +34,7 @@
       >
         <template x-for="t in types">
           <div class="pt-3 select-none flex">
-            <img
+            <img loading='eager'
               is:raw
               :src="`//${url}/badge?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}`"
             />
@@ -165,7 +165,7 @@
       <div class="border-slate-600 text-center">
         <template x-for="t in types">
           <template x-if="t.metric === '%'">
-            <img
+            <img loading='eager'
               class="inline select-none rounded-xl p-1"
               is:raw
               :src="`//${url}/progress?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=light`"
@@ -175,7 +175,7 @@
       </div>
       <div class="border-slate-600 border-2 rounded-lg p-2 text-center mt-5">
         <template x-for="t in types">
-          <img
+          <img loading='eager'
             class="inline select-none rounded-xl p-1"
             is:raw
             :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&type=${t.name}&theme=dark&line=fill&width=150&height=150&output=svg`"

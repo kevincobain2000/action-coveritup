@@ -18,13 +18,13 @@
       x-for="(ts, metric) in groupedTypes"
       :key="metric"
     >
-      <div x-show="ts.length > 1">
+      <template x-if="ts.length > 1">
         <div class="sm:col-span-1 bg-slate-900 rounded-md p-5">
           <dt class="text-white font-bold select-none pb-2" x-text="metric">
           </dt>
           <dd class="text-gray-600">
             <div class="pb-2 select-none flex justify-center items-center">
-              <img
+              <img loading='eager'
                 is:raw
                 :src="`//${url}/chart?org=${org}&repo=${repo}&branch=${branch}&types=${ts.map(t => t.name).join(',')}&theme=dark`"
                 alt="Chart"
@@ -39,7 +39,7 @@
             </code>
           </dd>
         </div>
-      </div>
+      </template>
     </template>
   </dl>
 </div>

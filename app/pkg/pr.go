@@ -195,7 +195,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 
 	images := ""
 	for _, u := range baseAndBranchImgUrls {
-		images += fmt.Sprintf("<img src='%s' alt='base vs branch' />", u)
+		images += fmt.Sprintf("<img loading='eager' src='%s' alt='base vs branch' />", u)
 	}
 
 	mdText.PlainText("")
@@ -203,7 +203,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 
 	cImages := ""
 	for _, u := range commitHistoryImgUrls {
-		cImages += fmt.Sprintf("<img src='%s' alt='commit history' />", u)
+		cImages += fmt.Sprintf("<img loading='eager' src='%s' alt='commit history' />", u)
 	}
 
 	mdText.PlainText("")
@@ -212,7 +212,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 
 	uImages := ""
 	for _, u := range userHistoryImgUrls {
-		uImages += fmt.Sprintf("<img src='%s' alt='user history' />", u)
+		uImages += fmt.Sprintf("<img loading='eager' src='%s' alt='user history' />", u)
 	}
 	mdText.PlainText("")
 	mdText.Details("Users History", "\n"+uptoCommitsText+"\n"+uImages+"\n")

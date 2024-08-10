@@ -18,7 +18,7 @@
         <dt class="text-white font-bold select-none pb-2" x-text="t.name"></dt>
         <dd class="text-gray-600">
           <div class="pb-2 select-none flex justify-center items-center">
-            <img
+            <img loading='eager'
               is:raw
               :src="`//${url}/chart?org=${org}&repo=${repo}&users=all&type=${t.name}&theme=dark&line=fill`"
             />
