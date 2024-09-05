@@ -80,6 +80,9 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		if commitBranch == "" {
 			commitBranch = scoreBranch.Commit
 		}
+		if !isFirstPR && scoreBaseBranch.Score == scoreBranch.Score {
+			continue
+		}
 		if err != nil {
 			y[1] = 0
 			tableRow[2] = ""
