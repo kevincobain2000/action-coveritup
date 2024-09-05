@@ -58,6 +58,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		types = onlyReportTypes
 	}
 
+	shouldComment := false
 	for _, t := range types {
 		y := make([]float64, 2)
 		tableRow := make([]string, 4)
@@ -83,6 +84,7 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		if !isFirstPR && scoreBaseBranch.Score == scoreBranch.Score {
 			continue
 		}
+		shouldComment = true
 		if err != nil {
 			y[1] = 0
 			tableRow[2] = ""
@@ -241,6 +243,10 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 		req.Repo,
 		req.Branch)
 	mdText.PlainTextf(md.Link("Embed README.md", readmeLink))
+
+	if !shouldComment {
+		return "", nil
+	}
 
 	return mdText.String(), nil
 }

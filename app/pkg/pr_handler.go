@@ -60,5 +60,8 @@ func (h *PRHandler) Get(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
+	if prComment == "" {
+		return echo.NewHTTPError(http.StatusConflict, errors.New("no types changed on user specified"))
+	}
 	return c.String(http.StatusCreated, prComment)
 }
