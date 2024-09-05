@@ -178,6 +178,14 @@ Before using this action, enable Github Actions
     - uses: kevincobain2000/action-coveritup@v2
       with:
         pr_comment: true
+        # optional
+        ## report only these types on PR comment, empty means all
+        types: coverage,go-sec-issues,go-lint-errors
+        # optional
+        ## report only these types after 1st comment
+        # 1st comment will have all types or types specified in `types`
+        # 2nd comment onwards will have only these types
+        diff_types: coverage
 ```
 
 ## Time taken

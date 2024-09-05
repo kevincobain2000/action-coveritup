@@ -26,6 +26,7 @@ type PRRequest struct {
 	PRNum      int    `json:"pr_num" query:"pr_num" validate:"required,numeric" message:"pr_num is required"`
 	Theme      string `json:"theme" query:"theme" default:"light" validate:"oneof=light dark" message:"theme must be light or dark"`
 	Types      string `json:"types" query:"types" validate:"ascii" message:"ascii types are required"`
+	DiffTypes  string `json:"diff_types" query:"diff_types" validate:"ascii" message:"ascii diff_types are required"`
 
 	host   string
 	scheme string
