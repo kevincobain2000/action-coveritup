@@ -13,6 +13,8 @@ inputs:
     description: "Type of score"
   types:
     description: "Types to report on PR comment. If empty then it will report all types"
+  diff_types:
+    description: "Only types to report on PR comment after 1st comment. 1st comment will have all types"
   metric:
     description: "Metric of score"
   command:
@@ -154,7 +156,7 @@ runs:
           -x "${{ env.COVERITUP_HTTP_PROXY }}" \
           -H 'Content-Type: application/json' \
           -w "%{http_code}" \
-          "${{env.COVERITUP_HOST}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&types=${{ inputs.types }}&theme=${{ inputs.theme }}&pr_num=${{ steps.pr-number-id.outputs.pr }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
+          "${{env.COVERITUP_HOST}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&types=${{ inputs.types }}&diff_types=${{ inputs.diff_types }}&theme=${{ inputs.theme }}&pr_num=${{ steps.pr-number-id.outputs.pr }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
           -o comment_body.txt)
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/fbiville/markdown-table-formatter/pkg/markdown"
 	"github.com/kevincobain2000/action-coveritup/models"
@@ -45,6 +46,17 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	commitHistoryImgUrls := []string{} // stores urls for commit history trends (line charts)
 	userHistoryImgUrls := []string{}   // stores urls for user history trends (line charts)
 	mdText.H4("CoverItUp Report")
+	// if it is not first PR, then only report the types that are different from diff_types
+	if !isFirstPR && req.DiffTypes != "" {
+		onlyReportTypes := []models.Type{}
+		diffTypes := strings.Split(req.DiffTypes, ",")
+		for _, t := range types {
+			if Contains(diffTypes, t.Name) {
+				onlyReportTypes = append(onlyReportTypes, t)
+			}
+		}
+		types = onlyReportTypes
+	}
 
 	for _, t := range types {
 		y := make([]float64, 2)
