@@ -9,12 +9,21 @@
   A CodeCov and SonarQube alternative.
   <br>
   <br>
+  <b>
+     <a href="https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=master" target="_blank">DEMO!</a>
+  </b>
+  <br>
   <br>
 </p>
 
+<p align="center">
+  <a href="https://coveritup.app">
+    <img loading='eager' alt="coveritup app url" src="https://imgur.com/7pQEwvT.png" width="460">
+  </a>
+</p>
 
 <p align="center">
-  Action and Self Hosted app for uploading Code Metrics
+  Action and Self Hosted app for uploading Code Metrics to <a href="https://coveritup.app">coveritup.app</a>
 </p>
 
 <p align="center">
@@ -36,6 +45,10 @@
 <br>
 <p align="center">
     <b>Add Progress To your README</b>
+    <br>
+    <br>
+    <img loading='eager' src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=bar" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img loading='eager' src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=circle" />
 </p>
 
 ---
@@ -44,11 +57,33 @@
     <b>Add Badges To your README</b>
 </p>
 
+![npm-install-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master)
+![npm-build-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master)
+![go-build-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master)
+
+![coverage](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master)
+![go-binary-size](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master)
+
+![go-test-run-time](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master)
+![go-mod-dependencies](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master)
+![go-sec-issues](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master)
+![go-lint-errors](https://coveritup.app/badge?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&branch=master)
+
 ---
 
 <p align="center">
     <b>Add Widgets To your README</b>
 </p>
+
+![npm-install-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-install-time&branch=master&height=150&width=150&output=svg&line=fill)
+![npm-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=npm-build-time&branch=master&height=150&width=150&output=svg&)
+![go-build-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-build-time&branch=master&height=150&width=150&output=svg&line=fill)
+![go-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-test-run-time&branch=master&height=150&width=150&output=svg)
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=coverage&branch=master&height=150&width=150&output=svg&line=fill)
+![go-binary-size](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-binary-size&branch=master&height=150&width=150&output=svg)
+![go-mod-dependencies](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-mod-dependencies&branch=master&height=150&width=150&output=svg&line=fill)
+![go-sec-issues](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-sec-issues&branch=master&height=150&width=150&output=svg)
+![go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=action-coveritup&type=go-lint-errors&output=svg&width=160&height=160&branch=master&line=fill)
 
 ---
 
@@ -72,6 +107,49 @@
 Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summary report for diff.
 
 See this pull request for example: https://github.com/kevincobain2000/action-coveritup/pull/15
+
+
+# Examples - Embedding
+
+### Coverage Trends for branch `master`
+
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branch=master&output=svg&theme=dark)
+
+### Build Times Trends for branch `master`
+
+![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branch=master&output=svg&theme=dark&line=fill)
+
+<details>
+<summary>More Examples</summary>
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branch=master&output=svg&theme=dark" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branch=master&output=svg&theme=dark" />
+</details>
+
+<br>
+
+### Code Coverage on same metric
+
+![go-mod-dependencies,go-sec-issues,go-lint-errors](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&theme=dark&branch=master&types=go-mod-dependencies,go-sec-issues,go-lint-errors)
+
+![build-time,unit-test-run-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&theme=dark&branch=master&types=build-time,unit-test-run-time)
+
+### Code Coverage on branch trends
+
+![coverage](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=coverage&branches=all&output=svg)
+
+### Build Time on branch trends
+
+![build-time](https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=build-time&branches=all&output=svg)
+
+<details>
+<summary>More Examples</summary>
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-binary-size&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-mod-dependencies&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=go-sec-issues&branches=all&output=svg" />
+<img loading='eager' src="https://coveritup.app/chart?org=kevincobain2000&repo=gobrew&type=unit-test-run-time&branches=all&output=svg" />
+</details>
 
 
 # Step 1) Using Action
