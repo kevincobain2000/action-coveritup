@@ -74,14 +74,7 @@
 
 **Charts:** Visualize your reports with charts. Report trends over time by branch and user.
 
-**Read on Medium** - [Revolutionizing Code Tracking for Developers](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204), [Use Linters the Right way](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204)
-
-
-# Examples - Pull Request Comments
-
-Do a CF (Continuous Feedback) on your pull requests. Comment on PR with the summary report for diff.
-
-See this pull request for example: https://github.com/kevincobain2000/action-coveritup/pull/15
+**Read on Medium** - [Revolutionizing Code Tracking for Developers](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204), [Use Linters the Right way](https://kevincobain2000-x.medium.com/revolutionizing-code-tracking-for-developers-e8b7b42a5204), [Continuous Benchmarking](https://medium.com/web-developer/continuous-benchmarks-in-go-f703d4a5a3e0)
 
 
 # Step 1) Using Action
