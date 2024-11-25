@@ -1,0 +1,5 @@
+<svg width="80" height="104" viewBox="0 0 200 200" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <circle r="90" cx="100" cy="100" fill="#FFD1A4" />
+  <circle r="90" cx="100" cy="100" fill="transparent" stroke="#333333" stroke-width="15px" stroke-dasharray="56.548000 0.000000" stroke-dashoffset="0"></circle><circle r="90" cx="100" cy="100" stroke="#FFB347" stroke-width="15px" stroke-linecap="round" stroke-dasharray="265.775600 299.704400" stroke-dashoffset="0px" fill="transparent" style="transform:rotate(-90deg); transform-origin: 50% 50%;"></circle><text x="100" y="100" font-family="Tohma,Helvetica,Arial,sans-serif,sans-serif" fill="#36454F" font-size="52px" font-weight="bold" text-anchor="middle" alignment-baseline="middle">47%</text>
+  <text x="100" y="220" font-family="Tohma,Helvetica,Arial,sans-serif,sans-serif" fill="#FFA500" font-size="35px" text-anchor="middle">coverage</text>
+</svg>

@@ -1,20 +1,19 @@
 <p align="center">
-  <a href="https://coveritup.app">
-    <img loading='eager' alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
-  </a>
+  <img loading='eager' alt="coveritup app url" src="https://imgur.com/fHfULta.png" width="160">
 </p>
 <p align="center">
   The Hassle-Free Code Coverage and Metrics Tracking Tool
   <br>
   A CodeCov and SonarQube alternative.
   <br>
-  <br>
-  <br>
 </p>
 
+<p align="center">
+  <img loading='eager' alt="coveritup app url" src="https://imgur.com/7pQEwvT.png" width="460">
+</p>
 
 <p align="center">
-  Action and Self Hosted app for uploading Code Metrics
+  Action and Self Hosted app for uploading Code Metrics.
 </p>
 
 <p align="center">
@@ -36,6 +35,10 @@
 <br>
 <p align="center">
     <b>Add Progress To your README</b>
+    <br>
+    <br>
+    <img loading='eager' src="https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/1.svg" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img loading='eager' src="https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/2.svg" />
 </p>
 
 ---
@@ -44,11 +47,18 @@
     <b>Add Badges To your README</b>
 </p>
 
+![npm-install-time](https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/3.svg)
+
+![coverage](https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/4.svg)
+
 ---
 
 <p align="center">
     <b>Add Widgets To your README</b>
 </p>
+
+![npm-install-time](https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/5.svg)
+![go-test-run-time](https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/6.svg)
 
 ---
 
@@ -184,7 +194,7 @@ Before using this action, enable Github Actions
 # Step 3) Embedding badges and charts
 
 Navigate to your repo and obtain embeding code for badges and charts.
-https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=master
+`/readme?org=kevincobain2000&repo=action-coveritup&branch=master`
 
 ---
 
@@ -212,7 +222,7 @@ https://coveritup.app/readme?org=kevincobain2000&repo=action-coveritup&branch=ma
 `github.token` from your action is sent to the server as an Authorization header.
 The expiration of `github.token` is until the workflow is running.
 The token is used to verify if the request has originated from the correct org, repo and commit author.
-https://coveritup.app doesn't store the token.
+It doesn't store the token.
 You can see usage in `action.yml` file
 
 
