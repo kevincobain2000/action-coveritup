@@ -1,0 +1,8 @@
+<svg width="160" height="59" version="1.1" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="150" height="35" fill="#FFD1A4" rx="10" ry="10" /><rect x="0" y="0" width="47%" height="35" fill="#FFB347" rx="10" ry="10" /><rect x="150" y="7" width="10" height="21" fill="#FFD1A4" rx="5" ry="5" /><rect x="150" y="7" width="10" height="21" fill="#FFB347" rx="5" ry="5" />
+  <rect x="31" y="0" width="5" height="35" fill="#FFD1A4" />
+  <rect x="62" y="0" width="5" height="35" fill="#FFD1A4" />
+  <rect x="93" y="0" width="5" height="35" fill="#FFD1A4" />
+  <rect x="124" y="0" width="5" height="35" fill="#FFD1A4" />
+  <text x="50%" y="17" font-family="Tohma,Helvetica,Arial,sans-serif,sans-serif" fill="#36454F" font-size="14px" font-weight="bold" text-anchor="middle" alignment-baseline="middle">47%</text>
+  <text x="50%" y="49" font-family="Tohma,Helvetica,Arial,sans-serif,sans-serif" fill="#FFA500" font-size="14px" text-anchor="middle">coverage</text>
+</svg>

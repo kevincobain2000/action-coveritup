@@ -47,7 +47,7 @@
     <b>Add Progress To your README</b>
     <br>
     <br>
-    <img loading='eager' src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=bar" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <img loading='eager' src="https://raw.githubusercontent.com/kevincobain2000/action-coveritup/refs/heads/master/samples/1.svg" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <img loading='eager' src="https://coveritup.app/progress?org=kevincobain2000&repo=action-coveritup&branch=master&type=coverage&theme=dark&style=circle" />
 </p>
 
