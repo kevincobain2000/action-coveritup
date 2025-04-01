@@ -38,13 +38,10 @@ jobs:
         with:
           mysql-version: "8.0"
 
-      - name: NPM Install
+      - name: NPM install
         working-directory: app/frontend
-        run: npm build
-      - name: NPM Install
-        working-directory: app/frontend
-        run: npm run build
-      - name: GO Build
+        run: npm install
+      - name: NPM build
         working-directory: app/frontend
         run: npm run build
 
