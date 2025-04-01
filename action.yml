@@ -85,12 +85,6 @@ runs:
       shell: bash
       run: echo COMMIT_HASH=${{ github.sha }} >> $GITHUB_ENV
 
-    # Find the pull request number
-    - name: pr-number-action
-      if: ${{github.event_name == 'pull_request'}}
-      id: pr-number-id
-      uses: kkak10/pr-number-action@v1.3
-
     # All branch names for this repo seperated by spaces
     - name: Extract all active branches
       shell: bash
@@ -141,7 +135,7 @@ runs:
             "score": "${{ env.SCORE }}",
             "user": "${{ github.actor }}",
             "branch": "${{ env.BRANCH_OR_TAG_NAME }}",
-            "pr_num": "${{ steps.pr-number-id.outputs.pr }}",
+            "pr_num": "${{ github.event.number }}",
             "branches": "${{ env.ACTIVE_BRANCHES }}"
           }' \
           "${{env.COVERITUP_HOST}}/upload"
@@ -156,7 +150,7 @@ runs:
           -x "${{ env.COVERITUP_HTTP_PROXY }}" \
           -H 'Content-Type: application/json' \
           -w "%{http_code}" \
-          "${{env.COVERITUP_HOST}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&types=${{ inputs.types }}&diff_types=${{ inputs.diff_types }}&theme=${{ inputs.theme }}&pr_num=${{ steps.pr-number-id.outputs.pr }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
+          "${{env.COVERITUP_HOST}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&types=${{ inputs.types }}&diff_types=${{ inputs.diff_types }}&theme=${{ inputs.theme }}&pr_num=${{ github.event.number }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
           -o comment_body.txt)
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 
@@ -166,7 +160,7 @@ runs:
       if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository }}
       uses: peter-evans/create-or-update-comment@v3
       with:
-        issue-number: ${{ steps.pr-number-id.outputs.pr }}
+        issue-number: ${{ github.event.number }}
         body-path: comment_body.txt
         token: ${{ inputs.token }}
     ###               END                 ###
