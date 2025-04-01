@@ -154,15 +154,34 @@ runs:
           -o comment_body.txt)
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 
-    # Comment on PR if it is a pull req and the status code is 201
+    # Create or update comment
     # Won't work on forks https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#restrictions-on-repository-forks
-    - name: Comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository }}
-      uses: peter-evans/create-or-update-comment@v3
+    - name: Find Comment
+      uses: peter-evans/find-comment@v3
+      if: ${{github.event_name == 'pull_request' && success() && inputs.pr_comment == 'true' && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository}}
+      id: fc
       with:
         issue-number: ${{ github.event.number }}
-        body-path: comment_body.txt
+        body-includes: '<!-- __COVERITUP_ANCHOR__ -->'
         token: ${{ inputs.token }}
+
+    - name: Create Comment
+      uses: peter-evans/create-or-update-comment@v4
+      if: ${{github.event_name == 'pull_request' && success() && inputs.pr_comment == 'true' && steps.fc.outputs.comment-id == 0 && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository}}
+      with:
+        issue-number: ${{ github.event.number }}
+        body: comment_body.txt
+        token: ${{ inputs.token }}
+
+    - name: Update Comment
+      uses: peter-evans/create-or-update-comment@v4
+      if: ${{github.event_name == 'pull_request' && success() && inputs.pr_comment == 'true' && steps.fc.outputs.comment-id != 0 && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository}}
+      with:
+        issue-number: ${{ github.event.number }}
+        body: comment_body.txt
+        comment-id: ${{ steps.fc.outputs.comment-id }}
+        token: ${{ inputs.token }}
+        edit-mode: replace
     ###               END                 ###
     ###            PUBLISHING             ###
 
