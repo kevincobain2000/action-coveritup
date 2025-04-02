@@ -45,6 +45,8 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	baseAndBranchImgUrls := []string{} // stores urls for bar charts for comparison of base and branch
 	commitHistoryImgUrls := []string{} // stores urls for commit history trends (line charts)
 	userHistoryImgUrls := []string{}   // stores urls for user history trends (line charts)
+	mdText.PlainText("<!-- __COVERITUP_ANCHOR__ -->")
+	mdText.PlainText("")
 	mdText.H4("CoverItUp Report")
 	// if it is not first PR, then only report the types that are different from diff_types
 	if !isFirstPR && req.DiffTypes != "" {
