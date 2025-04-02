@@ -38,6 +38,9 @@ func (p *PR) Get(req *PRRequest, types []models.Type) (string, error) {
 	commitBaseBranch := ""
 	isFirstPR := p.coverageModel.IsFirstPR(req.Org, req.Repo, req.PRNum)
 
+	isFirstPR = true // always since comments are updated
+	req.DiffTypes = "" //always, diff_types is deprecated and will be abolished
+
 	mdText := md.NewMarkdown(os.Stdout)
 	mdTable := md.TableSet{
 		Rows: [][]string{},
