@@ -110,6 +110,11 @@ Before using this action, enable Github Actions
         ## report only these types after 1st comment
         # 1st comment will have all types or types specified in `types`
         # 2nd comment onwards will have only these types
+
+        # NOTE on deprecation
+        # THIS diff_types is deprecated and will be abolished because now it only comments once
+        # And same comment is updated, since there are graphs to measure all commits history
+        # there is no need to spam comments
         diff_types: coverage
 ```
 
@@ -254,3 +259,5 @@ cp frontend/.env.example frontend/.env
 - **v1.0** - Initial release with `self hosted` and `action`.
 - **v2.0** - Better action that wraps the command.
 - **v2.4** - Smoothed bar charts.
+- **v2.5** - API Rate limit issue fixed by implementing no other `use:` in own action.
+- **v2.5** - It only posts one comment and updates same comment.
