@@ -38,47 +38,31 @@ runs:
 
     ###              Start                ###
     ### PREPARE ENVIRONMENT and VARIABLES ###
-    - uses: credfeto/action-repo-visibility@v1.2.0
-      if: ${{github.api_url == 'https://api.github.com'}}
-      id: visibility
-
-    - name: Do not allow private repos, unless explicitly specified
-      shell: bash
-      if: ${{ github.api_url == 'https://api.github.com' && steps.visibility.outputs.is_private == 'true' }}
-      run: |
-        echo "Private repos are not supported for Github"
-        exit 1
-
-    - name: Set the host
-      if: ${{env.COVERITUP_HOST == ''}}
-      shell: bash
-      run: echo COVERITUP_HOST="https://coveritup.app" >> "$GITHUB_ENV"
-
-    - name: Donot allow self-hosted, if user has forgotten to set the host
-      shell: bash
-      if: ${{github.api_url != 'https://api.github.com' && env.COVERITUP_HOST == 'https://coveritup.app'}}
-      run: |
-        echo "You must set the host to your own coveritup instance"
-        exit 1
 
     # Branch names for publication and pull requests comments
-    - id: branch-name
-      if: ${{inputs.destroy != 'true'}}
-      uses: tj-actions/branch-names@v8
-    - name: Branch name
+    - name: Get Source and Target Branch Names
+      if: ${{github.event_name != 'pull_request'}}
       shell: bash
-      if: ${{steps.branch-name.outputs.current_branch != ''}}
-      run: echo BRANCH_OR_TAG_NAME=${{ steps.branch-name.outputs.current_branch }} >> $GITHUB_ENV
-    - name: Tag name
+      run: |
+        REF=${GITHUB_REF#refs/}
+        if [[ "$REF" == heads/* ]]; then
+          echo BRANCH_OR_TAG_NAME=${REF#heads/} >> $GITHUB_ENV
+        elif [[ "$REF" == tags/* ]]; then
+          echo BRANCH_OR_TAG_NAME=${REF#tags/} >> $GITHUB_ENV
+        fi
+
+    - name: Get Source and Target Branch Names
       shell: bash
-      if: ${{steps.branch-name.outputs.current_branch == ''}}
-      run: echo BRANCH_OR_TAG_NAME=${{ github.ref }}|sed 's|refs/tags/||' >> $GITHUB_ENV
+      if: ${{github.event_name == 'pull_request'}}
+      run: echo BRANCH_OR_TAG_NAME=${{ github.event.pull_request.head.ref }} >> $GITHUB_ENV
 
     # Commit Hash
     - name: Commit Hash
       shell: bash
       if: ${{github.event_name == 'pull_request'}}
-      run: echo COMMIT_HASH=${{ github.event.pull_request.head.sha }} >> $GITHUB_ENV
+      run: |
+        echo COMMIT_HASH=${{ github.event.pull_request.head.sha }} >> $GITHUB_ENV
+        echo
 
     - name: Commit Hash
       if: ${{github.event_name != 'pull_request'}}
@@ -142,7 +126,7 @@ runs:
 
     # Prepare comment on PR if it is a pull req
     - name: Prepare comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != ''}}
+      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && github.event.pull_request.base.ref != ''}}
       shell: bash
       run: |
         response=$(curl -Lk \
@@ -150,19 +134,72 @@ runs:
           -x "${{ env.COVERITUP_HTTP_PROXY }}" \
           -H 'Content-Type: application/json' \
           -w "%{http_code}" \
-          "${{env.COVERITUP_HOST}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&types=${{ inputs.types }}&diff_types=${{ inputs.diff_types }}&theme=${{ inputs.theme }}&pr_num=${{ github.event.number }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ steps.branch-name.outputs.base_ref_branch }}" \
+          "${{env.COVERITUP_HOST}}/pr?org=${{github.repository_owner}}&repo=${{ github.event.repository.name }}&types=${{ inputs.types }}&diff_types=${{ inputs.diff_types }}&theme=${{ inputs.theme }}&pr_num=${{ github.event.number }}&branch=${{ env.BRANCH_OR_TAG_NAME }}&base_branch=${{ github.event.pull_request.base.ref }}" \
           -o comment_body.txt)
         echo "PR_HTTP_RESPONSE=$response" >> $GITHUB_ENV
 
-    # Comment on PR if it is a pull req and the status code is 201
+    # Create or update comment
     # Won't work on forks https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#restrictions-on-repository-forks
-    - name: Comment on PR if it is a pull req
-      if: ${{inputs.pr_comment == 'true' && github.event_name == 'pull_request' && steps.branch-name.outputs.base_ref_branch != '' && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository }}
-      uses: peter-evans/create-or-update-comment@v3
-      with:
-        issue-number: ${{ github.event.number }}
-        body-path: comment_body.txt
-        token: ${{ inputs.token }}
+    - name: Find Comment
+      shell: bash
+      if: ${{ github.event_name == 'pull_request' && success() && inputs.pr_comment == 'true' && env.PR_HTTP_RESPONSE == '201' && github.event.pull_request.head.repo.full_name == github.repository }}
+      run: |
+        cat comment_body.txt
+        # Define API URL for PR comments
+        PR_COMMENTS_URL="${{ github.api_url }}/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments"
+
+        # Fetch existing comments
+        COMMENTS_JSON=$(curl -s -H "Authorization: Bearer ${{ inputs.token }}" -H "Accept: application/vnd.github+json" "$PR_COMMENTS_URL")
+
+        if [ $? -ne 0 ] || [ -z "$COMMENTS_JSON" ] || [ "$COMMENTS_JSON" == "null" ]; then
+          echo "::error title=GitHub API Error::Failed to fetch comments or received null response"
+          exit 1
+        fi
+
+        echo "Fetched comments: $COMMENTS_JSON"
+
+        # Find existing comment ID
+        COMMENT_ID=$(echo "$COMMENTS_JSON" | jq -r --arg anchor "<!-- __COVERITUP_ANCHOR__ -->" '.[]? | select(.body? | contains($anchor)) | .id')
+
+        if [ $? -ne 0 ] || [ -z "$COMMENT_ID" ] || [ "$COMMENT_ID" == "null" ]; then
+          echo "No existing comment found, proceeding to create a new one."
+          COMMENT_ID=""
+        else
+          echo "Found existing comment with ID: $COMMENT_ID"
+        fi
+
+        # Read the comment body from the file
+        COMMENT_BODY=$(cat comment_body.txt)
+
+        if [ -n "$COMMENT_ID" ]; then
+          # Update existing comment
+          PR_COMMENT_URL="${{ github.api_url }}/repos/${{ github.repository }}/issues/comments/$COMMENT_ID"
+          METHOD="PATCH"
+        else
+          # Create a new comment
+          PR_COMMENT_URL="$PR_COMMENTS_URL"
+          METHOD="POST"
+        fi
+
+        # Escape the comment body to handle special characters properly
+        COMMENT_BODY_ESCAPED=$(jq -Rs . <<< "$COMMENT_BODY")
+
+        # Send the request
+        CURL_RESPONSE=$(curl -s -X "$METHOD" \
+          -H "Authorization: Bearer ${{ inputs.token }}" \
+          -H "Accept: application/vnd.github+json" \
+          -H "Content-Type: application/json" \
+          -d "{\"body\": $COMMENT_BODY_ESCAPED}" \
+          "$PR_COMMENT_URL")
+
+        if [ $? -ne 0 ] || [ -z "$CURL_RESPONSE" ] || [ "$CURL_RESPONSE" == "null" ]; then
+          echo "::error title=Curl failed::Failed to manage comment"
+          echo "Curl Response: $CURL_RESPONSE"
+          exit 1
+        fi
+
+        echo "Successfully posted comment: $CURL_RESPONSE"
+
     ###               END                 ###
     ###            PUBLISHING             ###
 
