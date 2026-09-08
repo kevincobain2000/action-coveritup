@@ -159,7 +159,11 @@ runs:
         echo "Fetched comments: $COMMENTS_JSON"
 
         # Find existing comment ID
-        COMMENT_ID=$(echo "$COMMENTS_JSON" | jq -r --arg anchor "<!-- __COVERITUP_ANCHOR__ -->" '.[]? | select(.body? | contains($anchor)) | .id')
+        ##COMMENT_ID=$(echo "$COMMENTS_JSON" | jq -r --arg anchor "<!-- __COVERITUP_ANCHOR__ -->" '.[]? | select(.body? | contains($anchor)) | .id')
+        # https://github.com/kevincobain2000/action-coveritup/issues/36
+        # Find existing comment ID (first match only; multiple anchored comments may exist
+        # from concurrent runs, and a multi-line value would break the PATCH URL -> curl exit 3) 
+        COMMENT_ID=$(echo "$COMMENTS_JSON" | jq -r --arg anchor "<!-- __COVERITUP_ANCHOR__ -->" '[.[]? | select(.body? | contains($anchor)) | .id] | first // empty')
 
         if [ $? -ne 0 ] || [ -z "$COMMENT_ID" ] || [ "$COMMENT_ID" == "null" ]; then
           echo "No existing comment found, proceeding to create a new one."
